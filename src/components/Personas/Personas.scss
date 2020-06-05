@@ -1,0 +1,113 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/breakpoints.scss';
+@import '../../styles/fonts.scss';
+
+.personas {
+  color: $san-juan;
+  position: relative;
+  padding: space(32) space(16);
+
+  &--intro {
+    @include for-tablet-portrait-up {
+      text-align: center;
+    }
+  }
+
+  .flex-container {
+    max-width: 1260px;
+  }
+
+  p {
+    margin-top: space(10);
+  }
+
+  @include for-phone-only {
+    background-color: $iceberg;
+    padding: space(56) space(32) space(56);
+    text-align: left;
+
+    p {
+      font-size: $font-body-s;
+    }
+  }
+
+  @include for-phone-only {
+    &:before {
+      content: url('../../assets/images/trees/peurto-small.svg');
+      position: absolute;
+      top: -46px;
+      left: 15%;
+    }
+
+    &:after {
+      content: url('../../assets/images/telephone-boxes-shapes.svg');
+      position: absolute;
+      top: -51px;
+      transform: scale(0.7);
+      right: 5%;
+    }
+  }
+
+  @include for-small-phone {
+    &:after {
+      transform: scale(0.6);
+      right: 0;
+    }
+  }
+
+  @include for-tablet-landscape-up {
+    &:before {
+      content: url('../../assets/images/trees/hawkes-small.svg');
+      position: absolute;
+      top: -55px;
+      right: 15%;
+    }
+
+    &:after {
+      content: url('../../assets/images/trees/cranberry-lg.svg');
+      position: absolute;
+      top: -65px;
+      right: 11%;
+    }
+  }
+}
+
+.personas__heading {
+  @include heading-l;
+
+  margin-bottom: space(8);
+
+  @include for-phone-only {
+    font-size: $font-body-l;
+    margin-bottom: space(20);
+  }
+}
+
+.personas__list {
+  position: relative;
+  padding: 0 0 space(32) !important;
+
+  @include for-phone-only {
+    margin-top: space(32);
+  }
+
+  @include for-tablet-portrait-up {
+    padding-top: space(24) !important;
+  }
+
+  @include for-tablet-landscape-up {
+    padding-top: 0 !important;
+
+    &:before {
+      content: url('../../assets/images/trees/iceberg-small.svg');
+      position: absolute;
+      top: -150px;
+      left: 10%;
+    }
+  }
+}
+
+.persona__image--telephone-box {
+  width: 160px;
+}

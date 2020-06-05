@@ -1,0 +1,337 @@
+@import 'breakpoint-sass';
+@import './colors.scss';
+
+// Define grid variables
+$total-columns: 12;
+$gutter-width: 0px/105px;
+$container-width: 1260px;
+$base-line-height: 16px;
+$base-margin: 16px;
+$border-radius: 6px;
+
+$break_container: max-width $container-width;
+$break_standard: max-width 1320px;
+$break_medium: max-width 1199px;
+$break_tablet_large: max-width 1024px;
+$break_tablet: max-width 860px;
+$break_mobile: max-width 600px;
+$break_mobile_small: max-width 320px;
+
+* {
+  box-sizing: border-box;
+}
+
+// BODY STYLES
+body {
+  background-color: $white;
+  color: $black;
+
+  @include breakpoint($break_tablet) {
+    &.noscroll {
+      overflow: hidden;
+    }
+  }
+
+  &.noscroll--mobile {
+    @include breakpoint($break_tablet) {
+      overflow: auto;
+    }
+
+    @include breakpoint($break_mobile) {
+      overflow: hidden;
+    }
+  }
+}
+
+// MAIN CONTAINER
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0 $base-margin * 2.5;
+
+  @include breakpoint($break_tablet) {
+    padding: 0 $base-margin * 1.5;
+  }
+
+  @include breakpoint($break_mobile) {
+    padding: 0 $base-margin;
+  }
+
+  // Mobile no padding
+  &--mobile-no-padding {
+    @include breakpoint($break_mobile) {
+      padding: 0;
+    }
+  }
+
+  // Remove padding
+  &--no-padding {
+    padding: 0;
+  }
+
+  // Mobile padding - if --no-padding is used
+  &--mobile-padding {
+    @include breakpoint($break_mobile) {
+      padding: $base-margin;
+    }
+  }
+
+  // Don't wrap elements
+  &--no-wrap {
+    flex-wrap: nowrap;
+  }
+
+  // Display elements in row
+  &--row {
+    flex-direction: row;
+  }
+
+  // Display elements in row in reverse order
+  &--row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  // Display elements in column
+  &--column {
+    flex-direction: column;
+  }
+
+  // Display elements in column in reverse order
+  &--column-reverse {
+    flex-direction: column-reverse;
+  }
+
+  // Vertical align center
+  &--align-center {
+    align-items: center;
+  }
+
+  // Vertical align bottom
+  &--align-bottom {
+    align-items: flex-end;
+  }
+
+  // Horizontal align center
+  &--justify {
+    justify-content: center;
+  }
+
+  // Don't fill space
+  &--no-space {
+    justify-content: flex-start;
+  }
+
+  // Horizontal align left
+  &--left {
+    justify-content: center;
+  }
+}
+
+.flex-col {
+  // Columns with gutters
+  &--gutter {
+    border: solid $base-margin transparent;
+    box-sizing: border-box;
+  }
+
+  // Column width
+  @for $i from 1 to $total-columns + 1 {
+    &--#{$i} {
+      width: percentage($i/$total-columns);
+    }
+  }
+
+  &--clear {
+    clear: left;
+  }
+
+  &--padding-left {
+    padding-left: $base-margin * 2;
+  }
+
+  &--padding-right {
+    padding-right: $base-margin * 2;
+  }
+
+  @include breakpoint(max-width 1320px) {
+    &--medium {
+      // Column width
+      @for $i from 1 to $total-columns + 1 {
+        &--#{$i} {
+          width: percentage($i/$total-columns);
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_standard) {
+    &--standard {
+      // Column width
+      @for $i from 1 to $total-columns + 1 {
+        &--#{$i} {
+          width: percentage($i/$total-columns);
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_tablet_large) {
+    &--tablet-large {
+      // Column width
+      @for $i from 1 to $total-columns + 1 {
+        &--#{$i} {
+          width: percentage($i/$total-columns);
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_tablet) {
+    &--tablet {
+      // Column width
+      @for $i from 1 to $total-columns + 1 {
+        &--#{$i} {
+          width: percentage($i/$total-columns);
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_mobile) {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: $base-margin * 2;
+
+    &.flex-col--gutter {
+      width: 100%;
+      border: none;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--mobile {
+      // Column width
+      @for $i from 1 to $total-columns + 1 {
+        &--#{$i} {
+          width: percentage($i/$total-columns);
+          margin-bottom: 0;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_mobile_small) {
+    &--mobile-small {
+      // Column width
+      @for $i from 1 to $total-columns + 1 {
+        &--#{$i} {
+          width: percentage($i/$total-columns);
+        }
+      }
+    }
+  }
+}
+
+// Flex order
+.flex-order {
+  @for $i from 1 to 12 {
+    &--#{$i} {
+      order: $i;
+    }
+  }
+
+  @include breakpoint($break_medium) {
+    &--medium {
+      @for $i from 1 to 12 {
+        // Column width
+        &--#{$i} {
+          order: $i;
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_tablet) {
+    &--tablet {
+      @for $i from 1 to 12 {
+        // Column width
+        &--#{$i} {
+          order: $i;
+        }
+      }
+    }
+  }
+
+  @include breakpoint($break_mobile) {
+    &--mobile {
+      @for $i from 1 to 12 {
+        // Column width
+        &--#{$i} {
+          order: $i;
+        }
+      }
+    }
+  }
+}
+
+// RESPONSIVE
+.mobile-show {
+  display: none !important;
+}
+
+.tablet-show {
+  display: none !important;
+}
+
+.tablet--large-show {
+  display: none !important;
+}
+
+.medium-show {
+  display: none !important;
+}
+
+@include breakpoint($break_tablet_large) {
+  .tablet--large-hide {
+    display: none !important;
+  }
+  .tablet--large-show {
+    display: block !important;
+  }
+}
+
+@include breakpoint($break_tablet) {
+  .tablet-hide {
+    display: none !important;
+  }
+  .tablet-show {
+    display: block !important;
+  }
+}
+
+@include breakpoint($break_mobile) {
+  .mobile-hide {
+    display: none !important;
+  }
+  .mobile-show {
+    display: block !important;
+  }
+}
+
+@include breakpoint($break_medium) {
+  .medium-hide {
+    display: none !important;
+  }
+  .medium-show {
+    display: block !important;
+  }
+}
