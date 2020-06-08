@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { History } from 'history';
-import cx from 'classnames';
 import get from 'lodash/get';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
 import Category from './Filters/Category';
 import Keyword from './Filters/Keyword';
-import ViewFilters from './Filters/ViewFilter/ViewFilter';
 import ListView from './ListView';
-import MapView from './MapView';
-import Select from '../../components/Select';
+
 import Breadcrumb from '../../components/Breadcrumb';
 import map from 'lodash/map';
 import SideboxCard from './SideboxCard';
@@ -76,66 +73,8 @@ class Results extends Component<IProps> {
                 })}
               </div>
             )}
-            <div className="flex-container flex-container results__filter-bar">
-              <div className="flex-col flex-col--4 flex-col--tablet--12 flex-col--mobile--12 results__container-count">
-                {!!resultsStore.results.length && !resultsStore.loading && (
-                  <p>
-                    {resultsStore.view === 'grid'
-                      ? `${
-                          resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems
-                        } services found`
-                      : `${resultsStore.serviceWithLocations} services shown. Some services are only available online or by phone`}
-                  </p>
-                )}
-              </div>
-              {resultsStore.isKeywordSearch && (
-                <div className="flex-col flex-col--8 flex-col--tablet-large--12 flex-col--medium--12 flex-container--tablet--12">
-                  <div
-                    className={cx(
-                      'flex-container flex-container--align-center results__keyword-container',
-                      {
-                        'results__keyword-container--end': !resultsStore.postcode,
-                      }
-                    )}
-                  >
-                    <ViewFilters resultsSwitch={true} />
-                    {resultsStore.view === 'grid' && resultsStore.postcode && (
-                      <div
-                        className={cx(
-                          'flex-col flex-col--7 flex-col--tablet-large--6 flex-col--mobile--5 flex-col--medium--5 flex-col--mobile-small--12 flex-container--mobile-no-padding results__sort-by-container',
-                          {
-                            'flex-col--medium--6': !resultsStore.postcode,
-                          }
-                        )}
-                      >
-                        <label htmlFor="orderBy" className="results__sort-by-label">
-                          Sort by:
-                        </label>
-                        <Select
-                          className="results__sort-by-select"
-                          options={[
-                            { value: 'relevance', text: 'Relevance' },
-                            { value: 'distance', text: 'Location' },
-                          ]}
-                          placeholder={resultsStore.order === 'distance' ? 'Location' : 'Relevance'}
-                          id="orderBy"
-                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                            resultsStore.orderResults(e)
-                          }
-                          disabled={!resultsStore.postcode}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
 
-            {resultsStore.view === 'grid' ? (
-              <ListView resultsStore={resultsStore} history={history} />
-            ) : (
-              <MapView />
-            )}
+            <ListView resultsStore={resultsStore} history={history} />
           </div>
         </section>
       </Layout>
