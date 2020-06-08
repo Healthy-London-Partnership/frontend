@@ -19,9 +19,6 @@ import Privacy from './views/Privacy';
 import DutyToRefer from './views/DutyToRefer';
 import Chatbot from './views/Chatbot';
 
-import Footer from './components/Footer/Footer';
-import Header from './components/Header';
-
 import './styles/grid.scss';
 
 import WindowSizeStore from './stores/windowSizeStore';
@@ -32,7 +29,6 @@ import FavouritesStore from './stores/favouritesStore';
 import CMSStore from './stores/CMSStore';
 import ReferralStore from './stores/referralStore';
 import Terms from './views/Terms';
-import FeedbackModal from './components/FeedbackModal';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 // add all free font awesome icons to project
