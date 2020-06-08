@@ -152,26 +152,29 @@ export default class ResultsStore {
   fetchResults = async (params: IParams, categories: string[]) => {
     this.loading = true;
 
-    Promise.all(
-      categories.map((category: string) => {
-        const requestParams = { category, ...params };
+    console.log(categories);
+    if (categories.length) {
+      Promise.all(
+        categories.map((category: string) => {
+          const requestParams = { category, ...params };
 
-        return axios
-          .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
-          .then(response => get(response, 'data.data'))
-          .then(data => {
-            this.results = this.results.concat(data);
+          return axios
+            .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
+            .then(response => get(response, 'data.data'))
+            .then(data => {
+              this.results = this.results.concat(data);
 
-            if (this.results.length) {
-              this.getOrganisations();
-            }
-          })
-          .catch(error => {
-            console.error(error);
-            this.loading = false;
-          });
-      })
-    );
+              if (this.results.length) {
+                this.getOrganisations();
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              this.loading = false;
+            });
+        })
+      );
+    }
   };
 
   @action
