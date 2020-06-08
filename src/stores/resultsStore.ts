@@ -152,7 +152,6 @@ export default class ResultsStore {
   fetchResults = async (params: IParams, categories: string[]) => {
     this.loading = true;
 
-    console.log(categories);
     if (categories.length) {
       Promise.all(
         categories.map((category: string) => {
