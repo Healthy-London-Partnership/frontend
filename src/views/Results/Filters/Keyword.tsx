@@ -145,18 +145,6 @@ class Keyword extends Component<IProps, IState> {
                       value={this.state.postcode}
                     />
                   </div>
-                  <div className="flex-col flex-col--mobile--4">
-                    <p className="results__keyword-filters--heading--cost">Cost</p>
-                    <Checkbox
-                      id="is_free"
-                      label="Free"
-                      checked={get(resultsStore, 'is_free', false)}
-                      onChange={() => {
-                        resultsStore.toggleIsFree();
-                      }}
-                      className="results__keyword-edit-checkbox"
-                    />
-                  </div>
                 </div>
                 <div className="flex-col results__keyword-edit-submit">
                   <Button

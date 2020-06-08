@@ -19,13 +19,11 @@ import { queryRegex, querySeparator } from '../utils/utils';
 
 export default class ResultsStore {
   @observable keyword: string = '';
-  @observable categoryId: string = '';
+  @observable categoryIds: string[] = [];
   @observable category: ICategory | null = null;
   @observable personaId: string = '';
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
-  @observable is_free: boolean = false;
-  @observable wait_time: string = 'null';
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: IService[] = [];
   @observable loading: boolean = false;
@@ -44,12 +42,10 @@ export default class ResultsStore {
   @action
   clear() {
     this.keyword = '';
-    this.categoryId = '';
+    this.categoryIds = [];
     this.category = null;
     this.personaId = '';
     this.persona = null;
-    this.is_free = false;
-    this.wait_time = 'null';
     this.order = 'relevance';
     this.results = [];
     this.loading = false;
@@ -65,7 +61,7 @@ export default class ResultsStore {
   @action
   getCategory = async () => {
     try {
-      const category = await axios.get(`${apiBase}/collections/categories/${this.categoryId}`);
+      const category = await axios.get(`${apiBase}/collections/categories/${this.categoryIds}`);
       this.category = get(category, 'data.data', '');
     } catch (e) {
       console.error(e);
@@ -92,7 +88,7 @@ export default class ResultsStore {
   setSearchTerms = async (searchTerms: { [key: string]: any }) => {
     forEach(searchTerms, (key, value) => {
       if (value === 'category') {
-        this.categoryId = key;
+        this.categoryIds = key.split(',');
       }
 
       if (value === 'persona') {
@@ -101,14 +97,6 @@ export default class ResultsStore {
 
       if (value === 'search_term') {
         this.keyword = key;
-      }
-
-      if (value === 'is_free') {
-        this.is_free = key === 'true' ? true : false;
-      }
-
-      if (value === 'wait_time') {
-        this.wait_time = key;
       }
 
       if (value === 'page') {
@@ -120,7 +108,7 @@ export default class ResultsStore {
       }
     });
 
-    if (this.categoryId) {
+    if (this.categoryIds) {
       await this.getCategory();
     }
 
@@ -144,14 +132,6 @@ export default class ResultsStore {
 
     if (this.persona) {
       params.persona = get(this.persona, 'name');
-    }
-
-    if (this.is_free) {
-      params.is_free = this.is_free;
-    }
-
-    if (this.wait_time !== 'null') {
-      params.wait_time = this.wait_time;
     }
 
     if (this.keyword) {
@@ -195,11 +175,6 @@ export default class ResultsStore {
     );
     this.organisations = get(organisations, 'data.data', []);
     this.loading = false;
-  };
-
-  @action
-  toggleIsFree = () => {
-    this.is_free = !this.is_free;
   };
 
   updateQueryStringParameter = (
@@ -249,14 +224,6 @@ export default class ResultsStore {
     if (!this.postcode) {
       url = this.removeQueryStringParameter('location', url);
       this.locationCoords = {};
-    }
-
-    if (this.is_free) {
-      url = this.updateQueryStringParameter('is_free', this.is_free, url);
-    }
-
-    if (!this.is_free) {
-      url = this.removeQueryStringParameter('is_free', url);
     }
 
     if (searchTerm) {

@@ -75,18 +75,6 @@ class KeywordFilter extends Component<IProps, IState> {
               value={this.state.postcode}
             />
           </div>
-          <div className="flex-col flex-col--3 flex-col--tablet--4 flex-col--mobile--3 flex-col--tablet-large--3 flex-container--mobile-no-padding">
-            <p className="results__keyword-filters--heading--cost">Cost</p>
-            <Checkbox
-              id="is_free"
-              label="Free"
-              checked={get(resultsStore, 'is_free', false)}
-              onChange={() => {
-                resultsStore.toggleIsFree();
-              }}
-              aria="Filter free services"
-            />
-          </div>
           <div className="flex-col flex-col--4 flex-col--tablet--4 flex-col--mobile--4 flex-col--tablet-large--3 flex-col--medium--5 flex-container--mobile-no-padding results__amend">
             <Button
               alt={true}
