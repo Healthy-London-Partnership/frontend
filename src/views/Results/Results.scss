@@ -28,8 +28,6 @@
   }
 
   &__title {
-    margin-bottom: space(16);
-
     @include for-phone-only {
       margin: 0 space(8) space(16);
     }
@@ -40,6 +38,7 @@
   width: 40%;
   border-top: 1px solid $nobel;
   opacity: 0.5;
+  margin-bottom: space(32);
 
   @include for-phone-only {
     width: 80%;
@@ -403,9 +402,9 @@
 }
 
 .results__category-sidebar {
-  margin-bottom: space(32) !important;
+  margin: space(32) 0 !important;
 
   @include for-tablet-portrait-down {
-    margin-bottom: space(16) !important;
+    margin: space(16) 0 !important;
   }
 }
