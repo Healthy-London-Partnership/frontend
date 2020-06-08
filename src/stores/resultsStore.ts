@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, toJS } from 'mobx';
 import forEach from 'lodash/forEach';
 import get from 'lodash/get';
 import size from 'lodash/size';
@@ -26,7 +26,7 @@ export default class ResultsStore {
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
   @observable order: 'relevance' | 'distance' = 'relevance';
-  @observable results: IService[] = [];
+  @observable results: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
@@ -47,7 +47,7 @@ export default class ResultsStore {
     this.personaId = '';
     this.persona = null;
     this.order = 'relevance';
-    this.results = [];
+    this.results = new Map();
     this.loading = false;
     this.organisations = [];
     this.currentPage = 1;
@@ -163,9 +163,9 @@ export default class ResultsStore {
             .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
             .then(response => get(response, 'data.data'))
             .then(data => {
-              this.results = this.results.concat(data);
+              this.results = this.results.set(category, data);
 
-              if (this.results.length) {
+              if (this.results.size) {
                 this.getOrganisations();
               }
             })
@@ -180,9 +180,11 @@ export default class ResultsStore {
 
   @action
   getOrganisations = async () => {
-    forEach(this.results, (service: IService) => {
-      // @ts-ignore
-      this.organisations.push(service.organisation_id);
+    this.results.forEach((services: any) => {
+      services.forEach((service: IService) => {
+        // @ts-ignore
+        this.organisations.push(service.organisation_id);
+      });
     });
 
     const organisations = await axios.get(
@@ -218,13 +220,6 @@ export default class ResultsStore {
   };
 
   @action
-  paginate = (page: number) => {
-    this.currentPage = page;
-    this.results = [];
-    this.loading = true;
-  };
-
-  @action
   postcodeChange = (postcode: string) => {
     this.postcode = postcode.replace(' ', '');
   };
@@ -245,7 +240,7 @@ export default class ResultsStore {
       url = this.updateQueryStringParameter('search_term', searchTerm, url);
     }
 
-    this.results = [];
+    this.results = new Map();
     return url;
   };
 
@@ -275,20 +270,8 @@ export default class ResultsStore {
   @action
   orderResults = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.order = e.target.value as 'relevance' | 'distance';
-    this.results = [];
+    this.results = new Map();
 
     this.setParams();
   };
-
-  @computed
-  get serviceWithLocations() {
-    const locations = this.results.filter(service => service.service_locations.length);
-
-    const totalLocations = locations.reduce((total, location) => {
-      total += location.service_locations.length;
-      return total;
-    }, 0);
-
-    return totalLocations;
-  }
 }
