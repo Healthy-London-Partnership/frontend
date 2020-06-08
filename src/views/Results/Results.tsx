@@ -34,7 +34,7 @@ class Results extends Component<IProps> {
   hasCategories = () => {
     const { resultsStore } = this.props;
 
-    if (resultsStore.category) {
+    if (resultsStore.categories) {
       return get(resultsStore, 'category.sideboxes', []);
     }
 

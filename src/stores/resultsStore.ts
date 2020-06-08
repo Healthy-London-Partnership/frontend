@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
+import map from 'lodash/map';
 
 import { apiBase } from '../config/api';
 import {
@@ -20,7 +21,7 @@ import { queryRegex, querySeparator } from '../utils/utils';
 export default class ResultsStore {
   @observable keyword: string = '';
   @observable categoryIds: string[] = [];
-  @observable category: ICategory | null = null;
+  @observable categories: ICategory[] = [];
   @observable personaId: string = '';
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
@@ -43,7 +44,7 @@ export default class ResultsStore {
   clear() {
     this.keyword = '';
     this.categoryIds = [];
-    this.category = null;
+    this.categories = [];
     this.personaId = '';
     this.persona = null;
     this.order = 'relevance';
@@ -59,13 +60,16 @@ export default class ResultsStore {
   }
 
   @action
-  getCategory = async () => {
-    try {
-      const category = await axios.get(`${apiBase}/collections/categories/${this.categoryIds}`);
-      this.category = get(category, 'data.data', '');
-    } catch (e) {
-      console.error(e);
-    }
+  getCategory = () => {
+    return Promise.all(
+      this.categoryIds.map((id: string) => {
+        return axios
+          .get(`${apiBase}/collections/categories/${id}`)
+          .then(response => get(response, 'data.data'))
+          .then(data => this.categories.push(data))
+          .catch(error => console.error(error));
+      })
+    );
   };
 
   @action
@@ -103,7 +107,7 @@ export default class ResultsStore {
         this.currentPage = Number(key);
       }
 
-      if (value === 'location') {
+      if (value === 'postcode') {
         this.postcode = key;
       }
     });
@@ -125,10 +129,7 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-
-    if (this.category) {
-      params.category = get(this.category, 'name');
-    }
+    const categories = map(this.categories, 'name');
 
     if (this.persona) {
       params.persona = get(this.persona, 'name');
@@ -144,32 +145,42 @@ export default class ResultsStore {
 
     params.order = this.order;
 
-    await this.fetchResults(params);
+    await this.fetchResults(params, categories);
   };
 
   @action
-  fetchResults = async (params: IParams) => {
+  fetchResults = async (params: IParams, categories: string[]) => {
     this.loading = true;
-    try {
-      const results = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
-      this.results = get(results, 'data.data', []);
-      this.totalItems = get(results, 'data.meta.total', 0);
-      this.itemsPerPage = get(results, 'data.meta.per_page', 25);
 
-      forEach(this.results, (service: IService) => {
-        // @ts-ignore
-        this.organisations.push(service.organisation_id);
-      });
+    Promise.all(
+      categories.map((category: string) => {
+        const requestParams = { category, ...params };
 
-      this.getOrganisations();
-    } catch (e) {
-      console.error(e);
-      this.loading = false;
-    }
+        return axios
+          .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
+          .then(response => get(response, 'data.data'))
+          .then(data => {
+            this.results = this.results.concat(data);
+
+            if (this.results.length) {
+              this.getOrganisations();
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            this.loading = false;
+          });
+      })
+    );
   };
 
   @action
   getOrganisations = async () => {
+    forEach(this.results, (service: IService) => {
+      // @ts-ignore
+      this.organisations.push(service.organisation_id);
+    });
+
     const organisations = await axios.get(
       `${apiBase}/organisations?filter[id]=${this.organisations}`
     );
@@ -218,11 +229,11 @@ export default class ResultsStore {
     let url = window.location.search;
 
     if (this.postcode) {
-      url = this.updateQueryStringParameter('location', this.postcode);
+      url = this.updateQueryStringParameter('postcode', this.postcode);
     }
 
     if (!this.postcode) {
-      url = this.removeQueryStringParameter('location', url);
+      url = this.removeQueryStringParameter('postcode', url);
       this.locationCoords = {};
     }
 
