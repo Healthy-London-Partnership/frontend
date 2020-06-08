@@ -33,7 +33,6 @@ export default class ResultsStore {
   @observable itemsPerPage: number = 25;
   @observable postcode: string = '';
   @observable locationCoords: IGeoLocation | {} = {};
-  @observable view: 'grid' | 'map' = 'grid';
 
   @computed
   get isKeywordSearch() {
@@ -56,7 +55,6 @@ export default class ResultsStore {
     this.itemsPerPage = 25;
     this.postcode = '';
     this.locationCoords = {};
-    this.view = 'grid';
   }
 
   @action
@@ -152,7 +150,11 @@ export default class ResultsStore {
   fetchResults = async (params: IParams, categories: string[]) => {
     this.loading = true;
 
-    if (categories.length) {
+    if (this.isKeywordSearch) {
+      const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
+      this.results = get(data, 'data');
+      this.getOrganisations();
+    } else {
       Promise.all(
         categories.map((category: string) => {
           const requestParams = { category, ...params };
@@ -268,11 +270,6 @@ export default class ResultsStore {
   @action
   handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.keyword = e.target.value;
-  };
-
-  @action
-  toggleView = (view: 'map' | 'grid') => {
-    this.view = view;
   };
 
   @action
