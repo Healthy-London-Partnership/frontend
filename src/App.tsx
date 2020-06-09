@@ -17,7 +17,6 @@ import Contact from './views/Contact';
 import GetInvolved from './views/GetInvolved';
 import Privacy from './views/Privacy';
 import DutyToRefer from './views/DutyToRefer';
-import Chatbot from './views/Chatbot';
 
 import './styles/grid.scss';
 
@@ -72,7 +71,6 @@ class App extends Component {
               <Route path="/privacy-policy" component={Privacy} />
               <Route path="/terms-and-conditions" component={Terms} />
               <Route path="/duty-to-refer" component={DutyToRefer} />
-              <Route path="/covid19" component={Chatbot} />
 
               <Route component={NotFound} />
             </Switch>
