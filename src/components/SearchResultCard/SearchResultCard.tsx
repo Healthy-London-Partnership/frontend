@@ -18,7 +18,6 @@ import FallBackLogo from '../../assets/images/logo-fallback.png';
 interface IProps extends RouteComponentProps {
   result: IService;
   organisation?: IOrganisation | null;
-  mapView?: boolean;
 }
 
 const getIcon = (type: string) => {
@@ -36,19 +35,12 @@ const getIcon = (type: string) => {
   }
 };
 
-const SearchResultCard: React.FunctionComponent<IProps> = ({
-  result,
-  organisation,
-  mapView,
-  history,
-}) => {
+const SearchResultCard: React.FunctionComponent<IProps> = ({ result, organisation, history }) => {
   const locations = getLocationName(result.service_locations);
 
   return (
     <article
-      className={cx('search-result-card', {
-        'search-result-card--full-width': mapView,
-      })}
+      className="search-result-card"
       onClick={() => history.push(`/services/${result.slug}`)}
       tabIndex={0}
     >

@@ -21,9 +21,27 @@
   flex-wrap: wrap;
   justify-content: center;
   color: $san-juan;
+  margin: space(40) 0 !important;
 
   @include for-desktop-up {
     padding: 0 space(64);
+  }
+
+  &__title {
+    @include for-phone-only {
+      margin: 0 space(8) space(16);
+    }
+  }
+}
+
+.results__divider {
+  width: 40%;
+  border-top: 1px solid $nobel;
+  opacity: 0.5;
+  margin-bottom: space(32);
+
+  @include for-phone-only {
+    width: 80%;
   }
 }
 
@@ -384,9 +402,9 @@
 }
 
 .results__category-sidebar {
-  margin-bottom: space(32) !important;
+  margin: space(32) 0 !important;
 
   @include for-tablet-portrait-down {
-    margin-bottom: space(16) !important;
+    margin: space(16) 0 !important;
   }
 }

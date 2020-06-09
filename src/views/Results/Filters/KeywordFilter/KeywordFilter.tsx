@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import get from 'lodash/get';
+
 import queryString from 'query-string';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import Checkbox from '../../../../components/Checkbox';
 import Input from '../../../../components/Input';
 import Button from '../../../../components/Button';
 import ResultsStore from '../../../../stores/resultsStore';
@@ -73,18 +72,6 @@ class KeywordFilter extends Component<IProps, IState> {
               className="results__search-filter-location"
               placeholder="Postcode"
               value={this.state.postcode}
-            />
-          </div>
-          <div className="flex-col flex-col--3 flex-col--tablet--4 flex-col--mobile--3 flex-col--tablet-large--3 flex-container--mobile-no-padding">
-            <p className="results__keyword-filters--heading--cost">Cost</p>
-            <Checkbox
-              id="is_free"
-              label="Free"
-              checked={get(resultsStore, 'is_free', false)}
-              onChange={() => {
-                resultsStore.toggleIsFree();
-              }}
-              aria="Filter free services"
             />
           </div>
           <div className="flex-col flex-col--4 flex-col--tablet--4 flex-col--mobile--4 flex-col--tablet-large--3 flex-col--medium--5 flex-container--mobile-no-padding results__amend">

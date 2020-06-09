@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
+import map from 'lodash/map';
 
 import { apiBase } from '../config/api';
 import {
@@ -19,39 +20,44 @@ import { queryRegex, querySeparator } from '../utils/utils';
 
 export default class ResultsStore {
   @observable keyword: string = '';
-  @observable categoryId: string = '';
-  @observable category: ICategory | null = null;
+  @observable categoryIds: string[] = [];
+  @observable categories: ICategory[] = [];
   @observable personaId: string = '';
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
-  @observable is_free: boolean = false;
-  @observable wait_time: string = 'null';
   @observable order: 'relevance' | 'distance' = 'relevance';
-  @observable results: IService[] = [];
+  @observable results: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
   @observable itemsPerPage: number = 25;
   @observable postcode: string = '';
   @observable locationCoords: IGeoLocation | {} = {};
-  @observable view: 'grid' | 'map' = 'grid';
 
   @computed
   get isKeywordSearch() {
     return !!this.keyword;
   }
 
+  @computed
+  get isPersonaSearch() {
+    return !!this.persona;
+  }
+
+  @computed
+  get isCategorySearch() {
+    return !!this.categoryIds.length;
+  }
+
   @action
   clear() {
     this.keyword = '';
-    this.categoryId = '';
-    this.category = null;
+    this.categoryIds = [];
+    this.categories = [];
     this.personaId = '';
     this.persona = null;
-    this.is_free = false;
-    this.wait_time = 'null';
     this.order = 'relevance';
-    this.results = [];
+    this.results = new Map();
     this.loading = false;
     this.organisations = [];
     this.currentPage = 1;
@@ -59,17 +65,19 @@ export default class ResultsStore {
     this.itemsPerPage = 25;
     this.postcode = '';
     this.locationCoords = {};
-    this.view = 'grid';
   }
 
   @action
-  getCategory = async () => {
-    try {
-      const category = await axios.get(`${apiBase}/collections/categories/${this.categoryId}`);
-      this.category = get(category, 'data.data', '');
-    } catch (e) {
-      console.error(e);
-    }
+  getCategory = () => {
+    return Promise.all(
+      this.categoryIds.map((id: string) => {
+        return axios
+          .get(`${apiBase}/collections/categories/${id}`)
+          .then(response => get(response, 'data.data'))
+          .then(data => this.categories.push(data))
+          .catch(error => console.error(error));
+      })
+    );
   };
 
   @action
@@ -92,7 +100,7 @@ export default class ResultsStore {
   setSearchTerms = async (searchTerms: { [key: string]: any }) => {
     forEach(searchTerms, (key, value) => {
       if (value === 'category') {
-        this.categoryId = key;
+        this.categoryIds = key.split(',');
       }
 
       if (value === 'persona') {
@@ -103,24 +111,16 @@ export default class ResultsStore {
         this.keyword = key;
       }
 
-      if (value === 'is_free') {
-        this.is_free = key === 'true' ? true : false;
-      }
-
-      if (value === 'wait_time') {
-        this.wait_time = key;
-      }
-
       if (value === 'page') {
         this.currentPage = Number(key);
       }
 
-      if (value === 'location') {
+      if (value === 'postcode') {
         this.postcode = key;
       }
     });
 
-    if (this.categoryId) {
+    if (this.categoryIds) {
       await this.getCategory();
     }
 
@@ -137,21 +137,10 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-
-    if (this.category) {
-      params.category = get(this.category, 'name');
-    }
+    const categories = map(this.categories, 'name');
 
     if (this.persona) {
       params.persona = get(this.persona, 'name');
-    }
-
-    if (this.is_free) {
-      params.is_free = this.is_free;
-    }
-
-    if (this.wait_time !== 'null') {
-      params.wait_time = this.wait_time;
     }
 
     if (this.keyword) {
@@ -164,42 +153,55 @@ export default class ResultsStore {
 
     params.order = this.order;
 
-    await this.fetchResults(params);
+    await this.fetchResults(params, categories);
   };
 
   @action
-  fetchResults = async (params: IParams) => {
+  fetchResults = async (params: IParams, categories: string[]) => {
     this.loading = true;
-    try {
-      const results = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
-      this.results = get(results, 'data.data', []);
-      this.totalItems = get(results, 'data.meta.total', 0);
-      this.itemsPerPage = get(results, 'data.meta.per_page', 25);
 
-      forEach(this.results, (service: IService) => {
-        // @ts-ignore
-        this.organisations.push(service.organisation_id);
-      });
-
+    if (this.isKeywordSearch || this.isPersonaSearch) {
+      const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
+      this.results = this.results.set(params.query as string, data.data);
       this.getOrganisations();
-    } catch (e) {
-      console.error(e);
-      this.loading = false;
+    } else {
+      Promise.all(
+        categories.map((category: string) => {
+          const requestParams = { category, ...params };
+
+          return axios
+            .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
+            .then(response => get(response, 'data.data'))
+            .then(data => {
+              this.results = this.results.set(category, data);
+
+              if (this.results.size) {
+                this.getOrganisations();
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              this.loading = false;
+            });
+        })
+      );
     }
   };
 
   @action
   getOrganisations = async () => {
+    this.results.forEach((services: any) => {
+      services.forEach((service: IService) => {
+        // @ts-ignore
+        this.organisations.push(service.organisation_id);
+      });
+    });
+
     const organisations = await axios.get(
       `${apiBase}/organisations?filter[id]=${this.organisations}`
     );
     this.organisations = get(organisations, 'data.data', []);
     this.loading = false;
-  };
-
-  @action
-  toggleIsFree = () => {
-    this.is_free = !this.is_free;
   };
 
   updateQueryStringParameter = (
@@ -228,13 +230,6 @@ export default class ResultsStore {
   };
 
   @action
-  paginate = (page: number) => {
-    this.currentPage = page;
-    this.results = [];
-    this.loading = true;
-  };
-
-  @action
   postcodeChange = (postcode: string) => {
     this.postcode = postcode.replace(' ', '');
   };
@@ -243,27 +238,19 @@ export default class ResultsStore {
     let url = window.location.search;
 
     if (this.postcode) {
-      url = this.updateQueryStringParameter('location', this.postcode);
+      url = this.updateQueryStringParameter('postcode', this.postcode);
     }
 
     if (!this.postcode) {
-      url = this.removeQueryStringParameter('location', url);
+      url = this.removeQueryStringParameter('postcode', url);
       this.locationCoords = {};
-    }
-
-    if (this.is_free) {
-      url = this.updateQueryStringParameter('is_free', this.is_free, url);
-    }
-
-    if (!this.is_free) {
-      url = this.removeQueryStringParameter('is_free', url);
     }
 
     if (searchTerm) {
       url = this.updateQueryStringParameter('search_term', searchTerm, url);
     }
 
-    this.results = [];
+    this.results = new Map();
     return url;
   };
 
@@ -291,27 +278,10 @@ export default class ResultsStore {
   };
 
   @action
-  toggleView = (view: 'map' | 'grid') => {
-    this.view = view;
-  };
-
-  @action
   orderResults = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.order = e.target.value as 'relevance' | 'distance';
-    this.results = [];
+    this.results = new Map();
 
     this.setParams();
   };
-
-  @computed
-  get serviceWithLocations() {
-    const locations = this.results.filter(service => service.service_locations.length);
-
-    const totalLocations = locations.reduce((total, location) => {
-      total += location.service_locations.length;
-      return total;
-    }, 0);
-
-    return totalLocations;
-  }
 }
