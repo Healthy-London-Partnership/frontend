@@ -25,6 +25,7 @@ class Results extends Component<IProps> {
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.location.search !== this.props.location.search) {
       const { resultsStore } = this.props;
+      resultsStore.clear();
       resultsStore.getSearchTerms();
     }
   }
