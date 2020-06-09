@@ -5,7 +5,6 @@ import SideboxCard from '../SideboxCard';
 import find from 'lodash/find';
 import SearchResultCard from '../../../components/SearchResultCard';
 import ResultsStore from '../../../stores/resultsStore';
-import { toJS } from 'mobx';
 
 interface IProps {
   title: string;

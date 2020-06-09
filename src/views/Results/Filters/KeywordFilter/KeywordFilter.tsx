@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import get from 'lodash/get';
+
 import queryString from 'query-string';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-import Checkbox from '../../../../components/Checkbox';
 import Input from '../../../../components/Input';
 import Button from '../../../../components/Button';
 import ResultsStore from '../../../../stores/resultsStore';

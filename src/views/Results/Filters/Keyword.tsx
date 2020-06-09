@@ -1,12 +1,11 @@
 import React, { Fragment, Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import get from 'lodash/get';
+
 import { withRouter, RouteComponentProps } from 'react-router';
 import queryString from 'query-string';
 
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import Checkbox from '../../../components/Checkbox';
 import ResultsStore from '../../../stores/resultsStore';
 import KeywordFilter from './KeywordFilter';
 import WindowSizeStore from '../../../stores/windowSizeStore';
