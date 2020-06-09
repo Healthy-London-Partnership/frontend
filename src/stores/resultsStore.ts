@@ -152,7 +152,7 @@ export default class ResultsStore {
 
     if (this.isKeywordSearch) {
       const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
-      this.results = get(data, 'data');
+      this.results = this.results.set(params.query as string, data.data);
       this.getOrganisations();
     } else {
       Promise.all(
