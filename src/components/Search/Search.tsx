@@ -40,15 +40,10 @@ class Search extends React.Component<IProps> {
 
     const { isMobile } = windowSizeStore;
     const options = map(SearchStore.categories, ({ name, id }) => ({ value: id, text: name }));
-    const covidOptions = map(SearchStore.covidCategories, ({ name, id }) => ({
-      value: id,
-      text: name,
-    }));
 
     return (
       <Fragment>
         <section className="flex-container flex-container--justify search__container">
-          {cmsStore.hasBanner && cmsStore.banner && <Banner banner={cmsStore.banner} />}
           <form className="flex--col--12 search__inner-container">
             <div className="flex-container flex-container--mobile-no-padding">
               <div
@@ -105,39 +100,6 @@ class Search extends React.Component<IProps> {
                 </div>
               </div>
               <div className="flex-col--12">
-                {!!SearchStore.covidCategories.length && (
-                  <Fragment>
-                    <label className="search__heading" htmlFor="category">
-                      COVID-19 <FontAwesomeIcon icon="virus" />
-                    </label>
-                    <div className="flex-col--6 flex-col--mobile--12">
-                      <p className="search__category-subtitle">
-                        Find up to date information and support in Kingston to help you take care of
-                        yourself and your community.
-                      </p>
-                    </div>
-                    {!isMobile && (
-                      <div className="search__cateogry-list" style={{ marginBottom: 24 }}>
-                        <CategoryList categories={SearchStore.covidCategories} covid={true} />
-                      </div>
-                    )}
-
-                    {isMobile && (
-                      <Fragment>
-                        <Select
-                          options={covidOptions}
-                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                            SearchStore.setCategory(e)
-                          }
-                          className="search__category--mobile"
-                          placeholder="Category List"
-                          id="category"
-                        />
-                      </Fragment>
-                    )}
-                  </Fragment>
-                )}
-
                 <label className="search__heading" htmlFor="category">
                   {get(cmsStore, 'home.categories_title')}
                 </label>
