@@ -5,6 +5,7 @@ import SideboxCard from '../SideboxCard';
 import find from 'lodash/find';
 import SearchResultCard from '../../../components/SearchResultCard';
 import ResultsStore from '../../../stores/resultsStore';
+import { toJS } from 'mobx';
 
 interface IProps {
   title: string;
@@ -16,7 +17,7 @@ interface IProps {
 const List: FunctionComponent<IProps> = ({ title, hasSideboxes, resultsList, resultsStore }) => (
   <Fragment key={title}>
     <div className="results__container">
-      {!resultsStore.isKeywordSearch && (
+      {resultsStore.isCategorySearch && (
         <div className="flex-col--12">
           <h1 className="results__container__title">{title}</h1>
         </div>
@@ -36,7 +37,7 @@ const List: FunctionComponent<IProps> = ({ title, hasSideboxes, resultsList, res
         return <SearchResultCard key={list.id} result={list} organisation={organisation} />;
       })}
     </div>
-    {!resultsStore.isKeywordSearch && <hr className="results__divider" />}
+    {resultsStore.isCategorySearch && <hr className="results__divider" />}
   </Fragment>
 );
 
