@@ -39,6 +39,16 @@ export default class ResultsStore {
     return !!this.keyword;
   }
 
+  @computed
+  get isPersonaSearch() {
+    return !!this.persona;
+  }
+
+  @computed
+  get isCategorySearch() {
+    return !!this.categoryIds.length;
+  }
+
   @action
   clear() {
     this.keyword = '';
@@ -150,7 +160,7 @@ export default class ResultsStore {
   fetchResults = async (params: IParams, categories: string[]) => {
     this.loading = true;
 
-    if (this.isKeywordSearch) {
+    if (this.isKeywordSearch || this.isPersonaSearch) {
       const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
       this.results = this.results.set(params.query as string, data.data);
       this.getOrganisations();
