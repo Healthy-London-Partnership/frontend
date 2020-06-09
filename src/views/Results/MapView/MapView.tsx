@@ -70,11 +70,11 @@ class MapView extends Component<IProps, IState> {
       return;
     }
 
-    this.addMarkers(resultsStore.results);
+    // this.addMarkers(resultsStore.results);
 
     return (
       <main className="flex-container">
-        <div className="flex-col--9 flex-col--mobile--12 map">
+        {/* <div className="flex-col--9 flex-col--mobile--12 map">
           <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
             <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
             {resultsStore.results.map((result: IService) => {
@@ -127,7 +127,7 @@ class MapView extends Component<IProps, IState> {
               Club
             </p>
           </div>
-        </div>
+        </div> */}
       </main>
     );
   }
