@@ -179,6 +179,9 @@ export default class ResultsStore {
                 this.getOrganisations();
               }
             })
+            .then(() => {
+              this.ordered();
+            })
             .catch(error => {
               console.error(error);
               this.loading = false;
@@ -186,6 +189,17 @@ export default class ResultsStore {
         })
       );
     }
+  };
+
+  @action
+  ordered = () => {
+    const categories = map(this.categories, 'name');
+    // reorder categories based on list in URL
+    const order = [...this.results.entries()].sort((a, b) => {
+      return categories.indexOf(a[0]) - categories.indexOf(b[0]);
+    });
+
+    this.results = new Map(order);
   };
 
   @action
