@@ -222,6 +222,10 @@
     max-width: 510px;
     height: auto;
 
+    img {
+      width: 100%;
+    }
+
     @include for-tablet-landscape-down {
       max-width: 360px;
     }
