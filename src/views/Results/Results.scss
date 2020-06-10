@@ -32,6 +32,14 @@
       margin: 0 space(8) space(16);
     }
   }
+
+  &__description {
+    margin-bottom: space(16);
+
+    @include for-phone-only {
+      margin: 0 space(8) space(16);
+    }
+  }
 }
 
 .results__divider {
