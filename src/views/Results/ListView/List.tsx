@@ -18,7 +18,7 @@ const List: FunctionComponent<IProps> = ({ title, hasSideboxes, resultsList, res
     <div className="results__container">
       {resultsStore.isCategorySearch && (
         <div className="flex-col--12">
-          <h1 className="results__container__title">{title}</h1>
+          <h1 className="results__container__title">{title.replace('Homepage:', '')}</h1>
         </div>
       )}
       <div className="flex-col--12">
