@@ -33,6 +33,7 @@ export default class ResultsStore {
   @observable itemsPerPage: number = 25;
   @observable postcode: string = '';
   @observable locationCoords: IGeoLocation | {} = {};
+  @observable fetched: boolean = false;
 
   @computed
   get isKeywordSearch() {
@@ -49,6 +50,11 @@ export default class ResultsStore {
     return !!this.categoryIds.length;
   }
 
+  @computed
+  get isPostcodeSearch() {
+    return !!this.postcode;
+  }
+
   @action
   clear() {
     this.keyword = '';
@@ -58,7 +64,7 @@ export default class ResultsStore {
     this.persona = null;
     this.order = 'relevance';
     this.results = new Map();
-    this.loading = false;
+    this.fetched = false;
     this.organisations = [];
     this.currentPage = 1;
     this.totalItems = 0;
@@ -158,8 +164,6 @@ export default class ResultsStore {
 
   @action
   fetchResults = async (params: IParams, categories: string[]) => {
-    this.loading = true;
-
     if (this.isKeywordSearch || this.isPersonaSearch) {
       const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
       this.results = this.results.set(params.query as string, data.data);
@@ -173,18 +177,21 @@ export default class ResultsStore {
             .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
             .then(response => get(response, 'data.data'))
             .then(data => {
-              this.results = this.results.set(category, data);
-
-              if (this.results.size) {
+              if (data.length) {
+                this.results = this.results.set(category, data);
                 this.getOrganisations();
+              } else {
+                this.fetched = true;
               }
             })
             .then(() => {
-              this.ordered();
+              if (this.results.size) {
+                this.ordered();
+              }
             })
             .catch(error => {
               console.error(error);
-              this.loading = false;
+              this.fetched = true;
             });
         })
       );
@@ -215,7 +222,7 @@ export default class ResultsStore {
       `${apiBase}/organisations?filter[id]=${this.organisations}`
     );
     this.organisations = get(organisations, 'data.data', []);
-    this.loading = false;
+    this.fetched = true;
   };
 
   updateQueryStringParameter = (

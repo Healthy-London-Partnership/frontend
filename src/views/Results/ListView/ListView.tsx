@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const ListView: React.FunctionComponent<IProps> = ({ resultsStore }) => {
-  if (resultsStore.loading) {
+  if (!resultsStore.fetched) {
     return <Loading />;
   }
 
@@ -47,7 +47,11 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore }) => {
           })
         ) : (
           <div className="results__container">
-            <h1>No results found</h1>
+            <h1>
+              {resultsStore.isPostcodeSearch
+                ? 'There are currently no service offers available in your area.'
+                : 'There are currently no service offers available.'}
+            </h1>
           </div>
         )}
       </main>
