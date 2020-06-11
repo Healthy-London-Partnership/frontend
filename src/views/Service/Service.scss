@@ -73,7 +73,7 @@
 
   button {
     @include body-s;
-    background-color: inherit;
+    background-color: transparent;
     border: 2px solid $white;
     font-family: $font-primary;
     font-weight: normal;
