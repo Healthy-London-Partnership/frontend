@@ -75,6 +75,19 @@ class CMSStore {
   get hasVideo() {
     return get(this.about, 'video_url') !== 'Video URL';
   }
+
+  @computed
+  get hasContactInfo() {
+    if (this.global) {
+      return !(
+        this.global.contact_email === 'Contact email' &&
+        this.global.contact_phone === 'Contact phone' &&
+        this.global.facebook_handle === 'Facebook handle' &&
+        this.global.twitter_handle === 'Twitter handle'
+      );
+    }
+    return false;
+  }
 }
 
 export default CMSStore;
