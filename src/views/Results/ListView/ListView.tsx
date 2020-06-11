@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import find from 'lodash/find';
+import get from 'lodash/get';
 import { observer } from 'mobx-react';
 
 import ResultsStore from '../../../stores/resultsStore';
@@ -21,9 +22,9 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore }) => {
     if (category) {
       return category.sideboxes;
     }
-    // if (resultsStore.persona) {
-    //   return get(resultsStore, 'persona.sideboxes', []);
-    // }
+    if (resultsStore.persona) {
+      return get(resultsStore, 'persona.sideboxes', []);
+    }
 
     return null;
   };
