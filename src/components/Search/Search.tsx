@@ -4,7 +4,6 @@ import map from 'lodash/map';
 import { withRouter, RouteComponentProps } from 'react-router';
 import cx from 'classnames';
 import get from 'lodash/get';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import SearchStore from './store';
 
@@ -14,7 +13,6 @@ import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
 import Personas from '../Personas';
-import Banner from '../Banner/Banner';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
 
