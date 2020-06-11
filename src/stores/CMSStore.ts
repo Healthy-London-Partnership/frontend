@@ -70,6 +70,11 @@ class CMSStore {
 
     return every(bannerFields, field => field === null) ? false : true;
   }
+
+  @computed
+  get hasVideo() {
+    return get(this.about, 'video_url') !== 'Video URL';
+  }
 }
 
 export default CMSStore;
