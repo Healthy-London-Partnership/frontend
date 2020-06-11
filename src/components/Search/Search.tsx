@@ -145,9 +145,11 @@ class Search extends React.Component<IProps> {
             </div>
           </form>
         </section>
-        <section>
-          <Personas personas={SearchStore.personas} />
-        </section>
+        {SearchStore.personas.length && (
+          <section>
+            <Personas personas={SearchStore.personas} />
+          </section>
+        )}
       </Fragment>
     );
   }
