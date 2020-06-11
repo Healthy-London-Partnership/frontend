@@ -4,7 +4,6 @@ import map from 'lodash/map';
 import { withRouter, RouteComponentProps } from 'react-router';
 import cx from 'classnames';
 import get from 'lodash/get';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import SearchStore from './store';
 
@@ -14,7 +13,6 @@ import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
 import Personas from '../Personas';
-import Banner from '../Banner/Banner';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
 
@@ -67,7 +65,7 @@ class Search extends React.Component<IProps> {
                     }}
                   >
                     <div
-                      className={cx('flex-col--6 flex-col--tablet-large--6', {
+                      className={cx('flex-col--9 flex-col--tablet-large--6', {
                         'flex-col--mobile--12': isMobile,
                       })}
                     >
@@ -145,9 +143,11 @@ class Search extends React.Component<IProps> {
             </div>
           </form>
         </section>
-        <section>
-          <Personas personas={SearchStore.personas} />
-        </section>
+        {SearchStore.personas.length && (
+          <section>
+            <Personas personas={SearchStore.personas} />
+          </section>
+        )}
       </Fragment>
     );
   }

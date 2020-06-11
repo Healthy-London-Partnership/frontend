@@ -16,15 +16,19 @@ const About: React.FunctionComponent<IProps> = ({ cmsStore }) => {
     return null;
   }
 
+  const video = get(cmsStore, 'about.video_url');
+
   return (
     <CMSPage title={get(cmsStore, 'about.title')} breadcrumb="About">
       <ReactMarkdown source={get(cmsStore, 'about.content')} />
-      <ReactPlayer
-        url={get(cmsStore, 'about.video_url')}
-        style={{ borderRadius: '19px', margin: 'auto', marginTop: '24px' }}
-        width={'90%'}
-        light={true}
-      />
+      {cmsStore.hasVideo && (
+        <ReactPlayer
+          url={video}
+          style={{ borderRadius: '19px', margin: 'auto', marginTop: '24px' }}
+          width={'90%'}
+          light={true}
+        />
+      )}
     </CMSPage>
   );
 };

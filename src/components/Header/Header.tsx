@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactSVG from 'react-svg';
+
 import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
 import { NavLink as RouterLink, withRouter, RouteComponentProps } from 'react-router-dom';
@@ -7,8 +7,6 @@ import { NavLink as RouterLink, withRouter, RouteComponentProps } from 'react-ro
 import './Header.scss';
 
 import Logo from '../../assets/logo/logo.png';
-import MobileLogo from '../../assets/logo/logo-mobile.svg';
-
 import Button from '../Button';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import UIStore from '../../stores/uiStore';
