@@ -67,7 +67,7 @@ class Search extends React.Component<IProps> {
                     }}
                   >
                     <div
-                      className={cx('flex-col--6 flex-col--tablet-large--6', {
+                      className={cx('flex-col--9 flex-col--tablet-large--6', {
                         'flex-col--mobile--12': isMobile,
                       })}
                     >
