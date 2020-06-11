@@ -80,7 +80,7 @@
   @include body-xs;
   padding: space(8);
   color: $white;
-  width: max-content;
+  display: inline-block;
   border-radius: 4px;
   margin: space(16) 0;
 
