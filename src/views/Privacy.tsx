@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown';
 
 import CMSStore from '../stores/CMSStore';
 import CMSPage from '../components/CMSPageLayout';
-import Layout from '../components/Layout';
 
 interface IProps {
   cmsStore: CMSStore;
@@ -17,11 +16,9 @@ const Privacy: React.FunctionComponent<IProps> = ({ cmsStore }) => {
   }
 
   return (
-    <Layout>
-      <CMSPage title={get(cmsStore, 'privacy_policy.title')} breadcrumb="Privacy Policy">
-        <ReactMarkdown source={get(cmsStore, 'privacy_policy.content')} />
-      </CMSPage>
-    </Layout>
+    <CMSPage title={get(cmsStore, 'privacy_policy.title')} breadcrumb="Privacy Policy">
+      <ReactMarkdown source={get(cmsStore, 'privacy_policy.content')} />
+    </CMSPage>
   );
 };
 

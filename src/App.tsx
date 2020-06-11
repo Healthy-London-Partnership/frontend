@@ -29,6 +29,9 @@ import CMSStore from './stores/CMSStore';
 import ReferralStore from './stores/referralStore';
 import Terms from './views/Terms';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import Header from './components/Header';
+import FeedbackModal from './components/FeedbackModal';
+import Footer from './components/Footer/Footer';
 
 // add all free font awesome icons to project
 library.add(fas, fab);
@@ -59,6 +62,7 @@ class App extends Component {
       >
         <Router>
           <ScrollToTop>
+            <Header />
             <Switch>
               <Route path="/" exact={true} component={Home} />
               <Route path="/results" component={Results} />
@@ -74,6 +78,8 @@ class App extends Component {
 
               <Route component={NotFound} />
             </Switch>
+            <FeedbackModal />
+            <Footer />
           </ScrollToTop>
         </Router>
       </Provider>

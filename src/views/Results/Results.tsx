@@ -8,7 +8,6 @@ import Keyword from './Filters/Keyword';
 import ListView from './ListView';
 
 import Breadcrumb from '../../components/Breadcrumb';
-import Layout from '../../components/Layout';
 
 interface IProps {
   location: Location;
@@ -39,18 +38,16 @@ class Results extends Component<IProps> {
   render() {
     const { resultsStore } = this.props;
     return (
-      <Layout>
-        <section>
-          <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
-          <div className="results__search-box">
-            {resultsStore.isKeywordSearch ? <Keyword /> : <Category />}
-          </div>
+      <section>
+        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
+        <div className="results__search-box">
+          {resultsStore.isKeywordSearch ? <Keyword /> : <Category />}
+        </div>
 
-          <div className="results__list">
-            <ListView resultsStore={resultsStore} />
-          </div>
-        </section>
-      </Layout>
+        <div className="results__list">
+          <ListView resultsStore={resultsStore} />
+        </div>
+      </section>
     );
   }
 }

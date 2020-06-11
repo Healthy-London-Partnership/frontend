@@ -194,6 +194,7 @@
       content: url('../../assets/images/trees/peurto-lg.svg');
       top: -245px;
       right: 50px;
+      max-width: 33px;
 
       @include for-desktop-up {
         right: -20px;
@@ -209,6 +210,7 @@
       content: url('../../assets/images/trees/cranberry-lg.svg');
       top: -240px;
       right: 0px;
+      max-width: 33px;
 
       @include for-desktop-up {
         right: -70px;
