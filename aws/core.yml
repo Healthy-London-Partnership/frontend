@@ -107,6 +107,24 @@ Resources:
             - "-"
             - - S3
               - Ref: Bucket
+          ViewerProtocolPolicy: redirect-to-https
+        - AllowedMethods:
+          - HEAD
+          - GET
+          CachedMethods:
+          - HEAD
+          - GET
+          DefaultTTL: 0
+          MaxTTL: 0
+          MinTTL: 0
+          ForwardedValues:
+            QueryString: False
+          PathPattern: "/covid19"
+          TargetOriginId:
+            Fn::Join:
+            - "-"
+            - - S3
+              - Ref: Bucket
           LambdaFunctionAssociations:
           - EventType: origin-request
             LambdaFunctionARN:
@@ -124,10 +142,6 @@ Resources:
             - "-"
             - - S3
               - Ref: Bucket
-          LambdaFunctionAssociations:
-          - EventType: origin-request
-            LambdaFunctionARN:
-              Ref: LambdaRedirectFunctionArn
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Enabled: True
