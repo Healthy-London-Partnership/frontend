@@ -25,8 +25,8 @@ Resources:
               let newuri = olduri;
 
               // Check if URI begins with '/covid19'
-              if (/^\/covid19(\?|\/)?/.test('/covid19')) {
-                newuri = olduri.replace(/^\/covid19/, '/covid19/index.html');
+              if (olduri === '/covid19') {
+                newuri = `${olduri}/index.html`;
               }
 
               // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
