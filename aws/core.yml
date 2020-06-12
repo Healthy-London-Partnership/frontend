@@ -107,6 +107,10 @@ Resources:
             - "-"
             - - S3
               - Ref: Bucket
+          LambdaFunctionAssociations:
+          - EventType: origin-request
+            LambdaFunctionARN:
+              Ref: LambdaRedirectFunctionArn
           ViewerProtocolPolicy: redirect-to-https
         CustomErrorResponses:
         - ErrorCode: 404
@@ -120,6 +124,10 @@ Resources:
             - "-"
             - - S3
               - Ref: Bucket
+          LambdaFunctionAssociations:
+          - EventType: origin-request
+            LambdaFunctionARN:
+              Ref: LambdaRedirectFunctionArn
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Enabled: True
