@@ -128,21 +128,6 @@ Resources:
           CachedMethods:
           - HEAD
           - GET
-          ForwardedValues:
-            QueryString: False
-          PathPattern: "*"
-          TargetOriginId:
-            Fn::Join:
-            - "-"
-            - - S3
-              - Ref: Bucket
-          ViewerProtocolPolicy: redirect-to-https
-        - AllowedMethods:
-          - HEAD
-          - GET
-          CachedMethods:
-          - HEAD
-          - GET
           DefaultTTL: 0
           MaxTTL: 0
           MinTTL: 0
@@ -158,6 +143,21 @@ Resources:
           - EventType: origin-request
             LambdaFunctionARN:
               Ref: LambdaRedirectFunctionArn
+          ViewerProtocolPolicy: redirect-to-https
+        - AllowedMethods:
+          - HEAD
+          - GET
+          CachedMethods:
+          - HEAD
+          - GET
+          ForwardedValues:
+            QueryString: False
+          PathPattern: "*"
+          TargetOriginId:
+            Fn::Join:
+            - "-"
+            - - S3
+              - Ref: Bucket
           ViewerProtocolPolicy: redirect-to-https
         CustomErrorResponses:
         - ErrorCode: 404
