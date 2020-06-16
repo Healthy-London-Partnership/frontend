@@ -137,7 +137,7 @@ Resources:
           MinTTL: 0
           ForwardedValues:
             QueryString: False
-          PathPattern: "/covid19"
+          PathPattern: "/covid19*"
           TargetOriginId:
             Fn::Join:
             - "-"
