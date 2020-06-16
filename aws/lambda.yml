@@ -17,32 +17,32 @@ Resources:
         ZipFile: |
           'use strict';
           exports.handler = (event, context, callback) => {
-              // Extract the request from the CloudFront event that is sent to Lambda@Edge
-              const request = event.Records[0].cf.request;
+            // Extract the request from the CloudFront event that is sent to Lambda@Edge
+            const request = event.Records[0].cf.request;
 
-              // Extract the URI from the request
-              const oldUri = request.uri;
-              let newUri = oldUri;
+            // Extract the URI from the request
+            const oldUri = request.uri;
+            let newUri = oldUri;
 
-              // Ensure '/index.html' is appended for the '/covid19' path
-              newUri = newUri.replace(
-                /^(\/covid19)(\/|\/\?.*|\?.*)?$/g,
-                '/covid19/index.html$2'
-              );
-              newUri = newUri.replace(
-                '/covid19/index.html/',
-                '/covid19/index.html'
-              );
+            // Ensure '/index.html' is appended for the '/covid19' path
+            newUri = newUri.replace(
+              /^(\/covid19)(\/|\/\?.*|\?.*)?$/g,
+              '/covid19/index.html$2'
+            );
+            newUri = newUri.replace(
+              /^\/covid19\/index\.html(\/)*/,
+              '/covid19/index.html'
+            );
 
-              // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
-              console.log(`Old URI: ${oldUri}`);
-              console.log(`New URI: ${newUri}`);
+            // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
+            console.log(`Old URI: ${oldUri}`);
+            console.log(`New URI: ${newUri}`);
 
-              // Replace the received URI with the URI that includes the index page
-              request.uri = newUri;
+            // Replace the received URI with the URI that includes the index page
+            request.uri = newUri;
 
-              // Return to CloudFront
-              return callback(null, request);
+            // Return to CloudFront
+            return callback(null, request);
           };
       Handler: index.handler
       Runtime: nodejs12.x

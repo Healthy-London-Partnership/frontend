@@ -121,8 +121,12 @@ Resources:
       DistributionConfig:
         Aliases:
         - Ref: Cname
-        CacheBehaviors:
-        - AllowedMethods:
+        CustomErrorResponses:
+        - ErrorCode: 404
+          ResponseCode: 200
+          ResponsePagePath: "/index.html"
+        DefaultCacheBehavior:
+          AllowedMethods:
           - HEAD
           - GET
           CachedMethods:
@@ -133,7 +137,6 @@ Resources:
           MinTTL: 0
           ForwardedValues:
             QueryString: False
-          PathPattern: "/covid19*"
           TargetOriginId:
             Fn::Join:
             - "-"
@@ -143,34 +146,6 @@ Resources:
           - EventType: origin-request
             LambdaFunctionARN:
               Ref: LambdaRedirectFunctionArn
-          ViewerProtocolPolicy: redirect-to-https
-        - AllowedMethods:
-          - HEAD
-          - GET
-          CachedMethods:
-          - HEAD
-          - GET
-          ForwardedValues:
-            QueryString: False
-          PathPattern: "*"
-          TargetOriginId:
-            Fn::Join:
-            - "-"
-            - - S3
-              - Ref: Bucket
-          ViewerProtocolPolicy: redirect-to-https
-        CustomErrorResponses:
-        - ErrorCode: 404
-          ResponseCode: 200
-          ResponsePagePath: "/index.html"
-        DefaultCacheBehavior:
-          ForwardedValues:
-            QueryString: False
-          TargetOriginId:
-            Fn::Join:
-            - "-"
-            - - S3
-              - Ref: Bucket
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Enabled: True
