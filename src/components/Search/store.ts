@@ -7,6 +7,7 @@ import { ICategory, IPersona } from '../../types/types';
 
 class SearchStore {
   @observable search: string = '';
+  @observable location: string = '';
   @observable categories: ICategory[] = [];
   @observable personas: IPersona[] = [];
   @observable categoryId: string = '';

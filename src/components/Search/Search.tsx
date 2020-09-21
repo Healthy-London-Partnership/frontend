@@ -49,28 +49,27 @@ class Search extends React.Component<IProps> {
                   'flex-col--mobile--12': isMobile,
                 })}
               >
-                <div className="flex-container flex-container--align-center flex-container--mobile-no-padding search__input--row">
+                <div className="flex-container flex-container--no-padding search__input">
                   <div className="flex-col--12">
-                    <label htmlFor="search">
-                      <h1 className="search__heading">{get(cmsStore, 'home.search_title')}</h1>
-                    </label>
+                    <h1 className="search__heading">{get(cmsStore, 'home.search_title')}</h1>
                   </div>
                   <div
-                    className="flex-container flex-container--align-center flex-container--mobile-no-padding"
+                    className="flex-container search__wrapper"
                     style={{
                       width: '100%',
                       padding: 0,
                       justifyContent: 'start',
-                      marginBottom: 24,
+                      marginBottom: 64,
                     }}
                   >
                     <div
-                      className={cx('flex-col--9 flex-col--tablet-large--6', {
-                        'flex-col--mobile--12': isMobile,
+                      className={cx('flex-col--6 search__input__item', {
+                        'flex-col--mobile--12 search__input__item': isMobile,
                       })}
                     >
+                      <label htmlFor="search">Enter a keyword</label>
                       <Input
-                        placeholder="Search for services, groups and activities"
+                        placeholder="e.g. Anxiety"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           SearchStore.onChange(e)
                         }
@@ -78,27 +77,43 @@ class Search extends React.Component<IProps> {
                         value={SearchStore.search}
                       />
                     </div>
-                    {!isMobile && (
-                      <div className="flex-col--3 flex-col--tablet-large--5">
-                        <Button
-                          text="Search"
-                          icon="search"
-                          type="submit"
-                          onClick={(e: React.FormEvent) => {
-                            e.preventDefault();
-                            history.push({
-                              pathname: '/results',
-                              search: `?search_term=${SearchStore.search}`,
-                            });
-                          }}
-                        />
-                      </div>
-                    )}
+                    <div
+                      className={cx('flex-col--6 search__input__item', {
+                        'flex-col--mobile--12 search__input__item': isMobile,
+                      })}
+                    >
+                      <label htmlFor="search">Enter a location</label>
+                      <Input
+                        placeholder="e.g SW16 7GZ or Camden"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          SearchStore.onChange(e)
+                        }
+                        id="location"
+                        value={SearchStore.location}
+                      />
+                    </div>
+                    <div
+                      className={cx('flex-col', {
+                        'flex-col--mobile--12': isMobile,
+                      })}>
+                      <Button
+                        text="Search"
+                        icon="search"
+                        type="submit"
+                        onClick={(e: React.FormEvent) => {
+                          e.preventDefault();
+                          history.push({
+                            pathname: '/results',
+                            search: `?search_term=${SearchStore.search}`,
+                          });
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
               <div className="flex-col--12">
-                <label className="search__heading" htmlFor="category">
+                <label className="search__support__heading" htmlFor="category">
                   {get(cmsStore, 'home.categories_title')}
                 </label>
                 {isMobile && (
