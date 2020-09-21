@@ -145,7 +145,7 @@
     z-index: 1;
 
     @include for-tablet-landscape-down {
-      padding: space(12) space(24) !important;
+      padding: space(12) space(24) space(24) !important;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -178,7 +178,7 @@
     }
 
     @include for-phone-only {
-      padding: space(12) !important;
+      padding: space(8) space(12) space(24) !important;
 
       &--active {
         padding-bottom: space(48) !important;
@@ -219,25 +219,25 @@
   .logo {
     display: block;
     float: left;
-    max-width: 510px;
-    height: auto;
-
-    img {
-      width: 100%;
-    }
-
-    @include for-tablet-landscape-down {
-      max-width: 360px;
-    }
+    max-width: 260px;
+    text-align: left;
 
     @include for-phone-only {
-      max-width: 250px;
+      max-width: 240px;
     }
 
-    @include for-small-phone {
-      svg {
-        max-width: 230px;
-      }
+    > a {
+      text-decoration: none;
+    }
+
+    .logo-heading {
+      display: block;
+      @include heading-xl;
+    }
+
+    .logo-byline {
+      display: block;
+      @include heading-s-light;
     }
   }
 

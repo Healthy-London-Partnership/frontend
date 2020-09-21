@@ -6,7 +6,6 @@ import { NavLink as RouterLink, withRouter, RouteComponentProps } from 'react-ro
 
 import './Header.scss';
 
-import Logo from '../../assets/logo/logo.png';
 import Button from '../Button';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import UIStore from '../../stores/uiStore';
@@ -82,8 +81,8 @@ class Header extends Component<IProps> {
           >
             <figure className="logo">
               <RouterLink to="/" aria-label="Home Link">
-                <img src={Logo} alt="Connected Together" />
-                {/* <ReactSVG src={isMobile ? MobileLogo : Logo} /> */}
+                <span className="logo-heading">NHS Connect</span>
+                <span className="logo-byline">Search for support and advice for health and wellbeing</span>
               </RouterLink>
             </figure>
 
