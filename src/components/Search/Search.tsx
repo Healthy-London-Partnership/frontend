@@ -42,7 +42,7 @@ class Search extends React.Component<IProps> {
     return (
       <Fragment>
         <section className="flex-container flex-container--justify search__container">
-          <form className="flex--col--12 search__inner-container">
+          <form className="flex-col--mobile--12 flex-col--10 search__inner-container">
             <div className="flex-container flex-container--mobile-no-padding">
               <div
                 className={cx('flex-col--12 search__input flex-col--mobile--12', {
@@ -135,7 +135,7 @@ class Search extends React.Component<IProps> {
                   </Fragment>
                 )}
                 {!isMobile && (
-                  <div className="search__cateogry-list">
+                  <div className="search__category-list">
                     <CategoryList categories={SearchStore.categories} />
                   </div>
                 )}

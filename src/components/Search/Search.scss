@@ -46,22 +46,21 @@
   }
 
   @include for-phone-only {
-    padding: space(40) space(24) space(80) !important;
+    padding: space(40) space(16) space(80) !important;
     background-color: $iceberg;
   }
 }
 
 .search__inner-container {
-  background-image: url('../../assets/images/backgrounds/home-search-shape.svg');
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   max-width: 1260px;
   position: relative;
+  border-radius: 13px;
+  background-color: $white;
 
   @include for-tablet-landscape-up {
-    padding: space(64);
+    padding: space(48) space(12);
     margin: space(64) space(32);
   }
 }
@@ -114,6 +113,6 @@
   }
 }
 
-.search__cateogry-list {
-  margin-top: space(24);
+.search__category-list {
+  margin-top: space(16);
 }

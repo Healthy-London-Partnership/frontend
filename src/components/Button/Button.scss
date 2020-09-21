@@ -197,10 +197,23 @@
 .button__category {
   font-size: $font-body-m;
   height: pxtorem(50px);
-  padding: 0 space(16);
-  border-radius: 9px;
-  margin-right: space(20);
+  padding: space(14) space(18);
+  margin-right: space(16);
   margin-bottom: space(16);
+  border: none;
+  border-radius: 10px;
+  background-color: $porcelain;
+
+  svg {
+    height: 0.875em;
+    margin-left: space(12);
+  }
+
+  &:hover {
+    background-color: $puerto-rico;
+    color: $white;
+    border: none;
+  }
 }
 
 .button__header {
