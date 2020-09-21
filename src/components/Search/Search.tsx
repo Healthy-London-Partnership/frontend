@@ -12,6 +12,7 @@ import CategoryList from '../CategoryList';
 import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
+import Link from '../Link';
 import Personas from '../Personas';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
@@ -45,11 +46,11 @@ class Search extends React.Component<IProps> {
           <form className="flex-col--mobile--12 flex-col--10 search__inner-container">
             <div className="flex-container flex-container--mobile-no-padding">
               <div
-                className={cx('flex-col--12 search__input flex-col--mobile--12', {
-                  'flex-col--mobile--12': isMobile,
+                className={cx('flex-col--12 flex-col--mobile--12 search__input', {
+                  'flex-col--mobile--12 search__input': isMobile,
                 })}
               >
-                <div className="flex-container flex-container--no-padding search__input">
+                <div className="flex-container flex-container--no-padding">
                   <div className="flex-col--12">
                     <h1 className="search__heading">{get(cmsStore, 'home.search_title')}</h1>
                   </div>
@@ -59,7 +60,6 @@ class Search extends React.Component<IProps> {
                       width: '100%',
                       padding: 0,
                       justifyContent: 'start',
-                      marginBottom: 64,
                     }}
                   >
                     <div
@@ -111,6 +111,14 @@ class Search extends React.Component<IProps> {
                     </div>
                   </div>
                 </div>
+                  <Link
+                    className="search__location__link"
+                    size="medium"
+                    text="Get your location"
+                    href=""
+                    iconPosition="left"
+                    icon="search-location"
+                  />
               </div>
               <div className="flex-col--12">
                 <label className="search__support__heading" htmlFor="category">
