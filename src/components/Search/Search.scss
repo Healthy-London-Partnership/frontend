@@ -19,6 +19,10 @@
 
   @include for-desktop-up {
     margin-top: space(20) !important;
+  }
+
+  @include for-tablet-landscape-up {
+    padding: space(64) space(24);
 
     &:after {
       content: url('../../assets/images/telephone-boxes-shapes.svg');
@@ -36,18 +40,12 @@
       left: 40%;
     }
   }
-  @include for-tablet-landscape-up {
-    padding: space(64) space(24);
-  }
-
-  @include for-tablet-portrait-down {
-    background-image: url('../../assets/images/backgrounds/home-white-shape-mobile.svg');
-    background-size: 110% 100%;
-  }
 
   @include for-phone-only {
     padding: space(40) space(16) space(80) !important;
     background-color: $iceberg;
+    background-image: url('../../assets/images/backgrounds/home-white-shape-mobile.svg');
+    background-size: 110% 100%;
   }
 }
 
@@ -55,13 +53,15 @@
   width: 100%;
   height: 100%;
   max-width: 1260px;
+  padding: space(48) space(12);
+  margin: space(64) space(32);
   position: relative;
   border-radius: 13px;
   background-color: $white;
 
-  @include for-tablet-landscape-up {
-    padding: space(48) space(12);
-    margin: space(64) space(32);
+  @include for-phone-only {
+    padding: 0;
+    margin: 0;
   }
 }
 
@@ -69,21 +69,41 @@
   flex-wrap: nowrap !important;
   border: 2px solid $san-juan;
   border-radius: 10px;
+
+  @include for-phone-only {
+    flex-wrap: wrap !important;
+  }
 }
 
 .search__input {
   margin-bottom: 48px;
 
+  @include for-phone-only {
+    margin-bottom: 48px !important;
+  }
+
   &__item {
     padding: 0 space(24);
     margin: space(10) 0;
 
+    @include for-phone-only {
+      padding: space(12) 0 space(32);
+      margin: 0 space(20);
+    }
+
     &:first-child {
       border-right: 2px solid $san-juan;
+
+      @include for-phone-only {
+        border-right: none;
+        border-bottom: 2px solid $san-juan;
+      }
     }
   }
 
   label {
+    display: block;
+    margin-bottom: space(16);
     font-family: $font-secondary;
     font-size: $font-heading-m;
   }
@@ -93,21 +113,28 @@
     height: auto;
     padding: 0;
     border: none;
-
-    &#search {
-      .input--container {
-        border-right: 2px solid $san-juan;
-      }
-    }
   }
 
-  button {
-    display: flex;
-    align-items: center;
-    border-top-left-radius: 0;
-    border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 0;
+  .search__submit {
+    .button {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      border-top-left-radius: 0;
+      border-top-right-radius: 7px;
+      border-bottom-right-radius: 7px;
+      border-bottom-left-radius: 0;
+
+      @include for-phone-only {
+        width: 100%;
+        height: 4.0625rem;
+        justify-content: center;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 7px;
+        border-bottom-left-radius: 7px;
+      }
+    }
   }
 }
 
@@ -115,6 +142,10 @@
   display: inline-block !important;
   margin-top: space(12);
   margin-left: calc(50% - 56px);
+
+  @include for-phone-only {
+    margin-left: 0;
+  }
 }
 
 .search__categories {
@@ -136,7 +167,7 @@
   margin-bottom: space(16);
 
   @include for-phone-only {
-    font-size: $font-body-l;
+    @include heading-l;
   }
 
   &--category {

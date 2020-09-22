@@ -43,7 +43,7 @@ class Search extends React.Component<IProps> {
     return (
       <Fragment>
         <section className="flex-container flex-container--justify search__container">
-          <form className="flex-col--mobile--12 flex-col--10 search__inner-container">
+          <form className="flex-col--tablet--12 flex-col--10 search__inner-container">
             <div className="flex-container flex-container--mobile-no-padding">
               <div
                 className={cx('flex-col--12 flex-col--mobile--12 search__input', {
@@ -63,7 +63,7 @@ class Search extends React.Component<IProps> {
                     }}
                   >
                     <div
-                      className={cx('flex-col--6 search__input__item', {
+                      className={cx('flex-col--6 flex-col--tablet--12 search__input__item', {
                         'flex-col--mobile--12 search__input__item': isMobile,
                       })}
                     >
@@ -78,7 +78,7 @@ class Search extends React.Component<IProps> {
                       />
                     </div>
                     <div
-                      className={cx('flex-col--6 search__input__item', {
+                      className={cx('flex-col--6 flex-col--tablet--12 search__input__item', {
                         'flex-col--mobile--12 search__input__item': isMobile,
                       })}
                     >
@@ -93,8 +93,8 @@ class Search extends React.Component<IProps> {
                       />
                     </div>
                     <div
-                      className={cx('flex-col', {
-                        'flex-col--mobile--12': isMobile,
+                      className={cx('flex-col search__submit', {
+                        'flex-col--mobile--12 search__submit': isMobile,
                       })}>
                       <Button
                         text="Search"
@@ -111,12 +111,12 @@ class Search extends React.Component<IProps> {
                     </div>
                   </div>
                 </div>
-                  <a
+                  <button
                     className="link link--medium search__location__link"
                     onClick={(e) => {
                       e.preventDefault();
                       SearchStore.getLocation();
-                    }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</a>
+                    }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</button>
               </div>
               <div className="flex-col--12">
                 <label className="search__support__heading" htmlFor="category">
