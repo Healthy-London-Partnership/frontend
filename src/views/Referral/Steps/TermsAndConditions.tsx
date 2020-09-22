@@ -39,13 +39,13 @@ const TermsAndConditions: React.FunctionComponent<IProps> = ({ referralStore }) 
                 'service.name'
               )} to contact you regarding the service you have connected with`}</li>
               <li>
-                For the Connected Together admin team and/or the Royal Borough of Kingston Council
-                to contact you/the client regarding your experience or to request feedback
+                For the NHS Connect Admin team or Healthy London Partnership to
+                contact you/the client regarding your experience or to request feedback
               </li>
 
               <li>
-                For the Connected Together admin team and/or the Royal Borough of Kingston Council
-                to contact you to let you know about changes to our terms of service
+                For the NHS Connect Admin team or Healthy London Partnership to
+                contact you to let you know about changes to our terms of service
               </li>
             </ul>
 
