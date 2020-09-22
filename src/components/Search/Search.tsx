@@ -12,7 +12,7 @@ import CategoryList from '../CategoryList';
 import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
-import Link from '../Link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Personas from '../Personas';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
@@ -111,14 +111,12 @@ class Search extends React.Component<IProps> {
                     </div>
                   </div>
                 </div>
-                  <Link
-                    className="search__location__link"
-                    size="medium"
-                    text="Get your location"
-                    href=""
-                    iconPosition="left"
-                    icon="search-location"
-                  />
+                  <a
+                    className="link link--medium search__location__link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      SearchStore.getLocation();
+                    }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</a>
               </div>
               <div className="flex-col--12">
                 <label className="search__support__heading" htmlFor="category">

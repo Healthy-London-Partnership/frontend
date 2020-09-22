@@ -19,11 +19,18 @@ class SearchStore {
 
   @action clear = () => {
     this.search = '';
+    this.location = '';
     this.categoryId = '';
   };
 
   @action setCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.categoryId = e.target.value;
+  };
+
+  @action getLocation = () => {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position);
+    });
   };
 
   @action
