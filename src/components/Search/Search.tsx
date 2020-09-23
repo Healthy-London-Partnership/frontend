@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
-import map from 'lodash/map';
 import { withRouter, RouteComponentProps } from 'react-router';
 import cx from 'classnames';
 import get from 'lodash/get';
@@ -10,7 +9,6 @@ import SearchStore from './store';
 import './Search.scss';
 import CategoryList from '../CategoryList';
 import Input from '../Input';
-import Select from '../Select';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Personas from '../Personas';
@@ -42,7 +40,7 @@ class Search extends React.Component<IProps> {
   }
 
   render() {
-    const { windowSizeStore, cmsStore, history } = this.props;
+    const { windowSizeStore, cmsStore } = this.props;
 
     // injected stores must be typed as optional, but will always be there if injected. Allows workound for destructuring values from store
     if (!windowSizeStore || !cmsStore) {
@@ -50,7 +48,6 @@ class Search extends React.Component<IProps> {
     }
 
     const { isMobile } = windowSizeStore;
-    const options = map(SearchStore.categories, ({ name, id }) => ({ value: id, text: name }));
 
     return (
       <Fragment>

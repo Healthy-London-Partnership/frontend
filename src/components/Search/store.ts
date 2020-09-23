@@ -5,8 +5,7 @@ import get from 'lodash/get';
 import { apiBase } from '../../config/api';
 import {
   ICategory,
-  IPersona,
-  IGeoLocation
+  IPersona
 } from '../../types/types';
 
 class SearchStore {
