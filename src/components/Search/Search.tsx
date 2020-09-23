@@ -32,7 +32,7 @@ class Search extends React.Component<IProps> {
     if(SearchStore.search || SearchStore.location) {
       this.props.history.push({
         pathname: '/results',
-        search: `?search_term=${SearchStore.search}`,
+        search: `?search_term=${SearchStore.search}&location=${SearchStore.location}`,
       });
     } else {
       alert('Please fill in at least one search criteria (keyword/location).');
@@ -80,7 +80,7 @@ class Search extends React.Component<IProps> {
                       <Input
                         placeholder="e.g. Anxiety"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          SearchStore.onChange(e)
+                          SearchStore.onChange(e, 'search')
                         }
                         id="search"
                         value={SearchStore.search}
@@ -95,7 +95,7 @@ class Search extends React.Component<IProps> {
                       <Input
                         placeholder="e.g SW16 7GZ or Camden"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          SearchStore.onChange(e)
+                          SearchStore.onChange(e, 'location')
                         }
                         id="location"
                         value={SearchStore.location}

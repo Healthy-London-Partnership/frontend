@@ -86,8 +86,12 @@ class SearchStore {
     }
   };
 
-  @action onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.search = e.target.value;
+  @action onChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
+    if(type == 'search') {
+      this.search = e.target.value;
+    } else if(type == 'location') {
+      this.location = e.target.value;
+    }
   };
 }
 
