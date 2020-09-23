@@ -29,6 +29,18 @@ class Search extends React.Component<IProps> {
     SearchStore.clear();
   }
 
+  checkValidation(e: React.ChangeEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    if(SearchStore.search || SearchStore.location) {
+      this.props.history.push({
+        pathname: '/results',
+        search: `?search_term=${SearchStore.search}`,
+      });
+    } else {
+      alert('Please fill in at least one search criteria (keyword/location).');
+    }
+  }
+
   render() {
     const { windowSizeStore, cmsStore, history } = this.props;
 
@@ -100,13 +112,7 @@ class Search extends React.Component<IProps> {
                         text="Search"
                         icon="search"
                         type="submit"
-                        onClick={(e: React.FormEvent) => {
-                          e.preventDefault();
-                          history.push({
-                            pathname: '/results',
-                            search: `?search_term=${SearchStore.search}`,
-                          });
-                        }}
+                        onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.checkValidation(e)}
                       />
                     </div>
                   </div>
@@ -122,44 +128,9 @@ class Search extends React.Component<IProps> {
                 <label className="search__support__heading" htmlFor="category">
                   {get(cmsStore, 'home.categories_title')}
                 </label>
-                {isMobile && (
-                  <Fragment>
-                    <p className="search__category-subtitle">
-                      {get(cmsStore, 'home.personas_content')}
-                    </p>
-                    <Select
-                      options={options}
-                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                        SearchStore.setCategory(e)
-                      }
-                      className="search__category--mobile"
-                      placeholder="Category List"
-                      id="category"
-                    />
-                    <Button
-                      text="Search"
-                      icon="search"
-                      size="small"
-                      type="submit"
-                      onClick={() =>
-                        SearchStore.categoryId
-                          ? history.push({
-                              pathname: '/results',
-                              search: `?category=${SearchStore.categoryId}`,
-                            })
-                          : history.push({
-                              pathname: '/results',
-                              search: `?search_term=${SearchStore.search}`,
-                            })
-                      }
-                    />
-                  </Fragment>
-                )}
-                {!isMobile && (
-                  <div className="search__category-list">
-                    <CategoryList categories={SearchStore.categories} />
-                  </div>
-                )}
+                <div className="search__category-list">
+                  <CategoryList categories={SearchStore.categories} />
+                </div>
               </div>
             </div>
           </form>
