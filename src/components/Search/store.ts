@@ -3,7 +3,11 @@ import axios from 'axios';
 import get from 'lodash/get';
 
 import { apiBase } from '../../config/api';
-import { ICategory, IPersona } from '../../types/types';
+import {
+  ICategory,
+  IPersona,
+  IGeoLocation
+} from '../../types/types';
 
 class SearchStore {
   @observable search: string = '';
@@ -11,6 +15,7 @@ class SearchStore {
   @observable categories: ICategory[] = [];
   @observable personas: IPersona[] = [];
   @observable categoryId: string = '';
+  @observable locationCoords: any;
 
   constructor() {
     this.getCategories();
@@ -21,6 +26,7 @@ class SearchStore {
     this.search = '';
     this.location = '';
     this.categoryId = '';
+    this.locationCoords = {};
   };
 
   @action setCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -28,9 +34,28 @@ class SearchStore {
   };
 
   @action getLocation = () => {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position);
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.locationCoords = {
+        lon: position.coords.longitude.toString(),
+        lat: position.coords.latitude.toString(),
+      };
+
+      this.geolocate();
     });
+  };
+
+  @action geolocate = async () => {
+    try {
+      const geolocation = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.locationCoords.lat},${this.locationCoords.lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+      );
+
+      console.log(geolocation);
+
+      this.location = get(geolocation, 'data.results[0].formatted_address', {});
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   @action
