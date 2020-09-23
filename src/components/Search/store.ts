@@ -49,11 +49,9 @@ class SearchStore {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.locationCoords.lat},${this.locationCoords.lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
       );
 
-      console.log(geolocation);
-
       this.location = get(geolocation, 'data.results[0].formatted_address', {});
     } catch (e) {
-      console.error(e);
+      alert('Sorry. We are currently unable to determine your location.');
     }
   };
 
