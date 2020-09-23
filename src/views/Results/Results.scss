@@ -72,7 +72,7 @@
   position: relative;
 
   @include for-tablet-landscape-up {
-    padding: space(48) 0 !important;
+    padding: space(48) 0 0 !important;
     background-image: url('../../assets/images/backgrounds/results-shape.svg');
 
     &:before {
@@ -415,4 +415,9 @@
   @include for-tablet-portrait-down {
     margin: space(16) 0 !important;
   }
+}
+
+.results__heading {
+  @include heading-xl;
+  margin-bottom: space(32);
 }

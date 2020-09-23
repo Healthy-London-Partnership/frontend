@@ -65,26 +65,6 @@
   }
 }
 
-.search__wrapper {
-  flex-wrap: nowrap !important;
-  border: 2px solid $san-juan;
-  border-radius: 10px;
-
-  @include for-phone-only {
-    flex-wrap: wrap !important;
-  }
-}
-
-.search__location__link {
-  display: inline-block !important;
-  margin-top: space(12);
-  margin-left: calc(50% - 56px);
-
-  @include for-phone-only {
-    margin-left: 0;
-  }
-}
-
 .search__categories {
   @include marginLeft;
 }

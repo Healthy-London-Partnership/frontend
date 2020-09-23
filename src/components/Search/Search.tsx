@@ -49,7 +49,10 @@ class Search extends React.Component<IProps> {
         <section className="flex-container flex-container--justify search__container">
           <form className="flex-col--tablet--12 flex-col--10 search__inner-container">
             <div className="flex-container flex-container--mobile-no-padding">
-              <SearchInput />
+              <div className="flex-col--12">
+                <h1 className="search__heading">{get(cmsStore, 'home.search_title')}</h1>
+              </div>
+              <SearchInput showButtonText={true} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
               <div className="flex-col--12">
                 <label className="search__support__heading" htmlFor="category">
                   {get(cmsStore, 'home.categories_title')}
