@@ -2,11 +2,11 @@ import { observable, action } from 'mobx';
 import axios from 'axios';
 import get from 'lodash/get';
 
-import { apiBase } from '../../config/api';
+import { apiBase } from '../config/api';
 import {
   ICategory,
   IPersona
-} from '../../types/types';
+} from '../types/types';
 
 class SearchStore {
   @observable search: string = '';
@@ -87,9 +87,9 @@ class SearchStore {
   };
 
   @action onChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
-    if(type == 'search') {
+    if(type === 'search') {
       this.search = e.target.value;
-    } else if(type == 'location') {
+    } else if(type === 'location') {
       this.location = e.target.value;
     }
   };
