@@ -24,18 +24,6 @@ class Search extends React.Component<IProps> {
     SearchStore.clear();
   }
 
-  checkValidation(e: React.ChangeEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    if(SearchStore.search || SearchStore.location) {
-      this.props.history.push({
-        pathname: '/results',
-        search: `?search_term=${SearchStore.search}&location=${SearchStore.location}`,
-      });
-    } else {
-      alert('Please fill in at least one search criteria (keyword/location).');
-    }
-  }
-
   render() {
     const { windowSizeStore, cmsStore } = this.props;
 

@@ -9,12 +9,9 @@ import {
 } from '../types/types';
 
 class SearchStore {
-  @observable search: string = '';
-  @observable location: string = '';
   @observable categories: ICategory[] = [];
   @observable personas: IPersona[] = [];
   @observable categoryId: string = '';
-  @observable locationCoords: any;
 
   constructor() {
     this.getCategories();
@@ -22,37 +19,11 @@ class SearchStore {
   }
 
   @action clear = () => {
-    this.search = '';
-    this.location = '';
     this.categoryId = '';
-    this.locationCoords = {};
   };
 
   @action setCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.categoryId = e.target.value;
-  };
-
-  @action getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.locationCoords = {
-        lon: position.coords.longitude.toString(),
-        lat: position.coords.latitude.toString(),
-      };
-
-      this.geolocate();
-    });
-  };
-
-  @action geolocate = async () => {
-    try {
-      const geolocation = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.locationCoords.lat},${this.locationCoords.lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
-      );
-
-      this.location = get(geolocation, 'data.results[0].formatted_address', {});
-    } catch (e) {
-      alert('Sorry. We are currently unable to determine your location.');
-    }
   };
 
   @action
@@ -83,14 +54,6 @@ class SearchStore {
       this.personas = get(personas, 'data.data', []);
     } catch (e) {
       console.error(e);
-    }
-  };
-
-  @action onChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
-    if(type === 'search') {
-      this.search = e.target.value;
-    } else if(type === 'location') {
-      this.location = e.target.value;
     }
   };
 }
