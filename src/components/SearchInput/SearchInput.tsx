@@ -45,7 +45,7 @@ class SearchInput extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    const { search_term, location } = queryString.parse(this.props.location.search);
+    const { search_term, postcode } = queryString.parse(this.props.location.search);
     const { resultsStore } = this.props;
 
     if (!resultsStore) {
@@ -58,9 +58,9 @@ class SearchInput extends React.Component<IProps, IState> {
       });
     }
 
-    if (location) {
+    if (postcode) {
       this.setState({
-        postcode: location as string,
+        postcode: postcode as string,
       });
     }
   }

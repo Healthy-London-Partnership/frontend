@@ -79,11 +79,12 @@
 }
 
 .search__location__link {
-  display: inline-block !important;
+  float: right;
   margin-top: space(12);
-  margin-left: calc(50% - 56px);
+  margin-right: calc(50% - 148px);
 
   @include for-phone-only {
-    margin-left: 0;
+    float: left;
+    margin-right: 0;
   }
 }

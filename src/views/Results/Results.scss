@@ -8,24 +8,12 @@
   border-radius: 23px;
 }
 
-.results__list {
-  padding: space(20);
-
-  @include for-phone-only {
-    padding: space(8);
-  }
-}
-
 .results__container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   color: $san-juan;
   margin: space(40) 0 !important;
-
-  @include for-desktop-up {
-    padding: 0 space(64);
-  }
 
   &__title {
     @include for-phone-only {

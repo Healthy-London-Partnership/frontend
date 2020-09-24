@@ -31,7 +31,7 @@ export default class ResultsStore {
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
-  @observable itemsPerPage: number = 25;
+  @observable itemsPerPage: number = 9;
   @observable postcode: string = '';
   @observable locationCoords: IGeoLocation | {} = {};
   @observable fetched: boolean = false;
@@ -70,7 +70,7 @@ export default class ResultsStore {
     this.organisations = [];
     this.currentPage = 1;
     this.totalItems = 0;
-    this.itemsPerPage = 25;
+    this.itemsPerPage = 9;
     this.postcode = '';
     this.locationCoords = {};
   }
@@ -175,8 +175,9 @@ export default class ResultsStore {
   @action
   fetchResults = async (params: IParams, categories: string[]) => {
     if (this.isKeywordSearch || this.isPersonaSearch) {
-      const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
+      const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${this.itemsPerPage}`, params);
       this.results = this.results.set(params.query as string, data.data);
+      this.totalItems = get(data, 'meta.total', 0);
       this.getOrganisations();
     } else {
       Promise.all(
@@ -319,5 +320,12 @@ export default class ResultsStore {
   @action	
   toggleIsFree = () => {	
     this.is_free = !this.is_free;	
+  };
+
+  @action	
+  paginate = (page: number) => {	
+    this.currentPage = page;	
+    this.results = new Map();
+    this.loading = true;	
   };
 }

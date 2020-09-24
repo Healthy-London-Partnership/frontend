@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
+import { History } from 'history';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
@@ -12,6 +13,7 @@ import Breadcrumb from '../../components/Breadcrumb';
 interface IProps {
   location: Location;
   resultsStore: ResultStore;
+  history: History;
 }
 
 class Results extends Component<IProps> {
@@ -36,7 +38,7 @@ class Results extends Component<IProps> {
   }
 
   render() {
-    const { resultsStore } = this.props;
+    const { resultsStore, history } = this.props;
     return (
       <section>
         <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
@@ -45,7 +47,7 @@ class Results extends Component<IProps> {
         </div>
 
         <div className="results__list">
-          <ListView resultsStore={resultsStore} />
+          <ListView resultsStore={resultsStore} history={history} />
         </div>
       </section>
     );
