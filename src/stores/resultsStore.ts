@@ -25,6 +25,7 @@ export default class ResultsStore {
   @observable personaId: string = '';
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
+  @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
@@ -62,6 +63,7 @@ export default class ResultsStore {
     this.categories = [];
     this.personaId = '';
     this.persona = null;
+    this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
     this.fetched = false;
@@ -117,6 +119,10 @@ export default class ResultsStore {
         this.keyword = key;
       }
 
+      if (value === 'is_free') {	
+        this.is_free = key === 'true' ? true : false;	
+      }
+
       if (value === 'page') {
         this.currentPage = Number(key);
       }
@@ -147,6 +153,10 @@ export default class ResultsStore {
 
     if (this.persona) {
       params.persona = get(this.persona, 'name');
+    }
+
+    if (this.is_free) {	
+      params.is_free = this.is_free;	
     }
 
     if (this.keyword) {
@@ -304,5 +314,10 @@ export default class ResultsStore {
     this.results = new Map();
 
     this.setParams();
+  };
+  
+  @action	
+  toggleIsFree = () => {	
+    this.is_free = !this.is_free;	
   };
 }

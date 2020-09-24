@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import get from 'lodash/get';
 
 import { withRouter, RouteComponentProps } from 'react-router';
 import queryString from 'query-string';
@@ -8,6 +9,7 @@ import ResultsStore from '../../../stores/resultsStore';
 import WindowSizeStore from '../../../stores/windowSizeStore';
 import UIStore from '../../../stores/uiStore';
 import SearchInput from '../../../components/SearchInput';
+import Checkbox from '../../../components/Checkbox';
 
 interface IProps extends RouteComponentProps {
   resultsStore?: ResultsStore;
@@ -75,13 +77,21 @@ class Keyword extends Component<IProps, IState> {
               </div>
             </div>
             <div className="flex-container flex-container--mobile-no-padding">
-              <div className="flex-col--12">
+              <div className="flex-col--10 flex-col--tablet--12" style={{flexGrow: 1}}>
                 <div className="flex-container flex-container--no-padding">
                   <SearchInput showButtonText={false} keywordFieldLabel="Keyword" postcodeFieldLabel="Location" />
                 </div>
               </div>
-              <div className="flex-col">
-                
+              <div className="flex-col--2 flex-col--tablet--12">
+                <Checkbox	
+                  id="is_free"	
+                  label="<strong>Cost</strong><br>Free"
+                  checked={get(resultsStore, 'is_free', false)}	
+                  onChange={() => {	
+                    resultsStore.toggleIsFree();	
+                  }}	
+                  className="results__keyword-edit-checkbox"	
+                />	
               </div>
             </div>
           </form>
