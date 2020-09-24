@@ -119,7 +119,7 @@ export default class ResultsStore {
         this.keyword = key;
       }
 
-      if (value === 'is_free') {	
+      if (value === 'is_free') {
         this.is_free = key === 'true' ? true : false;	
       }
 
@@ -278,6 +278,14 @@ export default class ResultsStore {
       this.locationCoords = {};
     }
 
+    if (this.is_free) {	
+      url = this.updateQueryStringParameter('is_free', this.is_free, url);	
+    }	
+
+    if (!this.is_free) {	
+      url = this.removeQueryStringParameter('is_free', url);	
+    }
+
     if (searchTerm) {
       url = this.updateQueryStringParameter('search_term', searchTerm, url);
     }
@@ -318,8 +326,8 @@ export default class ResultsStore {
   };
   
   @action	
-  toggleIsFree = () => {	
-    this.is_free = !this.is_free;	
+  toggleIsFree = () => {
+    this.is_free = !this.is_free;
   };
 
   @action	

@@ -60,7 +60,7 @@
   position: relative;
 
   @include for-tablet-landscape-up {
-    padding: space(48) 0 0 !important;
+    padding: space(48) 0 space(16) !important;
     background-image: url('../../assets/images/backgrounds/results-shape.svg');
 
     &:before {

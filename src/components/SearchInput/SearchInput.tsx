@@ -79,7 +79,6 @@ class SearchInput extends React.Component<IProps, IState> {
     if(this.state.keyword || this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
       uiStore!.toggleKeywordEdit();
-      console.log(resultsStore!.amendSearch(this.state.keyword));
       this.props.history.push({
         pathname: '/results',
         search: resultsStore!.amendSearch(this.state.keyword)

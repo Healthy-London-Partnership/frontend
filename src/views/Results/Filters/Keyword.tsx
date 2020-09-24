@@ -88,7 +88,11 @@ class Keyword extends Component<IProps, IState> {
                   label="<strong>Cost</strong><br>Free"
                   checked={get(resultsStore, 'is_free', false)}	
                   onChange={() => {	
-                    resultsStore.toggleIsFree();	
+                    resultsStore!.toggleIsFree();
+                    this.props.history.push({
+                      pathname: '/results',
+                      search: resultsStore!.amendSearch()
+                    });
                   }}	
                   className="results__keyword-edit-checkbox"	
                 />	
