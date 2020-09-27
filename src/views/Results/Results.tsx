@@ -6,6 +6,7 @@ import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
 import Category from './Filters/Category';
 import Keyword from './Filters/Keyword';
+import ViewFilters from './Filters/ViewFilter/ViewFilter';
 import ListView from './ListView';
 
 import Breadcrumb from '../../components/Breadcrumb';
@@ -47,7 +48,26 @@ class Results extends Component<IProps> {
         </div>
 
         <div className="results__list">
-          <ListView resultsStore={resultsStore} history={history} />
+          <div className="flex-container flex-container--justify results__filter-bar">	
+            <div className="flex-col--tablet--12 flex-col--10">
+              <div className="flex-container flex-container--align-center flex-container--space">
+                <div className="flex-col flex-col--6">
+                  {!!resultsStore.results.size && !resultsStore.loading && (	
+                    <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>	
+                  )}	
+                </div>	
+                <div className="flex-col flex-col--6">	
+                  <ViewFilters />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {resultsStore.view === 'grid' ? (	
+            <ListView resultsStore={resultsStore} history={history} />	
+          ) : (	
+            ''
+          )}
         </div>
       </section>
     );

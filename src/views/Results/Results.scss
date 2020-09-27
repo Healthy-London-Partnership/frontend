@@ -13,7 +13,6 @@
   flex-wrap: wrap;
   justify-content: center;
   color: $san-juan;
-  margin: space(40) 0 !important;
 
   &__title {
     @include for-phone-only {
@@ -192,24 +191,6 @@
   font-family: $font-primary;
   font-size: $font-heading-s;
   margin-bottom: space(16);
-}
-
-.results__filter-bar {
-  align-items: center;
-  max-width: 1260px;
-
-  @include for-phone-only {
-    flex-direction: column-reverse;
-  }
-
-  @include for-tablet-landscape-down {
-    padding: 0 !important;
-    flex-direction: column-reverse;
-  }
-
-  @include for-tablet-landscape-up {
-    margin-bottom: space(32) !important;
-  }
 }
 
 .results__sort-by-label {
@@ -413,6 +394,10 @@
       height: 1.25em !important;
     }
   }
+}
+
+.results__filter-bar {
+  margin: space(32) 0 !important;
 }
 
 .results__sort-by-container {
