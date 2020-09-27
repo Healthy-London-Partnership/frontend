@@ -14,10 +14,6 @@ interface IProps extends RouteComponentProps {
 @inject('resultsStore')
 @observer
 class ViewFilters extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   render() {
     const { resultsStore } = this.props;
 

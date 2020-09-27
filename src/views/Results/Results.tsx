@@ -8,6 +8,7 @@ import Category from './Filters/Category';
 import Keyword from './Filters/Keyword';
 import ViewFilters from './Filters/ViewFilter/ViewFilter';
 import ListView from './ListView';
+import MapView from './MapView';
 
 import Breadcrumb from '../../components/Breadcrumb';
 
@@ -66,7 +67,7 @@ class Results extends Component<IProps> {
           {resultsStore.view === 'grid' ? (	
             <ListView resultsStore={resultsStore} history={history} />	
           ) : (	
-            ''
+            <MapView />
           )}
         </div>
       </section>
