@@ -1,27 +1,41 @@
 import React, { Component, Fragment } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import Button from '../Button';
+import InstructionModal from './InstructionModal/InstructionModal';
 import HomeScreenIcon from '../../assets/images/icons/home-screen-icon.png';
 import './HomeScreenPrompt.scss';
 
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-@inject('windowSizeStore')
+interface IState {
+  showInstructionModal: boolean;
+}
+
 @observer
-class HomeScreenPrompt extends Component<any> {
+class HomeScreenPrompt extends Component<any, IState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      showInstructionModal: false
+    }
+  }
+
+  triggerInstructionModal() {
+    this.setState({
+      showInstructionModal : true
+    });
+
+    this.setHomeScreenPromptCookie();
+  }
+
   setHomeScreenPromptCookie() {
 
   }
 
   render() {
-    const { windowSizeStore } = this.props;
-
-    // injected stores must be typed as optional, but will always be there if injected. Allows workound for destructuring values from store
-    if (!windowSizeStore) {
-      return null;
-    }
-
-    const { isMobile } = windowSizeStore;
+    const { showInstructionModal } = this.state;
     
     return (
       <Fragment>
@@ -48,11 +62,12 @@ class HomeScreenPrompt extends Component<any> {
                     size="small"
                     text="Yes, let's add"
                     type="button"
-                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.setHomeScreenPromptCookie()}
+                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.triggerInstructionModal()}
                   />
                 </div>
               </div>
             </div>
+            <InstructionModal isOpen={showInstructionModal}/>
           </div>
         }
       </Fragment>
