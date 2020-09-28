@@ -37,9 +37,9 @@ class MapView extends Component<IProps, IState> {
     };
   }
 
-  addMarkers = (results: IService[]) => {
+  addMarkers = (results: any) => {
     if (results) {
-      map(results, (result: IService) => {
+      map(results[1], (result: IService) => {
         if (result.service_locations) {
           result.service_locations.forEach((location: IServiceLocation) =>
             this.state.bounds.extend([location.location.lat, location.location.lon])
@@ -87,7 +87,7 @@ class MapView extends Component<IProps, IState> {
       return;
     }
 
-    // this.addMarkers(resultsStore.results);
+    this.addMarkers([...resultsStore.results.entries()][0]);
 
     return (
       <main className="flex-container flex-container--justify">
