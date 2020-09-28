@@ -10,7 +10,7 @@ import get from 'lodash/get';
 interface IProps {
   title: string;
 
-  hasSideboxes: (titile: string) => ISidebox[] | null;
+  hasSideboxes: (title: string) => ISidebox[] | null;
   resultsList: IService[];
   resultsStore: ResultsStore;
 }

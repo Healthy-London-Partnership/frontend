@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import map from 'lodash/map';
+import find from 'lodash/find';
+import get from 'lodash/get';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { latLngBounds, LatLngBounds } from 'leaflet';
 import { observer, inject } from 'mobx-react';
 
 import { ActivityMarker, GroupMarker, ServiceMarker, ClubMarker } from './icons';
+import List from './../ListView/List';
 
 import './MapView.scss';
 import ResultsStore from '../../../stores/resultsStore';
@@ -62,6 +64,22 @@ class MapView extends Component<IProps, IState> {
     }
   };
 
+  hasSideboxes = (title: string) => {
+    const { resultsStore } = this.props;
+
+
+    const category = find(resultsStore!.categories, ['name', title]);
+
+    if (category) {
+      return category.sideboxes;
+    }
+    if (resultsStore!.persona) {
+      return get(resultsStore!, 'persona.sideboxes', []);
+    }
+
+    return null;
+  };
+
   render() {
     const { resultsStore } = this.props;
 
@@ -72,48 +90,52 @@ class MapView extends Component<IProps, IState> {
     // this.addMarkers(resultsStore.results);
 
     return (
-      <main className="flex-container">
-        <div className="flex-col--9 flex-col--mobile--12 map">
-          <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
-            <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
-            {[...resultsStore.results.entries()].map((results, i) => {
-              results[1].map((result: any) => {return result.service_locations.map((serviceLocation: IServiceLocation) => {
+      <main className="flex-container flex-container--justify">
+        <div className="flex-col--tablet--12 flex-col--10">
+          <div className="flex-container flex-container--space flex-container--row-reverse map">
+            <div className="flex-col--6 flex-col--mobile--12 map__map-container">
+              <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
+                <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
+                {[...resultsStore.results.entries()].map((results, i) => {
+                  results[1].map((result: any) => {return result.service_locations.map((serviceLocation: IServiceLocation) => {
+                      return (
+                        <Marker
+                          key={serviceLocation.id}
+                          position={[serviceLocation.location.lat, serviceLocation.location.lon]}
+                          icon={this.getMarker(result.type)}
+                        />
+                      );
+                    });
+                  })
+
+                  return null;
+                })}
+              </Map>
+            </div>
+            
+            <div className="flex-col--6 flex-col--mobile--12 map__results-container">
+              {resultsStore.results.size ? (
+                [...resultsStore.results.entries()].map((results, i) => {
+                  const [title, resultsList] = results;
+
                   return (
-                    <Marker
-                      key={serviceLocation.id}
-                      position={[serviceLocation.location.lat, serviceLocation.location.lon]}
-                      icon={this.getMarker(result.type)}
+                    <List
+                      key={title}
+                      title={title}
+                      hasSideboxes={this.hasSideboxes}
+                      resultsList={resultsList}
+                      resultsStore={resultsStore}
                     />
                   );
-                });
-              })
-
-              return null;
-            })}
-          </Map>
-        </div>
-        <div className="flex-col--3 flex-col--mobile--12 map__key--container">
-          <h3 className="map__key--heading">Map key</h3>
-          <div className="map__key">
-            <p className="map__key--description">
-              <FontAwesomeIcon
-                icon="paper-plane"
-                className="map__key-icon map__key-icon--activity"
-              />
-              Activity
-            </p>
-            <p className="map__key--description">
-              <FontAwesomeIcon icon="clipboard" className="map__key-icon map__key-icon--service" />
-              Service
-            </p>
-            <p className="map__key--description">
-              <FontAwesomeIcon icon="users" className="map__key-icon map__key-icon--group" />
-              Group
-            </p>
-            <p className="map__key--description">
-              <FontAwesomeIcon icon="tshirt" className="map__key-icon map__key-icon--club" />
-              Club
-            </p>
+                })
+              ) : (
+                <h1>
+                  {resultsStore.isPostcodeSearch
+                    ? 'There are currently no service offers available in your area.'
+                    : 'There are currently no service offers available.'}
+                </h1>
+              )}  
+            </div>
           </div>
         </div>
       </main>
