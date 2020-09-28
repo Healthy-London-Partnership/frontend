@@ -10,8 +10,14 @@
   left: 0;
   right: 0;
   z-index: 999;
+  transform: translateY(100%);
   padding: space(16);
   background-color: $mercury;
+  animation-name: slideUpPrompt;
+  animation-duration: 0.75s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
 
   &__wrapper {
     display: flex;
@@ -57,5 +63,15 @@
 
   &__description {
     font-size: $font-body-xs;
+  }
+}
+
+@keyframes slideUpPrompt {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
   }
 }
