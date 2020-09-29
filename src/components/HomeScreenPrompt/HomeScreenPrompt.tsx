@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { isMobile } from 'react-device-detect';
+import Cookies from 'universal-cookie';
 
 import Button from '../Button';
 import InstructionModal from './InstructionModal/InstructionModal';
@@ -9,8 +10,11 @@ import './HomeScreenPrompt.scss';
 import { observer } from 'mobx-react';
 
 interface IState {
+  isVisible: boolean;
   showInstructionModal: boolean;
 }
+
+const cookies = new Cookies();
 
 @observer
 class HomeScreenPrompt extends Component<any, IState> {
@@ -18,28 +22,45 @@ class HomeScreenPrompt extends Component<any, IState> {
     super(props);
 
     this.state = {
-      showInstructionModal: false
+      isVisible: true,
+      showInstructionModal: false,
     }
   }
 
-  triggerInstructionModal(value: boolean) {
-    this.setState({
-      showInstructionModal: value
-    });
-
-    this.setHomeScreenPromptCookie();
+  componentWillMount() {
+    this.getDisplayCookie();
   }
 
-  setHomeScreenPromptCookie() {
+  getDisplayCookie() {
+    let displayCookie = cookies.get('ct_home_screen_prompt_visible');
 
+    this.setState({
+      isVisible: displayCookie
+    });
+  }
+
+  setDisplayCookie(value: boolean) {
+    let d = new Date();
+
+    d.setMonth(d.getMonth() + 6);
+    console.log(d);
+
+    cookies.set('ct_home_screen_prompt_visible', false, {
+      expires: d
+    });
+
+    this.setState({
+      isVisible: true,
+      showInstructionModal: value
+    });
   }
 
   render() {
-    const { showInstructionModal } = this.state;
+    const { isVisible, showInstructionModal } = this.state;
     
     return (
       <Fragment>
-        {isMobile &&
+        {(isMobile && !isVisible) &&
           <div className="home-screen-prompt">
             <div className="home-screen-prompt__wrapper">
               <div className="home-screen-prompt__icon">
@@ -56,20 +77,20 @@ class HomeScreenPrompt extends Component<any, IState> {
                     light={true}
                     text="No thanks"
                     type="button"
-                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.setHomeScreenPromptCookie()}
+                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.setDisplayCookie(false)}
                   />
                   <Button
                     size="small"
                     text="Yes, let's add"
                     type="button"
-                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.triggerInstructionModal(true)}
+                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.setDisplayCookie(true)}
                   />
                 </div>
               </div>
             </div>
-            <InstructionModal triggerInstructionModal={this.triggerInstructionModal.bind(this)} isOpen={showInstructionModal}/>
           </div>
         }
+        <InstructionModal setDisplayCookie={this.setDisplayCookie.bind(this)} isOpen={showInstructionModal}/>
       </Fragment>
     )
   }

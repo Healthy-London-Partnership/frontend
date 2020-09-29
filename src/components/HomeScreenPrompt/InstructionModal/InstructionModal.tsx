@@ -34,7 +34,7 @@ class InstructionModal extends Component<any> {
       >
         <div className="instruction-modal__main">
           <div className="instruction-modal__close">
-            <button onClick={() => this.props.triggerInstructionModal(false)}>Close <FontAwesomeIcon icon="window-close" /></button>
+            <button onClick={() => this.props.setDisplayCookie(false)}>Close <FontAwesomeIcon icon="window-close" /></button>
           </div>
           <div className="instruction-modal__icon">
             <span>
