@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { isIOS } from 'react-device-detect';
 
 import './InstructionModal.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HomeScreenIcon from '../../../assets/images/icons/home-screen-icon.png';
 
 import Modal from 'react-modal';
@@ -32,6 +33,9 @@ class InstructionModal extends Component<any> {
         shouldCloseOnOverlayClick={true}
       >
         <div className="instruction-modal__main">
+          <div className="instruction-modal__close">
+            <button onClick={() => this.props.triggerInstructionModal(false)}>Close <FontAwesomeIcon icon="window-close" /></button>
+          </div>
           <div className="instruction-modal__icon">
             <span>
               <img src={HomeScreenIcon} alt="Add to home screen icon" />

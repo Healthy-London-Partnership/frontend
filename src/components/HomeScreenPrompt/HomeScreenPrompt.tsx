@@ -22,9 +22,9 @@ class HomeScreenPrompt extends Component<any, IState> {
     }
   }
 
-  triggerInstructionModal() {
+  triggerInstructionModal(value: boolean) {
     this.setState({
-      showInstructionModal : true
+      showInstructionModal: value
     });
 
     this.setHomeScreenPromptCookie();
@@ -62,12 +62,12 @@ class HomeScreenPrompt extends Component<any, IState> {
                     size="small"
                     text="Yes, let's add"
                     type="button"
-                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.triggerInstructionModal()}
+                    onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.triggerInstructionModal(true)}
                   />
                 </div>
               </div>
             </div>
-            <InstructionModal isOpen={showInstructionModal}/>
+            <InstructionModal triggerInstructionModal={this.triggerInstructionModal.bind(this)} isOpen={showInstructionModal}/>
           </div>
         }
       </Fragment>

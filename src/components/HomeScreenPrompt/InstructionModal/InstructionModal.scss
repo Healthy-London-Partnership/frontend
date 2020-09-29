@@ -6,10 +6,11 @@
 .instruction-modal {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   padding: 0;
 
   &__main {
-    flex: 1 1 100%;
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -19,13 +20,30 @@
     background-color: $mercury;
   }
 
+  &__close {
+    position: absolute;
+    top: space(16);
+    right: space(16);
+
+    button {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-left: space(8);
+      }
+    }
+  }
+
   &__icon {
+    flex: 1 1 100%;
     margin-bottom: space(32);
 
     span {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 auto;
       width: 62px;
       height: 62px;
       border-radius: 10px;
@@ -44,7 +62,7 @@
   }
 
   &__footer {
-    flex: 1 1 100%;
+    width: 100%;
     align-self: flex-end;
     padding: space(48) space(32);
     text-align: center;
