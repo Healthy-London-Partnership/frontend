@@ -32,6 +32,7 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import Header from './components/Header';
 import FeedbackModal from './components/FeedbackModal';
 import Footer from './components/Footer/Footer';
+import MetaData from './components/MetaData';
 
 // add all free font awesome icons to project
 library.add(fas, fab);
@@ -60,6 +61,7 @@ class App extends Component {
         cmsStore={cmsStore}
         referralStore={referralStore}
       >
+        <MetaData />
         <Router>
           <ScrollToTop>
             <Header />
