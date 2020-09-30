@@ -19,6 +19,7 @@ export interface IParams {
   order?: 'distance' | 'relevance';
   query?: string;
   location?: IGeoLocation | {};
+  is_national?: boolean;
 }
 
 export interface ICategory {

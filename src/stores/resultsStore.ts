@@ -28,6 +28,7 @@ export default class ResultsStore {
   @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
+  @observable nationalResults: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
@@ -180,44 +181,31 @@ export default class ResultsStore {
 
     params.order = this.order;
 
-    await this.fetchResults(params, categories);
+    await this.fetchResults(false, params);
+
+    if(this.postcode) {
+      params.is_national = true;
+      delete params['location'];
+
+      await this.fetchResults(true, params);
+    }
+
+    console.log([...this.results.entries()][0][1]);
+    console.log([...this.nationalResults.entries()][0][1]);
   };
 
   @action
-  fetchResults = async (params: IParams, categories: string[]) => {
-    if (this.isKeywordSearch || this.isPersonaSearch) {
-      const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${this.itemsPerPage}`, params);
-      this.results = this.results.set(params.query as string, data.data);
-      this.totalItems = get(data, 'meta.total', 0);
-      this.getOrganisations();
-    } else {
-      Promise.all(
-        categories.map((category: string) => {
-          const requestParams = { category, ...params };
+  fetchResults = async (isNational: boolean, params: IParams) => {
+    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${this.itemsPerPage}`, params);
+    this.totalItems += get(data, 'meta.total', 0);    
 
-          return axios
-            .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
-            .then(response => get(response, 'data.data'))
-            .then(data => {
-              if (data.length) {
-                this.results = this.results.set(category, data);
-                this.getOrganisations();
-              } else {
-                this.fetched = true;
-              }
-            })
-            .then(() => {
-              if (this.results.size) {
-                this.ordered();
-              }
-            })
-            .catch(error => {
-              console.error(error);
-              this.fetched = true;
-            });
-        })
-      );
+    if(!isNational) {
+      this.results = this.results.set(params.query as string, data.data);
+    } else {
+      this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
+
+    this.getOrganisations();
   };
 
   @action
@@ -303,6 +291,10 @@ export default class ResultsStore {
 
     if (searchTerm) {
       url = this.updateQueryStringParameter('search_term', searchTerm, url);
+    }
+
+    if (!searchTerm) {
+      url = this.removeQueryStringParameter('search_term', url);
     }
 
     this.results = new Map();

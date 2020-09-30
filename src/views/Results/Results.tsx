@@ -45,7 +45,7 @@ class Results extends Component<IProps> {
       <section>
         <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
         <div className="results__search-box">
-          {resultsStore.isKeywordSearch ? <Keyword /> : <Category />}
+          <Keyword />
         </div>
 
         <div className="results__list">

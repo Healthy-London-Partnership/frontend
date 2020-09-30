@@ -122,7 +122,6 @@ class MapView extends Component<IProps, IState> {
                     <List
                       key={title}
                       title={title}
-                      hasSideboxes={this.hasSideboxes}
                       resultsList={resultsList}
                       resultsStore={resultsStore}
                     />

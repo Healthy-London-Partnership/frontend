@@ -20,19 +20,6 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
     return <Loading />;
   }
 
-  const hasSideboxes = (title: string) => {
-    const category = find(resultsStore.categories, ['name', title]);
-
-    if (category) {
-      return category.sideboxes;
-    }
-    if (resultsStore.persona) {
-      return get(resultsStore, 'persona.sideboxes', []);
-    }
-
-    return null;
-  };
-
   return (
     <Fragment>
       <main>
@@ -46,7 +33,6 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                   <List
                     key={title}
                     title={title}
-                    hasSideboxes={hasSideboxes}
                     resultsList={resultsList}
                     resultsStore={resultsStore}
                   />

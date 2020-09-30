@@ -27,6 +27,16 @@
       margin: 0 space(8) space(16);
     }
   }
+
+  &--has-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+    .search-result-card {
+      width: calc(50% - 1rem);
+    }
+  }
 }
 
 .results__divider {
@@ -116,7 +126,7 @@
   margin-top: space(8);
 }
 
-.pagnation__container {
+.pagination__container {
   justify-content: center;
 }
 
@@ -414,11 +424,9 @@
   }
 }
 
-.results__category-sidebar {
-  margin: space(32) 0 !important;
-
-  @include for-tablet-portrait-down {
-    margin: space(16) 0 !important;
+.results__national-sidebar {
+  .search-result-card {
+    width: 100%;
   }
 }
 
