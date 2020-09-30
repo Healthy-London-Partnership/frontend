@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const MetaData: React.FunctionComponent<IProps> = ({
-  title = 'Connected Together - Search for support and advice for health and wellbeing',
+  title = '',
   metaDescription = 'Search for support and advice for health and wellbeing',
   metaName = 'Connected Together',
   metaImage,
@@ -32,7 +32,7 @@ const MetaData: React.FunctionComponent<IProps> = ({
 }) => (
   <Helmet>
     {/* <!-- HTML Meta Tags --> */}
-    <title>{title}</title>
+    <title>Connected Together{title && ` - ${title}`}</title>
     <meta
       name="description"
       content={metaDescription}

@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 
 import CMSPage from '../components/CMSPageLayout';
 import CMSStore from '../stores/CMSStore';
+import MetaData from '../components/MetaData';
 
 interface IProps {
   cmsStore: CMSStore;
@@ -17,6 +18,9 @@ const Terms: React.FunctionComponent<IProps> = ({ cmsStore }) => {
 
   return (
     <CMSPage title={get(cmsStore, 'terms_and_conditions.title')} breadcrumb="Terms & Conditions">
+      <MetaData
+        title="Terms &amp; Conditions"
+      />
       <ReactMarkdown source={get(cmsStore, 'terms_and_conditions.content')} />
     </CMSPage>
   );
