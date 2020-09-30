@@ -1,15 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { isMobile } from 'react-device-detect';
 import Cookies from 'universal-cookie';
+import get from 'lodash/get';
 
 import Button from '../Button';
 import InstructionModal from './InstructionModal/InstructionModal';
 import HomeScreenIcon from '../../assets/images/icons/home-screen-icon.png';
 import './HomeScreenPrompt.scss';
 
+import ReferralStore from '../../stores/referralStore';
+
 import { observer } from 'mobx-react';
 
 interface IState {
+  referralStore?: ReferralStore;
   isVisible: boolean;
   showInstructionModal: boolean;
 }
@@ -21,14 +25,22 @@ class HomeScreenPrompt extends Component<any, IState> {
   constructor(props: any) {
     super(props);
 
-    this.state = {
+    this.setState({
       isVisible: true,
       showInstructionModal: false,
-    }
+    });
   }
 
   componentWillMount() {
+    const { referralStore } = this.props;
+
     this.getDisplayCookie();
+
+    if(get(referralStore, 'showConfirmation')) {
+      this.setState({
+        isVisible: true
+      });
+    }
   }
 
   getDisplayCookie() {
