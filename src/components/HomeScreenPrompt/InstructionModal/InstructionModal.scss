@@ -59,6 +59,11 @@
     p {
       margin-bottom: space(16);
     }
+
+    .svg-inline--fa {
+      margin: 0 4px;
+      color: $elm;
+    }
   }
 
   &__footer {
@@ -67,5 +72,10 @@
     padding: space(48) space(32);
     text-align: center;
     background-color: $white;
+
+    .svg-inline--fa {
+      margin: 0 4px;
+      color: $elm;
+    }
   }
 }

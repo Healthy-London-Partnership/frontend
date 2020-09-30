@@ -11,17 +11,17 @@ class InstructionModal extends Component<any> {
   render() {
     const renderModalContent = ()=>{
       if(isIOS){
-        return <p>You can add the launcher to your home screen by clicking the 'Share Options'  'Add to home Screen' then 'Add</p>;
+        return <p>You can add the launcher to your home screen by clicking the 'Share Options' <FontAwesomeIcon icon="share-square" /> 'Add to home Screen' then <FontAwesomeIcon icon="plus-square" /> 'Add</p>;
       } else{
-        return <p>You can add the launcher to your home screen by clicking the 'Settings'  'Add to shortcut to home'</p>;
+        return <p>You can add the launcher to your home screen by clicking the 'Settings' <FontAwesomeIcon icon="ellipsis-v" /> 'Add to shortcut to home'</p>;
       }
     }
 
     const renderModalFooter = ()=>{
       if(isIOS){
-        return <p>Tap then 'Add to homescreen'</p>;
+        return <p>Tap <FontAwesomeIcon icon="share-square" /> then 'Add to homescreen'</p>;
       } else{
-        return <p>Tap then 'Add shortcut to home'</p>;
+        return <p>Tap <FontAwesomeIcon icon="ellipsis-v" /> then 'Add shortcut to home'</p>;
       }
     }
 
