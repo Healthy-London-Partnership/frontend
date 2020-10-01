@@ -38,7 +38,7 @@ class Results extends Component<IProps> {
 
   render() {
     const { resultsStore } = this.props;
-    console.log(resultsStore);
+
     return (
       <section>
         <MetaData
