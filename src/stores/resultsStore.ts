@@ -181,8 +181,6 @@ export default class ResultsStore {
 
     params.order = this.order;
 
-    params.is_national = false;
-
     await this.fetchResults(false, params);
 
     if(this.view !== 'map' && this.postcode !== '') {

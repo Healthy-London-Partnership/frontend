@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router';
-import get from 'lodash/get';
 import axios from 'axios';
 import queryString from 'query-string';
 import cx from 'classnames';
@@ -95,17 +94,16 @@ class SearchInput extends React.Component<IProps, IState> {
   };
 
   reverseGeolocate = async (lon: string, lat: string) => {
-    try {
-      const geolocation = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
-      );
-
-      const location = get(geolocation, 'data.results[0].formatted_address', {});
+    await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+    ).then(response => {
+      let location = response.data.results[0].formatted_address;
 
       this.handleInputChange(location, 'postcode');
-    } catch (e) {
+    })
+    .catch(() => {
       alert('Sorry. We are currently unable to determine your location.');
-    }
+    });
   };
 
   render() {
