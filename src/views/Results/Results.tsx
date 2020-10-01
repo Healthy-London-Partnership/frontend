@@ -7,6 +7,7 @@ import Category from './Filters/Category';
 import Keyword from './Filters/Keyword';
 import ListView from './ListView';
 
+import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
 
 interface IProps {
@@ -37,8 +38,13 @@ class Results extends Component<IProps> {
 
   render() {
     const { resultsStore } = this.props;
+    console.log(resultsStore);
     return (
       <section>
+        <MetaData
+          title={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
+          metaDescription={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
+        />
         <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
         <div className="results__search-box">
           {resultsStore.isKeywordSearch ? <Keyword /> : <Category />}
