@@ -18,7 +18,7 @@ interface IProps {
 
 const MetaData: React.FunctionComponent<IProps> = ({
   title = '',
-  metaDescription = 'Search for support and advice for health and wellbeing',
+  metaDescription = 'Connected Together is a site dedicated to helping people find activities, join clubs, and navigate local services across London Boroughs',
   metaName = 'Connected Together',
   metaImage,
   ogUrl,
