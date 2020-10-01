@@ -68,6 +68,7 @@ export default class ResultsStore {
     this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
+    this.nationalResults = new Map();
     this.fetched = false;
     this.organisations = [];
     this.currentPage = 1;
@@ -156,7 +157,7 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-    const categories = map(this.categories, 'name');
+    // const categories = map(this.categories, 'name');
 
     if (this.persona) {
       params.persona = get(this.persona, 'name');
@@ -165,7 +166,6 @@ export default class ResultsStore {
     if (this.is_free) {	
       params.is_free = this.is_free;	
     }
-
 
     if (this.view) {	
       params.view = this.view;
@@ -181,23 +181,30 @@ export default class ResultsStore {
 
     params.order = this.order;
 
+    params.is_national = false;
+
     await this.fetchResults(false, params);
 
-    if(this.postcode) {
+    if(this.view !== 'map' && this.postcode !== '') {
       params.is_national = true;
       delete params['location'];
 
       await this.fetchResults(true, params);
     }
-
-    console.log([...this.results.entries()][0][1]);
-    console.log([...this.nationalResults.entries()][0][1]);
   };
 
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
-    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${this.itemsPerPage}`, params);
-    this.totalItems += get(data, 'meta.total', 0);    
+    let itemsPerPage;
+
+    if(isNational) {
+      itemsPerPage = Math.round(this.itemsPerPage / 2);
+    } else {
+      itemsPerPage = this.itemsPerPage;
+    }
+
+    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`, params);
+    this.totalItems += get(data, 'meta.total', 0);
 
     if(!isNational) {
       this.results = this.results.set(params.query as string, data.data);
@@ -265,7 +272,7 @@ export default class ResultsStore {
     this.postcode = postcode.replace(' ', '');
   };
 
-  amendSearch = (searchTerm?: string) => {
+  amendSearch = () => {
     let url = window.location.search;
 
     if (this.postcode) {
@@ -289,15 +296,16 @@ export default class ResultsStore {
       url = this.updateQueryStringParameter('view', this.view, url)
     }	
 
-    if (searchTerm) {
-      url = this.updateQueryStringParameter('search_term', searchTerm, url);
+    if (this.keyword) {
+      url = this.updateQueryStringParameter('search_term', this.keyword, url);
     }
 
-    if (!searchTerm) {
+    if (!this.keyword) {
       url = this.removeQueryStringParameter('search_term', url);
     }
 
     this.results = new Map();
+    this.nationalResults = new Map();
     return url;
   };
 
@@ -320,8 +328,8 @@ export default class ResultsStore {
   };
 
   @action
-  handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.keyword = e.target.value;
+  handleKeywordChange = (value: string) => {
+    this.keyword = value;
   };
 
   @action	
@@ -333,6 +341,7 @@ export default class ResultsStore {
   orderResults = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.order = e.target.value as 'relevance' | 'distance';
     this.results = new Map();
+    this.nationalResults = new Map();
 
     this.setParams();
   };
@@ -346,6 +355,7 @@ export default class ResultsStore {
   paginate = (page: number) => {	
     this.currentPage = page;	
     this.results = new Map();
+    this.nationalResults = new Map();
     this.loading = true;	
   };
 }

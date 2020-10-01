@@ -13,7 +13,7 @@ interface IProps extends RouteComponentProps {
 
 @inject('resultsStore')
 @observer
-class ViewFilters extends Component<IProps> {
+class ViewFilter extends Component<IProps> {
   render() {
     const { resultsStore } = this.props;
 
@@ -57,4 +57,4 @@ class ViewFilters extends Component<IProps> {
   }
 };
 
-export default withRouter(ViewFilters);
+export default withRouter(ViewFilter);

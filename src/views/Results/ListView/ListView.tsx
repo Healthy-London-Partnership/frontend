@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import Pagination from 'react-js-pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import find from 'lodash/find';
-import get from 'lodash/get';
 import { observer } from 'mobx-react';
 
 import ResultsStore from '../../../stores/resultsStore';
@@ -20,33 +18,66 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
     return <Loading />;
   }
 
+  const results = resultsStore.results;
+  const nationalResults = resultsStore.nationalResults;
+
   return (
     <Fragment>
       <main>
         <div className="flex-container flex-container--justify">
           <div className="flex-col--tablet--12 flex-col--10">
-            {resultsStore.results.size ? (
-              [...resultsStore.results.entries()].map((results, i) => {
-                const [title, resultsList] = results;
+            <div className="flex-container flex-container--justify">
+              {(results.size || nationalResults.size) ? (
+                <Fragment>
+                  {results.size && (
+                    <div className={nationalResults.size ? 'flex-col--tablet--12 flex-col--8 results__list--has-national-results' : 'flex-col--12'}>
+                      {results.size && (
+                        [...results.entries()].map((results, i) => {
+                          const [title, resultsList] = results;
 
-                return (
-                  <List
-                    key={title}
-                    title={title}
-                    resultsList={resultsList}
-                    resultsStore={resultsStore}
-                  />
-                );
-              })
-            ) : (
-              <div className="results__container">
-                <h1>
-                  {resultsStore.isPostcodeSearch
-                    ? 'There are currently no service offers available in your area.'
-                    : 'There are currently no service offers available.'}
-                </h1>
-              </div>
-            )}
+                          return (
+                            <List
+                              key={title}
+                              title={title}
+                              resultsList={resultsList}
+                              resultsStore={resultsStore}
+                            />
+                          );
+                        })
+                      )}
+                    </div>
+                  )}
+                  {nationalResults.size && (
+                    <Fragment>
+                      <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--4 results__list__national-results' : 'flex-col--12'}>
+                        {nationalResults.size && (
+                          [...nationalResults.entries()].map((results, i) => {
+                            const [title, resultsList] = results;
+
+                            return (
+                              <List
+                                key={title}
+                                title={title}
+                                resultsList={resultsList}
+                                resultsStore={resultsStore}
+                              />
+                            );
+                          })
+                        )}
+                      </div>
+                    </Fragment>
+                  )}
+                </Fragment>
+              ) : (
+                <div className="results__container">
+                  <h1>
+                    {resultsStore.isPostcodeSearch
+                      ? 'There are currently no service offers available in your area.'
+                      : 'There are currently no service offers available.'}
+                  </h1>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>

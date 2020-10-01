@@ -73,15 +73,15 @@ class SearchInput extends React.Component<IProps, IState> {
   };
 
   checkValidation(e: React.ChangeEvent<HTMLButtonElement>) {
-    const { resultsStore, uiStore } = this.props;
+    const { resultsStore } = this.props;
 
     e.preventDefault();
     if(this.state.keyword || this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
-      uiStore!.toggleKeywordEdit();
+      resultsStore!.handleKeywordChange(this.state.keyword);
       this.props.history.push({
         pathname: '/results',
-        search: resultsStore!.amendSearch(this.state.keyword)
+        search: resultsStore!.amendSearch()
       });
     } else {
       alert('Please fill in at least one search criteria (keyword/location).');

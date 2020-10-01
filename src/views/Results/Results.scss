@@ -119,6 +119,22 @@
 
 .results__list {
   margin-top: space(48);
+
+  &--has-national-results {
+    .search-result-card {
+      width: calc(50% - 16px);
+
+      @include for-tablet-landscape-down {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.results__list__national-results {
+  .search-result-card {
+    width: 100%;
+  }
 }
 
 .results__search-filter-location {

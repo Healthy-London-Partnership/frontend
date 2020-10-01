@@ -4,9 +4,8 @@ import { History } from 'history';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
-import Category from './Filters/Category';
 import Keyword from './Filters/Keyword';
-import ViewFilters from './Filters/ViewFilter/ViewFilter';
+import ViewFilter from './Filters/ViewFilter/ViewFilter';
 import ListView from './ListView';
 import MapView from './MapView';
 
@@ -58,7 +57,7 @@ class Results extends Component<IProps> {
                   )}	
                 </div>	
                 <div className="flex-col flex-col--6">	
-                  <ViewFilters />
+                  <ViewFilter />
                 </div>
               </div>
             </div>
