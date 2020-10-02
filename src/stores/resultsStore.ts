@@ -273,6 +273,9 @@ export default class ResultsStore {
   amendSearch = () => {
     let url = window.location.search;
 
+    this.currentPage = 1;
+    url = this.updateQueryStringParameter('page', this.currentPage);
+
     if (this.postcode) {
       url = this.updateQueryStringParameter('postcode', this.postcode);
     }
