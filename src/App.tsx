@@ -33,6 +33,7 @@ import Header from './components/Header';
 import FeedbackModal from './components/FeedbackModal';
 import Footer from './components/Footer/Footer';
 import MetaData from './components/MetaData';
+import HomeScreenPrompt from './components/HomeScreenPrompt';
 
 // add all free font awesome icons to project
 library.add(fas, fab);
@@ -81,6 +82,7 @@ class App extends Component {
               <Route component={NotFound} />
             </Switch>
             <FeedbackModal />
+            <HomeScreenPrompt />
             <Footer />
           </ScrollToTop>
         </Router>
