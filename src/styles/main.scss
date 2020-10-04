@@ -16,6 +16,10 @@ html {
   height: 100%;
 }
 
+body {
+  position: inherit !important; // Google translate fix
+}
+
 h1 {
   @include heading-l;
 }

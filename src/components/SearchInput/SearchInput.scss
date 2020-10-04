@@ -1,0 +1,90 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/grid.scss';
+@import '../../styles/breakpoints.scss';
+@import '../../styles/fonts.scss';
+
+.search__input {
+  margin-bottom: 48px;
+
+  @include for-phone-only {
+    margin-bottom: 48px !important;
+  }
+
+  &__item {
+    padding: 0 space(24);
+    margin: space(10) 0;
+
+    @include for-phone-only {
+      padding: space(12) 0 space(32);
+      margin: 0 space(20);
+    }
+
+    &:first-child {
+      border-right: 2px solid $san-juan;
+
+      @include for-phone-only {
+        border-right: none;
+        border-bottom: 2px solid $san-juan;
+      }
+    }
+  }
+
+  label {
+    display: block;
+    margin-bottom: space(8);
+    font-family: $font-secondary;
+    font-size: $font-heading-m;
+  }
+
+  input {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: none;
+  }
+
+  .search__submit {
+    .button {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      border-top-left-radius: 0;
+      border-top-right-radius: 7px;
+      border-bottom-right-radius: 7px;
+      border-bottom-left-radius: 0;
+
+      @include for-phone-only {
+        width: 100%;
+        height: 4.0625rem;
+        justify-content: center;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 7px;
+        border-bottom-left-radius: 7px;
+      }
+    }
+  }
+}
+
+.search__wrapper {
+  flex-wrap: nowrap !important;
+  border: 2px solid $san-juan;
+  border-radius: 10px;
+  background-color: $white;
+
+  @include for-phone-only {
+    flex-wrap: wrap !important;
+  }
+}
+
+.search__location__link {
+  float: right;
+  margin-top: space(12);
+  margin-right: calc(50% - 148px);
+
+  @include for-phone-only {
+    float: left;
+    margin-right: 0;
+  }
+}

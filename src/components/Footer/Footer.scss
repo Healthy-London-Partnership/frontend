@@ -8,7 +8,7 @@
   color: $white;
   background-color: $san_juan;
   padding: space(64) 0;
-  margin-top: pxtorem(160px);
+  margin-top: pxtorem(192px);
 
   @include for-phone-only {
     padding: space(24) 0 space(64) 0;

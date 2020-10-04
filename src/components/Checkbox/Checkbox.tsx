@@ -36,7 +36,7 @@ const Checkbox: React.FunctionComponent<IProps> = ({
           <FontAwesomeIcon icon="check" />
         </span>
       </span>
-      {label}
+      <p dangerouslySetInnerHTML={{ __html: label }} />
     </label>
   </div>
 );
