@@ -1,0 +1,18 @@
+@import '../../../../styles/fonts.scss';
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/breakpoints.scss';
+@import '../../../../styles/mixins.scss';
+
+.view-filter__filter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  @include for-phone-only {
+    justify-content: flex-start;
+  }
+
+  .button {
+    margin-left: space(8);
+  }
+}

@@ -90,6 +90,13 @@ const SearchResultCard: React.FunctionComponent<IProps> = ({ result, organisatio
               )}
             </div>
           )}
+
+          {result.is_national && (
+            <div className="search-result-card__location">
+              <FontAwesomeIcon icon="map-marker-alt" />
+              <h4>National</h4>
+            </div>
+          )}
         </div>
         <div className="search-result-card__logo">
           <img

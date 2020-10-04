@@ -25,13 +25,13 @@ class HomeScreenPrompt extends Component<any, IState> {
   constructor(props: any) {
     super(props);
 
-    this.setState({
+    this.state = {
       isVisible: true,
       showInstructionModal: false,
-    });
+    };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { referralStore } = this.props;
 
     this.getDisplayCookie();

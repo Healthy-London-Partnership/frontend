@@ -25,15 +25,18 @@ export default class ResultsStore {
   @observable personaId: string = '';
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
+  @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
+  @observable nationalResults: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
-  @observable itemsPerPage: number = 25;
+  @observable itemsPerPage: number = 9;
   @observable postcode: string = '';
   @observable locationCoords: IGeoLocation | {} = {};
   @observable fetched: boolean = false;
+  @observable view: 'grid' | 'map' = 'grid';
 
   @computed
   get isKeywordSearch() {
@@ -62,15 +65,18 @@ export default class ResultsStore {
     this.categories = [];
     this.personaId = '';
     this.persona = null;
+    this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
+    this.nationalResults = new Map();
     this.fetched = false;
     this.organisations = [];
     this.currentPage = 1;
     this.totalItems = 0;
-    this.itemsPerPage = 25;
+    this.itemsPerPage = 9;
     this.postcode = '';
     this.locationCoords = {};
+    this.view = 'grid';
   }
 
   @action
@@ -117,6 +123,14 @@ export default class ResultsStore {
         this.keyword = key;
       }
 
+      if (value === 'is_free') {
+        this.is_free = key === 'true' ? true : false;	
+      }
+
+      if (value === 'view') {
+        this.view = key;	
+      }
+
       if (value === 'page') {
         this.currentPage = Number(key);
       }
@@ -143,10 +157,18 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-    const categories = map(this.categories, 'name');
+    // const categories = map(this.categories, 'name');
 
     if (this.persona) {
       params.persona = get(this.persona, 'name');
+    }
+
+    if (this.is_free) {	
+      params.is_free = this.is_free;	
+    }
+
+    if (this.view) {	
+      params.view = this.view;
     }
 
     if (this.keyword) {
@@ -159,43 +181,36 @@ export default class ResultsStore {
 
     params.order = this.order;
 
-    await this.fetchResults(params, categories);
+    await this.fetchResults(false, params);
+
+    if(this.view !== 'map' && this.postcode !== '') {
+      params.is_national = true;
+      delete params['location'];
+
+      await this.fetchResults(true, params);
+    }
   };
 
   @action
-  fetchResults = async (params: IParams, categories: string[]) => {
-    if (this.isKeywordSearch || this.isPersonaSearch) {
-      const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}`, params);
-      this.results = this.results.set(params.query as string, data.data);
-      this.getOrganisations();
-    } else {
-      Promise.all(
-        categories.map((category: string) => {
-          const requestParams = { category, ...params };
+  fetchResults = async (isNational: boolean, params: IParams) => {
+    let itemsPerPage;
 
-          return axios
-            .post(`${apiBase}/search?page=${this.currentPage}`, requestParams)
-            .then(response => get(response, 'data.data'))
-            .then(data => {
-              if (data.length) {
-                this.results = this.results.set(category, data);
-                this.getOrganisations();
-              } else {
-                this.fetched = true;
-              }
-            })
-            .then(() => {
-              if (this.results.size) {
-                this.ordered();
-              }
-            })
-            .catch(error => {
-              console.error(error);
-              this.fetched = true;
-            });
-        })
-      );
+    if(isNational) {
+      itemsPerPage = Math.round(this.itemsPerPage / 2);
+    } else {
+      itemsPerPage = this.itemsPerPage;
     }
+
+    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`, params);
+    this.totalItems += get(data, 'meta.total', 0);
+
+    if(!isNational) {
+      this.results = this.results.set(params.query as string, data.data);
+    } else {
+      this.nationalResults = this.nationalResults.set(params.query as string, data.data);
+    }
+
+    this.getOrganisations();
   };
 
   @action
@@ -255,8 +270,11 @@ export default class ResultsStore {
     this.postcode = postcode.replace(' ', '');
   };
 
-  amendSearch = (searchTerm?: string) => {
+  amendSearch = () => {
     let url = window.location.search;
+
+    this.currentPage = 1;
+    url = this.updateQueryStringParameter('page', this.currentPage);
 
     if (this.postcode) {
       url = this.updateQueryStringParameter('postcode', this.postcode);
@@ -267,11 +285,28 @@ export default class ResultsStore {
       this.locationCoords = {};
     }
 
-    if (searchTerm) {
-      url = this.updateQueryStringParameter('search_term', searchTerm, url);
+    if (this.is_free) {	
+      url = this.updateQueryStringParameter('is_free', this.is_free, url);	
+    }	
+
+    if (!this.is_free) {	
+      url = this.removeQueryStringParameter('is_free', url);	
+    }
+
+    if (this.view) {	
+      url = this.updateQueryStringParameter('view', this.view, url)
+    }	
+
+    if (this.keyword) {
+      url = this.updateQueryStringParameter('search_term', this.keyword, url);
+    }
+
+    if (!this.keyword) {
+      url = this.removeQueryStringParameter('search_term', url);
     }
 
     this.results = new Map();
+    this.nationalResults = new Map();
     return url;
   };
 
@@ -294,15 +329,34 @@ export default class ResultsStore {
   };
 
   @action
-  handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.keyword = e.target.value;
+  handleKeywordChange = (value: string) => {
+    this.keyword = value;
+  };
+
+  @action	
+  toggleView = (view: 'map' | 'grid') => {	
+    this.view = view;
   };
 
   @action
   orderResults = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.order = e.target.value as 'relevance' | 'distance';
     this.results = new Map();
+    this.nationalResults = new Map();
 
     this.setParams();
+  };
+  
+  @action	
+  toggleIsFree = () => {
+    this.is_free = !this.is_free;
+  };
+
+  @action	
+  paginate = (page: number) => {	
+    this.currentPage = page;	
+    this.results = new Map();
+    this.nationalResults = new Map();
+    this.loading = true;	
   };
 }
