@@ -8,15 +8,16 @@ interface IProps {
   title: string;
   resultsList: IService[];
   resultsStore: ResultsStore;
+  activeId?: string;
 }
 
-const List: FunctionComponent<IProps> = ({ title, resultsList, resultsStore }) => {
+const List: FunctionComponent<IProps> = ({ title, resultsList, resultsStore, activeId }) => {
   return (
     <Fragment key={title}>
       <div className="results__container">
         {resultsList.map((list: any) => {
           const organisation = find(resultsStore.organisations, ['id', list.organisation_id]) || null;
-          return <SearchResultCard key={list.id} result={list} organisation={organisation} />;
+          return <SearchResultCard key={list.id} isActive={activeId === list.id} result={list} organisation={organisation} />;
         })}
       </div>
     </Fragment>
