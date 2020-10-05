@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import map from 'lodash/map';
-import find from 'lodash/find';
-import get from 'lodash/get';
 
 import { latLngBounds, LatLngBounds } from 'leaflet';
 import { observer, inject } from 'mobx-react';
@@ -19,22 +17,22 @@ interface IProps {
 }
 
 interface IState {
-  markers: [];
+  markers: any;
   bounds: LatLngBounds;
 }
 
-const CENTRE_OF_KINGSTON: [number, number] = [51.378583, -0.280582];
-const TOP_LEFT_CORNER: [number, number] = [51.412437, -0.329297];
-const BOTTOM_RIGHT_CORNER: [number, number] = [51.403871, -0.288459];
+const CENTRE_OF_MAP: [number, number] = [52.8170759, -4.5698321];
+const TOP_LEFT_CORNER: [number, number] = [49.959999905, -7.57216793459];
+const BOTTOM_RIGHT_CORNER: [number, number] = [58.6350001085, 1.68153079591];
 
-class MapView extends Component<IProps, IState> {
+class MapView extends Component<IProps, IState> {  
   constructor(props: IProps) {
     super(props);
 
     this.state = {
       markers: [],
       bounds: latLngBounds(TOP_LEFT_CORNER, BOTTOM_RIGHT_CORNER),
-    };
+    };;
   }
 
   addMarkers = (results: any) => {
@@ -49,7 +47,31 @@ class MapView extends Component<IProps, IState> {
     }
   };
 
-  getMarker = (type: string) => {
+  getMarkers = (results: any) => {
+    let { markers } = this.state;
+
+    if(results) {
+      markers.length = 0;
+
+      {results[1].map((result: any) => {
+        if (result.service_locations) {
+          return result.service_locations.map((serviceLocation: IServiceLocation) => {	
+            markers.push(
+              {
+                type: result.type,
+                lat: serviceLocation.location.lat,
+                lon: serviceLocation.location.lon
+              }
+            );
+          });
+        }
+
+        return null;
+      })}
+    }
+  };
+
+  getMarkerType = (type: string) => {
     switch (true) {
       case type === 'service':
         return ServiceMarker;
@@ -64,22 +86,6 @@ class MapView extends Component<IProps, IState> {
     }
   };
 
-  hasSideboxes = (title: string) => {
-    const { resultsStore } = this.props;
-
-
-    const category = find(resultsStore!.categories, ['name', title]);
-
-    if (category) {
-      return category.sideboxes;
-    }
-    if (resultsStore!.persona) {
-      return get(resultsStore!, 'persona.sideboxes', []);
-    }
-
-    return null;
-  };
-
   render() {
     const { resultsStore } = this.props;
 
@@ -87,29 +93,29 @@ class MapView extends Component<IProps, IState> {
       return;
     }
 
-    this.addMarkers([...resultsStore.results.entries()][0]);
+    if([...resultsStore.results.entries()]) {
+      this.getMarkers([...resultsStore.results.entries()][0]);
+      this.addMarkers([...resultsStore.results.entries()][0]);
+    }
 
     return (
       <main className="flex-container flex-container--justify">
         <div className="flex-col--tablet--12 flex-col--10">
           <div className="flex-container flex-container--space flex-container--row-reverse map">
             <div className="flex-col--6 flex-col--mobile--12 map__map-container">
-              <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
+              <Map
+                center={CENTRE_OF_MAP}
+                attributionControl={false}
+                bounds={this.state.bounds}>
                 <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
-                {[...resultsStore.results.entries()].map((results, i) => {
-                  results[1].map((result: any) => {return result.service_locations.map((serviceLocation: IServiceLocation) => {
-                      return (
-                        <Marker
-                          key={serviceLocation.id}
-                          position={[serviceLocation.location.lat, serviceLocation.location.lon]}
-                          icon={this.getMarker(result.type)}
-                        />
-                      );
-                    });
-                  })
-
-                  return null;
-                })}
+                
+                {this.state.markers.map((marker: any, id: string) =>
+                  <Marker	
+                    key={id}
+                    position={[marker.lat, marker.lon]}
+                    icon={this.getMarkerType(marker.type)}
+                  />
+                )}
               </Map>
             </div>
             
