@@ -51,26 +51,27 @@ class MapView extends Component<IProps, IState> {
 
   getMarkers = (results: any) => {
     let { markers } = this.state;
+    markers.length = 0;
 
     if(results) {
-      markers.length = 0;
-
-      {results[1].map((result: any) => {
+      results[1].map((result: any) => {
         if (result.service_locations) {
           return result.service_locations.map((serviceLocation: IServiceLocation) => {	
-            markers.push(
-              {
-                id: result.id,
-                type: result.type,
-                lat: serviceLocation.location.lat,
-                lon: serviceLocation.location.lon
-              }
-            );
+            return (
+              markers.push(
+                {
+                  id: result.id,
+                  type: result.type,
+                  lat: serviceLocation.location.lat,
+                  lon: serviceLocation.location.lon
+                }
+              )
+            )
           });
         }
 
         return null;
-      })}
+      })
     }
   };
 

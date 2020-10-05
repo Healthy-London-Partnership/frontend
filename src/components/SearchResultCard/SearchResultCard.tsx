@@ -27,10 +27,6 @@ interface IProps extends RouteComponentProps {
 @inject('result', 'organisation', 'isActive')
 @observer
 class SearchResultCard extends React.Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  };
-
   getIcon = (type: string) => {
     switch (true) {
       case type === 'service':
