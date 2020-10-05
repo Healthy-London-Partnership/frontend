@@ -193,19 +193,19 @@ export default class ResultsStore {
 
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
-    let searchUrl;
     let itemsPerPage;
-
-    if(this.view === 'map') {
-      searchUrl = `${apiBase}/search`;
-    } else {
-      searchUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
-    }
+    let searchUrl;
 
     if(isNational) {
       itemsPerPage = Math.round(this.itemsPerPage / 2);
     } else {
       itemsPerPage = this.itemsPerPage;
+    }
+
+    if(this.view === 'map') {
+      searchUrl = `${apiBase}/search`;
+    } else {
+      searchUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
     }
 
     const { data } = await axios.post(searchUrl, params);

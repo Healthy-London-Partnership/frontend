@@ -92,7 +92,6 @@ class MapView extends Component<IProps, IState> {
   };
 
   setActiveService = (id: string) => {
-    console.log(id);
     this.setState({
       activeMarkerId: id
     });
@@ -141,6 +140,7 @@ class MapView extends Component<IProps, IState> {
                     <List
                       key={title}
                       activeId={this.state.activeMarkerId}
+                      activeIdHandler={this.setActiveService}
                       title={title}
                       resultsList={resultsList}
                       resultsStore={resultsStore}
