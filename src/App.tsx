@@ -8,7 +8,7 @@ import { Provider, observer } from 'mobx-react';
 
 import Home from './views/Home';
 import NotFound from './views/NotFound/NotFound';
-import Collection from './views/Collections/Collection/Collection';
+import Category from './views/Collections/Category/Category';
 import Results from './views/Results';
 import Service from './views/Service';
 import Favourites from './views/Favourites';
@@ -72,7 +72,7 @@ class App extends Component {
             <Header />
             <Switch>
               <Route path="/" exact={true} component={Home} />
-              <Route path="/collections/:collection" component={Collection} />
+              <Route path="/collections/category/:category" component={Category} />
               <Route path="/results" component={Results} />
               <Route path="/services/:service" component={Service} />
               <Route path="/favourites" component={Favourites} />

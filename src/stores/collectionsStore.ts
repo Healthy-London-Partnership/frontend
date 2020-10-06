@@ -3,7 +3,6 @@ import get from 'lodash/get';
 import axios from 'axios';
 
 import { apiBase } from '../config/api';
-import { ICategory } from '../types/types';
 
 export default class CollectionsStore {
   @observable collection: any;
