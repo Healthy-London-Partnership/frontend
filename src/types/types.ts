@@ -26,6 +26,7 @@ export interface ICategory {
   id: string;
   intro: string;
   name: string;
+  slug: string;
   icon: IconName | undefined;
   sideboxes: ISidebox[];
 }
