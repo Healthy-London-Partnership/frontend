@@ -7,6 +7,7 @@ import CollectionsStore from '../../../stores/collectionsStore';
 
 import MetaData from '../../../components/MetaData/MetaData';
 import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
+import SearchResultCard from '../../../components/SearchResultCard/SearchResultCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface RouteParams {
@@ -34,16 +35,16 @@ class Collection extends Component<IProps> {
 
   render() {
     const { collectionsStore } = this.props;
-    const { collection } = collectionsStore;
+    const { collection, results } = collectionsStore;
     
     if (!collection) {
       return null;
     }
 
-    console.log(collection);
+    console.log(results);
 
     return(
-      <section>
+      <main>
         <MetaData
           title={`${collection.name}`}
           metaDescription={`${collection.intro}`}
@@ -62,8 +63,28 @@ class Collection extends Component<IProps> {
           </div>
         </div>
 
-        <div className="collection__list"></div>
-      </section>
+        <div className="collection__list">
+          <div className="flex-container flex-container--justify">
+            {collection.size > 0 ? (
+              <div className="flex-col--tablet--12 flex-col--10">
+                <div className="flex-container">
+                  {[...results.entries()].map((result: any) => {
+                    return <SearchResultCard key={result.id} result={result} organisation={null} />;
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div className="flex-col--tablet--12 flex-col--10">
+                <div className="flex-container">
+                  <div className="flex-col">
+                    <h3>There are no results for this collection</h3>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
     )
 
   }
