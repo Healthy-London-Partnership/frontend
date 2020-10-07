@@ -23,7 +23,6 @@ import './styles/grid.scss';
 
 import WindowSizeStore from './stores/windowSizeStore';
 import UIStore from './stores/uiStore';
-import CollectionsStore from './stores/collectionsStore';
 import ResultsStore from './stores/resultsStore';
 import ServiceStore from './stores/serviceStore';
 import FavouritesStore from './stores/favouritesStore';
@@ -42,7 +41,6 @@ library.add(fas, fab);
 
 const windowSizeStore = new WindowSizeStore();
 const uiStore = new UIStore();
-const collectionsStore = new CollectionsStore();
 const resultsStore = new ResultsStore();
 const serviceStore = new ServiceStore();
 const favouritesStore = new FavouritesStore();
@@ -59,7 +57,6 @@ class App extends Component {
       <Provider
         windowSizeStore={windowSizeStore}
         uiStore={uiStore}
-        collectionsStore={collectionsStore}
         resultsStore={resultsStore}
         serviceStore={serviceStore}
         favouritesStore={favouritesStore}

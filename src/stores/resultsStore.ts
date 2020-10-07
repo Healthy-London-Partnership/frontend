@@ -20,6 +20,7 @@ import { queryRegex, querySeparator } from '../utils/utils';
 
 export default class ResultsStore {
   @observable keyword: string = '';
+  @observable collection: any;
   @observable categoryIds: string[] = [];
   @observable categories: ICategory[] = [];
   @observable personaId: string = '';
@@ -61,6 +62,7 @@ export default class ResultsStore {
   @action
   clear() {
     this.keyword = '';
+    this.collection = '';
     this.categoryIds = [];
     this.categories = [];
     this.personaId = '';
@@ -100,6 +102,16 @@ export default class ResultsStore {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  @action
+  getCollectionCategory = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/categories/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.collection = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
   };
 
   getSearchTerms = () => {
@@ -175,6 +187,10 @@ export default class ResultsStore {
       params.query = this.keyword;
     }
 
+    if (this.collection) {
+      params.category = this.collection.name;
+    }
+
     if (size(this.locationCoords)) {
       params.location = this.locationCoords;
     }
@@ -194,6 +210,7 @@ export default class ResultsStore {
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
     let itemsPerPage;
+    let apiUrl;
 
     if(isNational) {
       itemsPerPage = Math.round(this.itemsPerPage / 2);
@@ -201,7 +218,13 @@ export default class ResultsStore {
       itemsPerPage = this.itemsPerPage;
     }
 
-    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`, params);
+    if(this.collection) {
+      apiUrl = `${apiBase}/search?page=${this.currentPage}`;
+    } else {
+      apiUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
+    }
+
+    const { data } = await axios.post(apiUrl, params);
     this.totalItems += get(data, 'meta.total', 0);
 
     if(!isNational) {
