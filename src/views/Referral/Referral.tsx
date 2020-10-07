@@ -10,6 +10,8 @@ import cx from 'classnames';
 import ReferralStore from '../../stores/referralStore';
 
 import './Referral.scss';
+
+import MetaData from '../../components/MetaData';
 import Button from '../../components/Button';
 import { apiBase } from '../../config/api';
 import StepOne from './Steps/StepOne';
@@ -88,6 +90,10 @@ class Referral extends Component<IProps> {
 
     return (
       <div className="flex-container flex-container--mobile-no-padding referral">
+        <MetaData
+          title="Referral"
+          metaDescription="Get in touch to access/get more information about a service."
+        />
         <div className="flex-col flex-col--12 referral--back">
           {referralStore.step === 1 ? (
             <Link to={`/services/${referralStore.service.slug}`}>

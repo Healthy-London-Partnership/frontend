@@ -9,6 +9,7 @@ import ViewFilter from './Filters/ViewFilter/ViewFilter';
 import ListView from './ListView';
 import MapView from './MapView';
 
+import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
 
 interface IProps {
@@ -42,6 +43,10 @@ class Results extends Component<IProps> {
     const { resultsStore, history } = this.props;
     return (
       <section>
+        <MetaData
+          title={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
+          metaDescription={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
+        />
         <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
         <div className="results__search-box">
           <Keyword />

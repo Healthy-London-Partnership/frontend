@@ -7,12 +7,17 @@ import MentalHealth from '../assets/images/duty-to-refer/mental-health.png';
 import Shelter from '../assets/images/duty-to-refer/shelter.png';
 
 import CMSPage from '../components/CMSPageLayout';
+import MetaData from '../components/MetaData';
 
 import './DutyToRefer.scss';
 
 const DutyToRefer: React.FunctionComponent = () => {
   return (
     <CMSPage title="Duty to refer" breadcrumb="Duty to refer">
+      <MetaData
+        title="Duty to refer"
+        metaDescription="Help can be as simple as a click. Fulfil your statutory duty"
+      />
       <section>
         <div className="flex-container flex-container--justify">
           <div className="cta">

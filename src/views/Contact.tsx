@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 
 import CMSStore from '../stores/CMSStore';
 import CMSPage from '../components/CMSPageLayout';
+import MetaData from '../components/MetaData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
@@ -18,6 +19,9 @@ const Contact: React.FunctionComponent<IProps> = ({ cmsStore }) => {
 
   return (
     <CMSPage title={get(cmsStore, 'contact.title')} twoColumn={true} breadcrumb="Contact">
+      <MetaData
+        title={get(cmsStore, 'contact.title')}
+      />
       <div className="flex-col flex-col--7 flex-col--tablet--8 cms__content">
         <ReactMarkdown source={get(cmsStore, 'contact.content')} />
       </div>
