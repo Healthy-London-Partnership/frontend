@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import map from 'lodash/map';
-import find from 'lodash/find';
-import get from 'lodash/get';
 
 import { latLngBounds, LatLngBounds } from 'leaflet';
 import { observer, inject } from 'mobx-react';
@@ -62,22 +60,6 @@ class MapView extends Component<IProps, IState> {
       default:
         break;
     }
-  };
-
-  hasSideboxes = (title: string) => {
-    const { resultsStore } = this.props;
-
-
-    const category = find(resultsStore!.categories, ['name', title]);
-
-    if (category) {
-      return category.sideboxes;
-    }
-    if (resultsStore!.persona) {
-      return get(resultsStore!, 'persona.sideboxes', []);
-    }
-
-    return null;
   };
 
   render() {

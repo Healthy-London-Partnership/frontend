@@ -3,6 +3,7 @@ import { IconName } from '@fortawesome/fontawesome-svg-core';
 export interface IPersona {
   created_at: string;
   id: string;
+  slug: string;
   intro: string;
   name: string;
   sideboxes: ISidebox[];
@@ -11,7 +12,7 @@ export interface IPersona {
 }
 
 export interface IParams {
-  category?: string[];
+  category?: string;
   persona?: string;
   is_free?: boolean;
   wait_time?: string;

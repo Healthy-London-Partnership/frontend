@@ -4,12 +4,10 @@ import get from 'lodash/get';
 import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
-import map from 'lodash/map';
 
 import { apiBase } from '../config/api';
 import {
   IParams,
-  ICategory,
   IPersona,
   IOrganisation,
   IService,
@@ -20,10 +18,7 @@ import { queryRegex, querySeparator } from '../utils/utils';
 
 export default class ResultsStore {
   @observable keyword: string = '';
-  @observable collection: any;
-  @observable categoryIds: string[] = [];
-  @observable categories: ICategory[] = [];
-  @observable personaId: string = '';
+  @observable category: any;
   @observable persona: IPersona | null = null;
   @observable organisations: IOrganisation[] | null = [];
   @observable is_free: boolean = false;
@@ -45,16 +40,6 @@ export default class ResultsStore {
   }
 
   @computed
-  get isPersonaSearch() {
-    return !!this.persona;
-  }
-
-  @computed
-  get isCategorySearch() {
-    return !!this.categoryIds.length;
-  }
-
-  @computed
   get isPostcodeSearch() {
     return !!this.postcode;
   }
@@ -62,10 +47,7 @@ export default class ResultsStore {
   @action
   clear() {
     this.keyword = '';
-    this.collection = '';
-    this.categoryIds = [];
-    this.categories = [];
-    this.personaId = '';
+    this.category = '';
     this.persona = null;
     this.is_free = false;
     this.order = 'relevance';
@@ -82,34 +64,21 @@ export default class ResultsStore {
   }
 
   @action
-  getCategory = () => {
-    return Promise.all(
-      this.categoryIds.map((id: string) => {
-        return axios
-          .get(`${apiBase}/collections/categories/${id}`)
-          .then(response => get(response, 'data.data'))
-          .then(data => this.categories.push(data))
-          .catch(error => console.error(error));
-      })
-    );
-  };
-
-  @action
-  getPersona = async () => {
-    try {
-      const persona = await axios.get(`${apiBase}/collections/personas/${this.personaId}`);
-      this.persona = get(persona, 'data.data', '');
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  @action
-  getCollectionCategory = async (slug: string) => {
+  getCategory = async (slug: string) => {
     return axios
       .get(`${apiBase}/collections/categories/${slug}`)
       .then(response => get(response, 'data.data'))
-      .then(data => this.collection = data)
+      .then(data => this.category = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getPersona = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/personas/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.persona = data)
       .then(() => this.setParams())
       .catch(error => console.error(error));
   };
@@ -123,14 +92,6 @@ export default class ResultsStore {
   @action
   setSearchTerms = async (searchTerms: { [key: string]: any }) => {
     forEach(searchTerms, (key, value) => {
-      if (value === 'category') {
-        this.categoryIds = key.split(',');
-      }
-
-      if (value === 'persona') {
-        this.personaId = key;
-      }
-
       if (value === 'search_term') {
         this.keyword = key;
       }
@@ -152,14 +113,6 @@ export default class ResultsStore {
       }
     });
 
-    if (this.categoryIds) {
-      await this.getCategory();
-    }
-
-    if (this.personaId) {
-      await this.getPersona();
-    }
-
     if (this.postcode) {
       await this.geolocate();
     }
@@ -169,11 +122,6 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-    // const categories = map(this.categories, 'name');
-
-    if (this.persona) {
-      params.persona = get(this.persona, 'name');
-    }
 
     if (this.is_free) {	
       params.is_free = this.is_free;	
@@ -187,8 +135,12 @@ export default class ResultsStore {
       params.query = this.keyword;
     }
 
-    if (this.collection) {
-      params.category = this.collection.name;
+    if (this.category) {
+      params.category = this.category.name;
+    }
+
+    if (this.persona) {
+      params.persona = this.persona.name;
     }
 
     if (size(this.locationCoords)) {
@@ -218,7 +170,10 @@ export default class ResultsStore {
       itemsPerPage = this.itemsPerPage;
     }
 
-    if(this.collection) {
+    if(
+      this.category ||
+      this.persona
+    ) {
       apiUrl = `${apiBase}/search?page=${this.currentPage}`;
     } else {
       apiUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
@@ -234,17 +189,6 @@ export default class ResultsStore {
     }
 
     this.getOrganisations();
-  };
-
-  @action
-  ordered = () => {
-    const categories = map(this.categories, 'name');
-    // reorder categories based on list in URL
-    const order = [...this.results.entries()].sort((a, b) => {
-      return categories.indexOf(a[0]) - categories.indexOf(b[0]);
-    });
-
-    this.results = new Map(order);
   };
 
   @action

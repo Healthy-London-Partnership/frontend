@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { RouteComponentProps } from 'react-router';
+import { apiBase } from '../../../config/api';
 
-import './Category.scss';
+import './Persona.scss';
 import ResultsStore from '../../../stores/resultsStore';
 
 import MetaData from '../../../components/MetaData/MetaData';
 import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 import List from '../../../views/Results/ListView/List';
 import Loading from '../../../components/Loading/Loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface RouteParams {
-  category: string;
+  persona: string;
 }
 
 interface IProps extends RouteComponentProps<RouteParams> {
   resultsStore: ResultsStore;
 }
 
-class Category extends Component<IProps> {
+class Persona extends Component<IProps> {
   componentDidMount() {
     const { resultsStore, match } = this.props;
     
-    resultsStore.getCategory(match.params.category);
+    resultsStore.getPersona(match.params.persona);
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -31,7 +31,7 @@ class Category extends Component<IProps> {
       const { resultsStore, match } = this.props;
 
       resultsStore.clear();
-      resultsStore.getCategory(match.params.category);
+      resultsStore.getPersona(match.params.persona);
     }
   }
 
@@ -43,10 +43,14 @@ class Category extends Component<IProps> {
 
   render() {
     const { resultsStore } = this.props;
-    const { category } = resultsStore;
+    const { persona } = resultsStore;
     
     if (!resultsStore.fetched) {
       return <Loading />;
+    }
+
+    if(!persona) {
+      return null;
     }
   
     const results = resultsStore.results;
@@ -54,24 +58,30 @@ class Category extends Component<IProps> {
     return(
       <main>
         <MetaData
-          title={`${category.name}`}
-          metaDescription={`${category.intro}`}
+          title={`${persona.name}`}
+          metaDescription={`${persona.intro}`}
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: category.name, url: '' }]} />
-        <div className="category__search-box">
+        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: persona.name, url: '' }]} />
+        <div className="persona__search-box">
           <div className="flex-container flex-container--justify">
             <div className="flex-col--tablet--12 flex-col--10">
-              <div className="flex-container">
+              <div className="flex-container flex-container--no-space flex-container--no-wrap flex-container--align-center">
+                <div className="flex-col">
+                <img
+                  src={`${apiBase}/collections/personas/${persona.id}/image.png?max_dimension=300`}
+                  alt={`Services relating to ${persona.name}`}
+                />
+                </div>
                 <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="category__heading"><FontAwesomeIcon icon={category.icon} /> {category.name}</h1>
-                  <p className="category__intro">{category.intro}</p>
+                  <h1 className="persona__heading">{persona.name}</h1>
+                  <p className="persona__intro">{persona.intro}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="category__list">
+        <div className="persona__list">
           <div className="flex-container flex-container--justify">
             {results.size > 0 ? (
               <div className="flex-col--tablet--12 flex-col--10 results__list">
@@ -94,7 +104,7 @@ class Category extends Component<IProps> {
               <div className="flex-col--tablet--12 flex-col--10">
                 <div className="flex-container">
                   <div className="flex-col">
-                    <h3>There are no results for this category</h3>
+                    <h3>There are no results for this persona</h3>
                   </div>
                 </div>
               </div>
@@ -107,4 +117,4 @@ class Category extends Component<IProps> {
   }
 }
 
-export default inject('resultsStore')(observer(Category));
+export default inject('resultsStore')(observer(Persona));

@@ -3,14 +3,14 @@
 @import '../../../styles/colors.scss';
 @import '../../../styles/fonts.scss';
 
-.category__search-box {
+.persona__search-box {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   color: $san-juan;
   position: relative;
 
   @include for-tablet-landscape-up {
-    padding: space(48) 0 space(32) !important;
+    padding: space(48) 0 space(16) !important;
     background-image: url('../../../assets/images/backgrounds/results-shape.svg');
 
     &:before {
@@ -39,6 +39,10 @@
     &:before {
       content: none;
     }
+
+    .flex-container {
+      flex-wrap: wrap;
+    }
   }
 
   @include for-phone-only {
@@ -48,7 +52,7 @@
   }
 }
 
-.category__heading {
+.persona__heading {
   margin-bottom: space(24);
 
   svg {
@@ -58,6 +62,6 @@
   }
 }
 
-.category__list {
+.persona__list {
   margin-top: space(48);
 }

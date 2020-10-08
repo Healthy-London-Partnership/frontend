@@ -21,7 +21,7 @@ const CategoryList: React.FunctionComponent<IProps> = ({ history, categories, co
         icon={icon}
         onClick={() => {
           history.push({
-            pathname: `/collections/category/${slug}`,
+            pathname: `/collections/categories/${slug}`,
           });
         }}
         covid={covid}
