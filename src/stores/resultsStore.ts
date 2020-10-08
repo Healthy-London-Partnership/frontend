@@ -325,11 +325,15 @@ export default class ResultsStore {
       );
 
       const location = get(geolocation, 'data.results[0].geometry.location', {});
-
-      this.locationCoords = {
-        lon: location.lng,
-        lat: location.lat,
-      };
+      
+      if(location) {
+        this.locationCoords = {
+          lon: location.lng,
+          lat: location.lat,
+        };
+      } else {
+        alert('we could not find a location for the address entered');
+      }
     } catch (e) {
       console.error(e);
     }

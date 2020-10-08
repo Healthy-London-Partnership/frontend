@@ -139,7 +139,7 @@ class MapView extends Component<IProps, IState> {
 
                   return (
                     <List
-                      key={title}
+                      key={i}
                       activeId={this.state.activeMarkerId}
                       activeIdHandler={this.setActiveService}
                       title={title}
