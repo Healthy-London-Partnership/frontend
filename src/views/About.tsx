@@ -6,6 +6,7 @@ import ReactPlayer from 'react-player';
 
 import CMSStore from '../stores/CMSStore';
 import CMSPage from '../components/CMSPageLayout';
+import MetaData from '../components/MetaData';
 
 interface IProps {
   cmsStore: CMSStore;
@@ -20,6 +21,10 @@ const About: React.FunctionComponent<IProps> = ({ cmsStore }) => {
 
   return (
     <CMSPage title={get(cmsStore, 'about.title')} breadcrumb="About">
+      <MetaData
+        title={get(cmsStore, 'about.title')}
+        metaDescription={get(cmsStore, 'about.content')}
+      />
       <ReactMarkdown source={get(cmsStore, 'about.content')} />
       {cmsStore.hasVideo && (
         <ReactPlayer

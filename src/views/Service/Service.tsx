@@ -29,6 +29,7 @@ import Income from '../../assets/images/icons/who-is-this-for/income.svg';
 import Language from '../../assets/images/icons/who-is-this-for/language.svg';
 import Other from '../../assets/images/icons/who-is-this-for/other.svg';
 
+import MetaData from '../../components/MetaData';
 import Button from '../../components/Button';
 import CriteriaCard from './CriteriaCard';
 import Accordian from '../../components/Accordian';
@@ -118,6 +119,10 @@ class Service extends Component<IProps> {
             { text: 'Search', url: '/' },
             { text: service.name, url: '' },
           ]}
+        />
+        <MetaData
+          title={get(service, 'name')}
+          metaDescription={service.description}
         />
         <div className={`service__header service__header--${get(service, 'type')}`}>
           <div className="flex-container flex-container--mobile-no-padding">
