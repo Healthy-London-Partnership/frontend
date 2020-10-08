@@ -37,6 +37,10 @@ class SearchResultCard extends React.Component<IProps> {
         return 'paper-plane';
       case type === 'club':
         return 'tshirt';
+      case type === 'app':
+        return 'tablet-alt';
+      case type === 'information':
+        return 'info';
       default:
         break;
     }
