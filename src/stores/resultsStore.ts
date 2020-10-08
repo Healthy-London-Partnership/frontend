@@ -20,6 +20,7 @@ export default class ResultsStore {
   @observable keyword: string = '';
   @observable category: any;
   @observable persona: IPersona | null = null;
+  @observable taxonomyCategory: any;
   @observable organisations: IOrganisation[] | null = [];
   @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
@@ -49,6 +50,7 @@ export default class ResultsStore {
     this.keyword = '';
     this.category = '';
     this.persona = null;
+    this.taxonomyCategory = '';
     this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
@@ -70,6 +72,15 @@ export default class ResultsStore {
       .then(response => get(response, 'data.data'))
       .then(data => this.category = data)
       .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getTaxonomiesCategory = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/taxonomies/categories/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.taxonomyCategory = data)
       .catch(error => console.error(error));
   };
 
