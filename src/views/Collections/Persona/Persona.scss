@@ -50,6 +50,14 @@
       font-size: $font-body-l;
     }
   }
+
+  &__logo {
+    padding-right: space(32);
+
+    img {
+      max-width: 180px;
+    }
+  }
 }
 
 .persona__heading {

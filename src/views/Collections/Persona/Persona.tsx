@@ -66,11 +66,11 @@ class Persona extends Component<IProps> {
           <div className="flex-container flex-container--justify">
             <div className="flex-col--tablet--12 flex-col--10">
               <div className="flex-container flex-container--no-space flex-container--no-wrap flex-container--align-center">
-                <div className="flex-col">
-                <img
-                  src={`${apiBase}/collections/personas/${persona.id}/image.png?max_dimension=300`}
-                  alt={`Services relating to ${persona.name}`}
-                />
+                <div className="flex-col persona__search-box__logo">
+                  <img
+                    src={`${apiBase}/collections/personas/${persona.id}/image.png?max_dimension=300`}
+                    alt={`Services relating to ${persona.name}`}
+                  />
                 </div>
                 <div className="flex-col flex-col--8 flex-col--standard--12">
                   <h1 className="persona__heading">{persona.name}</h1>
