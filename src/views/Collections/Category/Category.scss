@@ -60,4 +60,10 @@
 
 .category__list {
   margin-top: space(48);
+
+  &__items {
+    a {
+      display: inline-block;
+    }
+  }
 }

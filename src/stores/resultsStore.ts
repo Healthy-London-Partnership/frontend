@@ -20,6 +20,8 @@ export default class ResultsStore {
   @observable keyword: string = '';
   @observable category: any;
   @observable persona: IPersona | null = null;
+  @observable categories: [] | null = [];
+  @observable personas: [] | null = [];
   @observable taxonomyCategory: any;
   @observable taxonomyOrganisation: any;
   @observable organisations: IOrganisation[] | null = [];
@@ -51,6 +53,8 @@ export default class ResultsStore {
     this.keyword = '';
     this.category = '';
     this.persona = null;
+    this.categories = null;
+    this.personas = null;
     this.taxonomyCategory = '';
     this.taxonomyOrganisation = '';
     this.is_free = false;
@@ -66,6 +70,21 @@ export default class ResultsStore {
     this.locationCoords = {};
     this.view = 'grid';
   }
+
+  @action
+  getAllCollections = async () => {
+    axios
+      .get(`${apiBase}/collections/categories`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.categories = data)
+      .catch(error => console.error(error));
+
+    axios
+      .get(`${apiBase}/collections/personas`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.personas = data)
+      .catch(error => console.error(error));
+  };
 
   @action
   getCategory = async (slug: string) => {
@@ -99,9 +118,8 @@ export default class ResultsStore {
   @action
   getTaxonomiesOrganisation = async (slug: string) => {
     return axios
-      .get(`${apiBase}/taxonomies/organisations`)
+      .get(`${apiBase}/taxonomies/organisations/${slug}`)
       .then(response => get(response, 'data.data'))
-      .then(data => console.log(data))
       .then(data => this.taxonomyOrganisation = data)
       .catch(error => console.error(error));
   };
