@@ -21,6 +21,7 @@ export default class ResultsStore {
   @observable category: any;
   @observable persona: IPersona | null = null;
   @observable taxonomyCategory: any;
+  @observable taxonomyOrganisation: any;
   @observable organisations: IOrganisation[] | null = [];
   @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
@@ -51,6 +52,7 @@ export default class ResultsStore {
     this.category = '';
     this.persona = null;
     this.taxonomyCategory = '';
+    this.taxonomyOrganisation = '';
     this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
@@ -76,6 +78,16 @@ export default class ResultsStore {
   };
 
   @action
+  getPersona = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/personas/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.persona = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
   getTaxonomiesCategory = async (slug: string) => {
     return axios
       .get(`${apiBase}/taxonomies/categories/${slug}`)
@@ -85,12 +97,12 @@ export default class ResultsStore {
   };
 
   @action
-  getPersona = async (slug: string) => {
+  getTaxonomiesOrganisation = async (slug: string) => {
     return axios
-      .get(`${apiBase}/collections/personas/${slug}`)
+      .get(`${apiBase}/taxonomies/organisations`)
       .then(response => get(response, 'data.data'))
-      .then(data => this.persona = data)
-      .then(() => this.setParams())
+      .then(data => console.log(data))
+      .then(data => this.taxonomyOrganisation = data)
       .catch(error => console.error(error));
   };
 

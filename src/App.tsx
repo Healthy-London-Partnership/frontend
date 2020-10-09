@@ -11,6 +11,7 @@ import NotFound from './views/NotFound/NotFound';
 import CollectionsCategory from './views/Collections/Category/Category';
 import CollectionsPersona from './views/Collections/Persona/Persona';
 import TaxonomiesCategory from './views/Taxonomies/Category/Category';
+import TaxonomiesOrganisation from './views/Taxonomies/Organisation/Organisation';
 import Results from './views/Results';
 import Service from './views/Service';
 import Favourites from './views/Favourites';
@@ -74,6 +75,7 @@ class App extends Component {
               <Route path="/collections/categories/:category" component={CollectionsCategory} />
               <Route path="/collections/personas/:persona" component={CollectionsPersona} />
               <Route path="/taxonomies/categories/:category" component={TaxonomiesCategory} />
+              <Route path="/taxonomies/organisations/:organisation" component={TaxonomiesOrganisation} />
               <Route path="/results" component={Results} />
               <Route path="/services/:service" component={Service} />
               <Route path="/favourites" component={Favourites} />

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { RouteComponentProps } from 'react-router';
 
-import './Category.scss';
+import './Organisation.scss';
 import ResultsStore from '../../../stores/resultsStore';
 
 import MetaData from '../../../components/MetaData/MetaData';
@@ -12,18 +12,18 @@ import Loading from '../../../components/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface RouteParams {
-  category: string;
+  organisation: string;
 }
 
 interface IProps extends RouteComponentProps<RouteParams> {
   resultsStore: ResultsStore;
 }
 
-class Category extends Component<IProps> {
+class Organisation extends Component<IProps> {
   componentDidMount() {
     const { resultsStore, match } = this.props;
     
-    resultsStore.getTaxonomiesCategory(match.params.category);
+    resultsStore.getTaxonomiesOrganisation(match.params.organisation);
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -31,7 +31,7 @@ class Category extends Component<IProps> {
       const { resultsStore, match } = this.props;
 
       resultsStore.clear();
-      resultsStore.getTaxonomiesCategory(match.params.category);
+      resultsStore.getTaxonomiesOrganisation(match.params.organisation);
     }
   }
 
@@ -43,24 +43,24 @@ class Category extends Component<IProps> {
 
   render() {
     const { resultsStore } = this.props;
-    const { taxonomyCategory } = resultsStore;
+    const { taxonomyOrganisation } = resultsStore;
     
-    if (!taxonomyCategory) {
+    if (!taxonomyOrganisation) {
       return <Loading />;
     }
 
     return(
       <main>
         <MetaData
-          title={`${taxonomyCategory.name}`}
+          title={`${taxonomyOrganisation.name}`}
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: taxonomyCategory.name, url: '' }]} />
+        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: taxonomyOrganisation.name, url: '' }]} />
         <div className="taxonomy__search-box">
           <div className="flex-container flex-container--justify">
             <div className="flex-col--tablet--12 flex-col--10">
               <div className="flex-container">
                 <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="taxonomy__heading"><FontAwesomeIcon icon={taxonomyCategory.icon} /> {taxonomyCategory.name}</h1>
+                  <h1 className="taxonomy__heading"><FontAwesomeIcon icon={taxonomyOrganisation.icon} /> {taxonomyOrganisation.name}</h1>
                 </div>
               </div>
             </div>
@@ -69,12 +69,12 @@ class Category extends Component<IProps> {
 
         <div className="taxonomy__list">
           <div className="flex-container flex-container--justify">
-            {taxonomyCategory.children.length > 0 ? (
+            {taxonomyOrganisation.children.length > 0 ? (
               <div className="flex-col--tablet--12 flex-col--10 taxonomy__list">
                 <div className="flex-container">
                   <div className="flex-col flex-col--8 flex-col--standard--12">
                     <ul>
-                      {taxonomyCategory.children.map((item: any, i: number) => {
+                      {taxonomyOrganisation.children.map((item: any, i: number) => {
                         return (
                           <li key={i}>
                             <Link
@@ -93,7 +93,7 @@ class Category extends Component<IProps> {
               <div className="flex-col--tablet--12 flex-col--10">
                 <div className="flex-container">
                   <div className="flex-col">
-                    <h3>There are no results for this category</h3>
+                    <h3>There are no results for this organisation</h3>
                   </div>
                 </div>
               </div>
@@ -106,4 +106,4 @@ class Category extends Component<IProps> {
   }
 }
 
-export default inject('resultsStore')(observer(Category));
+export default inject('resultsStore')(observer(Organisation));
