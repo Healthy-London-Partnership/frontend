@@ -194,6 +194,7 @@ export default class ResultsStore {
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
     let itemsPerPage;
+    let searchUrl;
 
     if(isNational) {
       itemsPerPage = Math.round(this.itemsPerPage / 2);
@@ -201,7 +202,13 @@ export default class ResultsStore {
       itemsPerPage = this.itemsPerPage;
     }
 
-    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`, params);
+    if(this.view === 'map') {
+      searchUrl = `${apiBase}/search`;
+    } else {
+      searchUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
+    }
+
+    const { data } = await axios.post(searchUrl, params);
     this.totalItems += get(data, 'meta.total', 0);
 
     if(!isNational) {
@@ -318,11 +325,15 @@ export default class ResultsStore {
       );
 
       const location = get(geolocation, 'data.results[0].geometry.location', {});
-
-      this.locationCoords = {
-        lon: location.lng,
-        lat: location.lat,
-      };
+      
+      if(location) {
+        this.locationCoords = {
+          lon: location.lng,
+          lat: location.lat,
+        };
+      } else {
+        alert('we could not find a location for the address entered');
+      }
     } catch (e) {
       console.error(e);
     }

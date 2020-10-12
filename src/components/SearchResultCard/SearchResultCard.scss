@@ -10,9 +10,14 @@
   margin: space(8);
   height: max-content;
   cursor: pointer;
+  overflow: hidden;
 
   &:hover {
     box-shadow: 0 2px 4px 0 rgba(56, 56, 56, 0.5);
+  }
+
+  &.is-active {
+    border: 6px solid $puerto-rico;
   }
 
   @include for-tablet-landscape-up {
@@ -105,6 +110,14 @@
   background-color: $elm;
 }
 
+.search-result-card__tag--app {
+  background-color: $cranberry;
+}
+
+.search-result-card__tag--information {
+  background-color: $club-blue;
+}
+
 .search-result-card__tag--icon {
   margin-right: pxtorem(4px);
 }
@@ -159,8 +172,6 @@
   padding: space(16);
   color: $white;
   text-align: center;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
 
   a {
     font-size: $font-body-m;
