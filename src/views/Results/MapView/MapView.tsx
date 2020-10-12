@@ -56,11 +56,11 @@ class MapView extends Component<IProps, IState> {
     if(results) {
       results[1].map((result: any) => {
         if (result.service_locations) {
-          return result.service_locations.map((serviceLocation: IServiceLocation) => {	
+          return result.service_locations.map((serviceLocation: IServiceLocation) => {
             return (
               markers.push(
                 {
-                  id: result.id,
+                  id: serviceLocation.id,
                   type: result.type,
                   lat: serviceLocation.location.lat,
                   lon: serviceLocation.location.lon
