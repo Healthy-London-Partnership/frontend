@@ -5,7 +5,7 @@ import map from 'lodash/map';
 import { latLngBounds, LatLngBounds } from 'leaflet';
 import { observer, inject } from 'mobx-react';
 
-import { ActivityMarker, GroupMarker, ServiceMarker, ClubMarker } from './icons';
+import { ActivityMarker, GroupMarker, ServiceMarker, ClubMarker, ActiveMarker } from './icons';
 import List from './../ListView/List';
 
 import './MapView.scss';
@@ -17,22 +17,24 @@ interface IProps {
 }
 
 interface IState {
-  markers: [];
+  markers: any;
   bounds: LatLngBounds;
+  activeMarkerId: string;
 }
 
-const CENTRE_OF_KINGSTON: [number, number] = [51.378583, -0.280582];
-const TOP_LEFT_CORNER: [number, number] = [51.412437, -0.329297];
-const BOTTOM_RIGHT_CORNER: [number, number] = [51.403871, -0.288459];
+const CENTRE_OF_MAP: [number, number] = [52.8170759, -4.5698321];
+const TOP_LEFT_CORNER: [number, number] = [49.959999905, -7.57216793459];
+const BOTTOM_RIGHT_CORNER: [number, number] = [58.6350001085, 1.68153079591];
 
-class MapView extends Component<IProps, IState> {
+class MapView extends Component<IProps, IState> {  
   constructor(props: IProps) {
     super(props);
 
     this.state = {
       markers: [],
       bounds: latLngBounds(TOP_LEFT_CORNER, BOTTOM_RIGHT_CORNER),
-    };
+      activeMarkerId: '',
+    };;
   }
 
   addMarkers = (results: any) => {
@@ -47,7 +49,34 @@ class MapView extends Component<IProps, IState> {
     }
   };
 
-  getMarker = (type: string) => {
+  getMarkers = (results: any) => {
+    let { markers } = this.state;
+    markers.length = 0;
+
+    if(results) {
+      results[1].map((result: any) => {
+        if (result.service_locations) {
+          return result.service_locations.map((serviceLocation: IServiceLocation) => {
+            return (
+              markers.push(
+                {
+                  key: serviceLocation.id,
+                  id: result.id,
+                  type: result.type,
+                  lat: serviceLocation.location.lat,
+                  lon: serviceLocation.location.lon
+                }
+              )
+            )
+          });
+        }
+
+        return null;
+      })
+    }
+  };
+
+  getMarkerType = (type: string) => {
     switch (true) {
       case type === 'service':
         return ServiceMarker;
@@ -57,9 +86,17 @@ class MapView extends Component<IProps, IState> {
         return ActivityMarker;
       case type === 'club':
         return ClubMarker;
+      case type === 'active':
+        return ActiveMarker;
       default:
         break;
     }
+  };
+
+  setActiveService = (id: string) => {
+    this.setState({
+      activeMarkerId: id
+    });
   };
 
   render() {
@@ -69,29 +106,30 @@ class MapView extends Component<IProps, IState> {
       return;
     }
 
-    this.addMarkers([...resultsStore.results.entries()][0]);
+    if([...resultsStore.results.entries()]) {
+      this.getMarkers([...resultsStore.results.entries()][0]);
+      this.addMarkers([...resultsStore.results.entries()][0]);
+    }
 
     return (
       <main className="flex-container flex-container--justify">
         <div className="flex-col--tablet--12 flex-col--10">
           <div className="flex-container flex-container--space flex-container--row-reverse map">
             <div className="flex-col--6 flex-col--mobile--12 map__map-container">
-              <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
+              <Map
+                center={CENTRE_OF_MAP}
+                attributionControl={false}
+                bounds={this.state.bounds}>
                 <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
-                {[...resultsStore.results.entries()].map((results, i) => {
-                  results[1].map((result: any) => {return result.service_locations.map((serviceLocation: IServiceLocation) => {
-                      return (
-                        <Marker
-                          key={serviceLocation.id}
-                          position={[serviceLocation.location.lat, serviceLocation.location.lon]}
-                          icon={this.getMarker(result.type)}
-                        />
-                      );
-                    });
-                  })
-
-                  return null;
-                })}
+                
+                {this.state.markers.map((marker: any) =>
+                  <Marker	
+                    key={marker.key}
+                    position={[marker.lat, marker.lon]}
+                    icon={this.state.activeMarkerId === marker.id ? this.getMarkerType('active') : this.getMarkerType(marker.type)}
+                    onClick={() => this.setActiveService(marker.id)}
+                  />
+                )}
               </Map>
             </div>
             
@@ -102,7 +140,9 @@ class MapView extends Component<IProps, IState> {
 
                   return (
                     <List
-                      key={title}
+                      key={i}
+                      activeId={this.state.activeMarkerId}
+                      activeIdHandler={this.setActiveService}
                       title={title}
                       resultsList={resultsList}
                       resultsStore={resultsStore}

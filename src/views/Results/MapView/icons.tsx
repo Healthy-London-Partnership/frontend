@@ -16,3 +16,7 @@ export const ClubMarker = L.icon({
   iconUrl: require('../../../assets/images/icons/maps/club-pin.svg'),
   iconSize: [50, 95],
 });
+export const ActiveMarker = L.icon({
+  iconUrl: require('../../../assets/images/icons/maps/active-pin.svg'),
+  iconSize: [62, 88],
+});
