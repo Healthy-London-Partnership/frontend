@@ -9,7 +9,6 @@ import MetaData from '../../../components/MetaData/MetaData';
 import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 import Link from '../../../components/Link/Link';
 import Loading from '../../../components/Loading/Loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface RouteParams {
   organisation: string;
@@ -60,7 +59,7 @@ class Organisation extends Component<IProps> {
             <div className="flex-col--tablet--12 flex-col--10">
               <div className="flex-container">
                 <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="taxonomy__heading"><FontAwesomeIcon icon={taxonomyOrganisation.icon} /> {taxonomyOrganisation.name}</h1>
+                  <h1 className="taxonomy__heading">{taxonomyOrganisation.name}</h1>
                 </div>
               </div>
             </div>
@@ -69,7 +68,7 @@ class Organisation extends Component<IProps> {
 
         <div className="taxonomy__list">
           <div className="flex-container flex-container--justify">
-            {taxonomyOrganisation.children.length > 0 ? (
+            {taxonomyOrganisation.children ? (
               <div className="flex-col--tablet--12 flex-col--10 taxonomy__list">
                 <div className="flex-container">
                   <div className="flex-col flex-col--8 flex-col--standard--12">
