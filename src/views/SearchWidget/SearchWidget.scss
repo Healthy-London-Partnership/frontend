@@ -14,7 +14,7 @@
   height: auto;
   background-size: 100% 100%;
   position: relative;
-  padding: space(48) 0;
+  padding: space(48) space(16);
 
   .search__input {
     margin-bottom: 0;
@@ -34,5 +34,15 @@
     @include for-tablet-landscape-up {
       @include marginLeft;
     }
+  }
+}
+
+.search-widget__info {
+  display: block;
+  margin-bottom: space(24);
+  font-size: pxtorem(16px);
+
+  svg {
+    margin-right: space(8);
   }
 }

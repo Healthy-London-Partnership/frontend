@@ -2,32 +2,69 @@ import React, { Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import get from 'lodash/get';
+import queryString from 'query-string';
 
 import SearchStore from '../../stores/searchStore';
 
 import './SearchWidget.scss';
 import SearchInput from '../../components/SearchInput/SearchInput';
-import WindowSizeStore from '../../stores/windowSizeStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ResultsStore from '../../stores/resultsStore';
 import CMSStore from '../../stores/CMSStore';
 
 interface IProps extends RouteComponentProps {
-  windowSizeStore?: WindowSizeStore;
   cmsStore?: CMSStore;
+  resultsStore?: ResultsStore;
 }
 
-@inject('windowSizeStore', 'cmsStore')
+interface IState {
+  collection_categories: any | null;
+  collection_personas: any | null;
+}
+
+@inject('cmsStore', 'resultsStore')
 @observer
-class Search extends React.Component<IProps> {
+class Search extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      collection_categories: null,
+      collection_personas: null
+    };
+  }
+
+  componentDidMount() {
+    this.getCollection();
+  }
+
   componentWillUnmount() {
     SearchStore.clear();
   }
 
+  getCollection() {
+    const { collection_categories, collection_personas } = queryString.parse(this.props.location.search, {arrayFormat: 'comma'});
+    
+    this.setState({
+      collection_categories: collection_categories,
+      collection_personas: collection_personas,
+    });
+  }
+
   render() {
-    const { windowSizeStore, cmsStore } = this.props;
+    const { cmsStore, resultsStore } = this.props;
 
     // injected stores must be typed as optional, but will always be there if injected. Allows workound for destructuring values from store
-    if (!windowSizeStore || !cmsStore) {
+    if (!cmsStore || !resultsStore) {
       return null;
+    }
+    
+    const renderSearchInfo = ()=>{
+      if(this.state.collection_categories){
+        return <span>This search is restricted to the <strong>{this.state.collection_categories.map((item:string, i:number) => item + ((this.state.collection_categories.length !== i + 1) ? ', ' : ''))}</strong> category.</span>
+      } else if(this.state.collection_personas) {
+        return <span>This search is restricted to the <strong>{this.state.collection_personas.map((item:string, i:number) => item + ((this.state.collection_personas.length !== i + 1) ? ', ' : ''))}</strong> personas.</span>
+      }
     }
 
     return (
@@ -36,6 +73,11 @@ class Search extends React.Component<IProps> {
           <form className="flex-container flex-container--mobile-no-padding">
             <div className="flex-col--12">
               <h1 className="search-widget__heading">{get(cmsStore, 'home.search_title')}</h1>
+              {(this.state.collection_categories || this.state.collection_personas) &&
+                <p className="search-widget__info"><FontAwesomeIcon icon="info-circle" />
+                  {renderSearchInfo()}
+                </p>
+              }
             </div>
             <SearchInput showButtonText={true} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
           </form>
