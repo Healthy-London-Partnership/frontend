@@ -1,0 +1,38 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/grid.scss';
+@import '../../styles/breakpoints.scss';
+@import '../../styles/fonts.scss';
+
+@mixin marginLeft {
+  margin-left: pxtorem(60px) !important;
+}
+
+.search-widget {
+  background-color: $iceberg;
+  color: $san-juan;
+  height: auto;
+  background-size: 100% 100%;
+  position: relative;
+  padding: space(48) 0;
+
+  .search__input {
+    margin-bottom: 0;
+  }
+}
+
+.search-widget__heading {
+  @include heading-xl;
+  display: block;
+  margin-bottom: space(16);
+
+  @include for-phone-only {
+    @include heading-l;
+  }
+
+  &--category {
+    @include for-tablet-landscape-up {
+      @include marginLeft;
+    }
+  }
+}
