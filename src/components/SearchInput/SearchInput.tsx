@@ -20,6 +20,7 @@ interface IProps extends RouteComponentProps {
   resultsStore?: ResultsStore;
   uiStore?: UIStore;
   showButtonText: boolean;
+  showGeoLocate: boolean;
   keywordFieldLabel: string;
   postcodeFieldLabel: string;
 }
@@ -107,7 +108,8 @@ class SearchInput extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { resultsStore, windowSizeStore, uiStore, showButtonText, keywordFieldLabel, postcodeFieldLabel } = this.props;
+    const { resultsStore, windowSizeStore, uiStore, showButtonText, showGeoLocate, keywordFieldLabel, postcodeFieldLabel } = this.props;
+
 
     // injected stores must be typed as optional, but will always be there if injected. Allows workound for destructuring values from store
     if (!resultsStore || !windowSizeStore || !uiStore) {
@@ -173,12 +175,14 @@ class SearchInput extends React.Component<IProps, IState> {
               />
             </div>
           </div>
-          <button
+          {showGeoLocate &&
+            <button
             className="link link--medium search__location__link"
             onClick={(e) => {
               e.preventDefault();
               this.getLocation();
             }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</button>
+          }
         </div>
       </Fragment>
     );

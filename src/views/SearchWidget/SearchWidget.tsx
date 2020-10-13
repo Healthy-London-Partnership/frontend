@@ -79,7 +79,7 @@ class Search extends React.Component<IProps, IState> {
                 </p>
               }
             </div>
-            <SearchInput showButtonText={true} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
+            <SearchInput showButtonText={true} showGeoLocate={false} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
           </form>
         </section>
       </Fragment>
