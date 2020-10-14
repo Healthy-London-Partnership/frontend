@@ -12,7 +12,7 @@ import Results from './views/Results';
 import Service from './views/Service';
 import Favourites from './views/Favourites';
 import Referral from './views/Referral';
-import About from './views/About';
+import AboutConnect from './views/AboutConnect';
 import Contact from './views/Contact';
 import GetInvolved from './views/GetInvolved';
 import Privacy from './views/Privacy';
@@ -72,7 +72,7 @@ class App extends Component {
               <Route path="/services/:service" component={Service} />
               <Route path="/favourites" component={Favourites} />
               <Route path="/referral" component={Referral} />
-              <Route path="/about" component={About} />
+              <Route path="/about-connect" component={AboutConnect} />
               <Route path="/contact" component={Contact} />
               <Route path="/get-involved" component={GetInvolved} />
               <Route path="/privacy-policy" component={Privacy} />

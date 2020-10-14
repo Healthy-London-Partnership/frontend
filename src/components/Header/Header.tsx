@@ -124,7 +124,7 @@ class Header extends Component<IProps> {
                     Home
                   </RouterLink>
                   <RouterLink
-                    to="/about"
+                    to="/about-connect"
                     exact={true}
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
@@ -134,7 +134,7 @@ class Header extends Component<IProps> {
                       }
                     }}
                   >
-                    About
+                    About Connect
                   </RouterLink>
                   <RouterLink
                     to="/contact"
