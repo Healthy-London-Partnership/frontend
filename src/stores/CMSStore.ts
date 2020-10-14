@@ -40,6 +40,7 @@ class CMSStore {
   @observable contact: IContent | null = null;
   @observable favourites: IContent | null = null;
   @observable providers: IContent | null = null;
+  @observable supporters: IContent | null = null;
   @observable privacy_policy: IContent | null = null;
   @observable terms_and_conditions: IContent | null = null;
   @observable global: IGlobal | null = null;

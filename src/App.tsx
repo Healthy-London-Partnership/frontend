@@ -14,6 +14,7 @@ import Favourites from './views/Favourites';
 import Referral from './views/Referral';
 import AboutConnect from './views/AboutConnect';
 import Providers from './views/Providers';
+import Supporters from './views/Supporters';
 import Contact from './views/Contact'
 import Privacy from './views/Privacy';
 import DutyToRefer from './views/DutyToRefer';
@@ -74,6 +75,7 @@ class App extends Component {
               <Route path="/referral" component={Referral} />
               <Route path="/about-connect" component={AboutConnect} />
               <Route path="/providers" component={Providers} />
+              <Route path="/supporters" component={Supporters} />
               <Route path="/contact" component={Contact} />
               <Route path="/privacy-policy" component={Privacy} />
               <Route path="/terms-and-conditions" component={Terms} />
