@@ -137,6 +137,18 @@ class Header extends Component<IProps> {
                     About Connect
                   </RouterLink>
                   <RouterLink
+                    to="/providers"
+                    className="link link__inline link--large link__header"
+                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    onClick={() => {
+                      if (burgerMenuOpen) {
+                        toggleBurgerMenu();
+                      }
+                    }}
+                  >
+                    Providers
+                  </RouterLink>
+                  <RouterLink
                     to="/contact"
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
@@ -147,18 +159,6 @@ class Header extends Component<IProps> {
                     }}
                   >
                     Contact
-                  </RouterLink>
-                  <RouterLink
-                    to="/get-involved"
-                    className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
-                    onClick={() => {
-                      if (burgerMenuOpen) {
-                        toggleBurgerMenu();
-                      }
-                    }}
-                  >
-                    Get Involved
                   </RouterLink>
 
                   <div className="mobile-show tablet-show tablet--large-show medium-show">
