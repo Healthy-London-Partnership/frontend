@@ -60,7 +60,8 @@ class MapView extends Component<IProps, IState> {
             return (
               markers.push(
                 {
-                  id: serviceLocation.id,
+                  key: serviceLocation.id,
+                  id: result.id,
                   type: result.type,
                   lat: serviceLocation.location.lat,
                   lon: serviceLocation.location.lon
@@ -123,7 +124,7 @@ class MapView extends Component<IProps, IState> {
                 
                 {this.state.markers.map((marker: any) =>
                   <Marker	
-                    key={marker.id}
+                    key={marker.key}
                     position={[marker.lat, marker.lon]}
                     icon={this.state.activeMarkerId === marker.id ? this.getMarkerType('active') : this.getMarkerType(marker.type)}
                     onClick={() => this.setActiveService(marker.id)}

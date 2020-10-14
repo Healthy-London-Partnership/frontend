@@ -22,7 +22,7 @@ const List: FunctionComponent<IProps> = ({ title, resultsList, resultsStore, act
       <div className="results__container">
         {resultsList.map((list: any) => {
           const organisation = find(resultsStore.organisations, ['id', list.organisation_id]) || null;
-          return <SearchResultCard key={list.id} activeIdHandler={setActiveId} isActive={activeId === list.id} result={list} organisation={organisation} />;
+          return <SearchResultCard resultsStore={resultsStore} key={list.id} activeIdHandler={setActiveId} isActive={activeId === list.id} result={list} organisation={organisation} />;
         })}
       </div>
     </Fragment>

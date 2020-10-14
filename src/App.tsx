@@ -8,6 +8,11 @@ import { Provider, observer } from 'mobx-react';
 
 import Home from './views/Home';
 import NotFound from './views/NotFound/NotFound';
+import Collections from './views/Collections/Collections';
+import CollectionsCategory from './views/Collections/Category/Category';
+import CollectionsPersona from './views/Collections/Persona/Persona';
+import TaxonomiesCategory from './views/Taxonomies/Category/Category';
+import TaxonomiesOrganisation from './views/Taxonomies/Organisation/Organisation';
 import Results from './views/Results';
 import Service from './views/Service';
 import Favourites from './views/Favourites';
@@ -68,6 +73,11 @@ class App extends Component {
             <Header />
             <Switch>
               <Route path="/" exact={true} component={Home} />
+              <Route path="/collections" exact={true} component={Collections} />
+              <Route path="/collections/categories/:category" component={CollectionsCategory} />
+              <Route path="/collections/personas/:persona" component={CollectionsPersona} />
+              <Route path="/taxonomies/categories/:category" component={TaxonomiesCategory} />
+              <Route path="/taxonomies/organisations/:organisation" component={TaxonomiesOrganisation} />
               <Route path="/results" component={Results} />
               <Route path="/services/:service" component={Service} />
               <Route path="/favourites" component={Favourites} />

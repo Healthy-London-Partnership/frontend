@@ -34,8 +34,7 @@ const Personas: React.FunctionComponent<IProps> = ({ personas, history, cmsStore
             persona={persona}
             action={() => {
               history.push({
-                pathname: '/results',
-                search: `?persona=${persona.id}`,
+                pathname: `/collections/personas/${persona.slug}`,
               });
             }}
           />

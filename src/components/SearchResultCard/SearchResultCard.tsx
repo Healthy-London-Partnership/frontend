@@ -15,8 +15,10 @@ import './SearchResultCard.scss';
 import Accordian from '../Accordian';
 import { getLocationName } from '../../utils/utils';
 import FallBackLogo from '../../assets/images/logo-fallback.png';
+import ResultsStore from '../../stores/resultsStore';
 
 interface IProps extends RouteComponentProps {
+  resultsStore: ResultsStore;
   result: IService;
   organisation?: IOrganisation | null;
   isActive?: boolean;
@@ -24,7 +26,7 @@ interface IProps extends RouteComponentProps {
   activeIdHandler: any;
 }
 
-@inject('result', 'organisation', 'isActive')
+@inject('resultsStore', 'result', 'organisation', 'isActive')
 @observer
 class SearchResultCard extends React.Component<IProps> {
   getIcon = (type: string) => {
@@ -47,7 +49,7 @@ class SearchResultCard extends React.Component<IProps> {
   };
 
   render() {
-    const { result, organisation, isActive } = this.props;
+    const { resultsStore, history, result, organisation, isActive } = this.props;
     const locations = getLocationName(result.service_locations);
 
     if (!result) {
@@ -59,7 +61,13 @@ class SearchResultCard extends React.Component<IProps> {
         className={cx('search-result-card', {
           'is-active': isActive,
         })}
-        onClick={() => this.props.activeIdHandler(result.id)}
+        onClick={() => {
+          resultsStore.view === 'map'  ?
+          this.props.activeIdHandler(result.id) :
+          history.push({
+            pathname: `/services/${result.slug}`,
+          });
+        }}
         tabIndex={0}
       >
         <div className="search-result-card__top-row">
