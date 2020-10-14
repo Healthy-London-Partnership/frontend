@@ -1,0 +1,14 @@
+@import '../../styles/breakpoints.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.taxonomy__list__heading {
+  margin-bottom: space(16);
+  color: $san-juan;
+}
+
+.categories__list ,
+.personas__list {
+  margin-top: space(48);
+}
