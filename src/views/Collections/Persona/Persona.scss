@@ -72,4 +72,15 @@
 
 .persona__list {
   margin-top: space(48);
+
+  &__items {
+    li {
+      white-space: pre;
+      word-break: break-all;
+    }
+
+    a {
+      display: inline-block;
+    }
+  }
 }
