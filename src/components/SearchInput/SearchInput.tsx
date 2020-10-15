@@ -166,6 +166,7 @@ class SearchInput extends React.Component<IProps, IState> {
                 'flex-col--mobile--12 search__submit': isMobile,
               })}>
               <Button
+                size="large"
                 text={showButtonText ? "Search" : ""}
                 icon="search"
                 type="submit"

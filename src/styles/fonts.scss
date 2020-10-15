@@ -6,8 +6,8 @@ $font-tertiary: 'Skippy Sharpie';
 
 $font-base: pxtorem(16px);
 
-$font-heading-xl: pxtorem(36px);
-$font-heading-mobile-xl: pxtorem(22px);
+$font-heading-xl: pxtorem(48px);
+$font-heading-mobile-xl: pxtorem(32px);
 
 $font-heading-l: pxtorem(28px);
 $font-heading-mobile-l: pxtorem(27px);
@@ -21,7 +21,7 @@ $font-heading-mobile-s: pxtorem(17px);
 $font-body-l: pxtorem(20px);
 $font-body-mobile-l: $font-base;
 
-$font-body-m: pxtorem(18px);
+$font-body-m: pxtorem(19px);
 $font-body-mobile-m: pxtorem(16px);
 $font-body-mobile-tertiary: $font-base;
 
@@ -51,7 +51,7 @@ $font-link-medium: $font-base;
   font-size: $font-heading-xl;
   font-family: $font-primary;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 3.25rem;
 
   @include for-phone-only {
     font-size: $font-heading-mobile-xl;
@@ -127,7 +127,7 @@ $font-link-medium: $font-base;
 @mixin body-m {
   font-size: $font-body-m;
   font-family: $font-primary;
-  line-height: 1.22;
+  line-height: 1.5625rem;
 
   @include for-phone-only {
     font-size: $font-body-mobile-m;

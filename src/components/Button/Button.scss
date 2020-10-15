@@ -128,7 +128,7 @@
 }
 
 .button__icon {
-  max-width: 20px;
+  max-width: 32px;
 }
 
 .button__icon--small {
@@ -196,6 +196,7 @@
 
 .button__category {
   font-size: $font-body-m;
+  font-weight: 500;
   height: pxtorem(50px);
   padding: space(14) space(18);
   margin-right: space(16);

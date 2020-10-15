@@ -81,7 +81,7 @@
 .search__heading {
   @include heading-xl;
   display: block;
-  margin-bottom: space(16);
+  margin-bottom: space(32);
 
   @include for-phone-only {
     @include heading-l;
