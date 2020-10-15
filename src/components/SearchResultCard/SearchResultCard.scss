@@ -4,9 +4,9 @@
 @import '../../styles/fonts.scss';
 
 .search-result-card {
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
   border-radius: 10px;
-  color: $san-juan;
+  color: $gulf-blue;
   margin: space(8);
   height: max-content;
   cursor: pointer;
@@ -98,7 +98,7 @@
 }
 
 .search-result-card__tag--service {
-  background-color: $san-juan;
+  background-color: $gulf-blue;
 }
 
 .search-result-card__tag--group {
@@ -155,7 +155,7 @@
 }
 
 .search-result-card__footer {
-  background-color: $san-juan;
+  background-color: $gulf-blue;
   padding: space(16);
   color: $white;
   text-align: center;

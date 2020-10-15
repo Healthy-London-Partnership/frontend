@@ -12,7 +12,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  color: $san-juan;
+  color: $gulf-blue;
 
   &__title {
     @include for-phone-only {
@@ -53,7 +53,7 @@
 .results__container-count {
   display: flex;
   justify-content: flex-start;
-  color: $san-juan;
+  color: $gulf-blue;
   padding: space(16) 0;
 
   @include for-tablet-landscape-down {
@@ -65,7 +65,7 @@
 .results__search-box {
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  color: $san-juan;
+  color: $gulf-blue;
   position: relative;
 
   @include for-tablet-landscape-up {
@@ -225,7 +225,7 @@
 
 .results__sort-by-label {
   @include body-m;
-  color: $san-juan;
+  color: $gulf-blue;
 }
 
 .results__sort-by {

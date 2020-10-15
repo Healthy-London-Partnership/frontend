@@ -19,7 +19,7 @@
   margin: 0 auto;
   box-sizing: border-box;
   border-radius: 10px;
-  color: $san-juan;
+  color: $gulf-blue;
 
   .flex-container {
     padding: 0 !important;
@@ -36,7 +36,7 @@
   textarea {
     @include body-m;
     width: 100%;
-    border: 2px solid $san-juan;
+    border: 2px solid $gulf-blue;
     resize: none;
     height: pxtorem(260px);
     padding: space(12) !important;

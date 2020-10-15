@@ -7,7 +7,7 @@
 .header {
   background: $white;
   overflow: hidden;
-  color: $san-juan;
+  color: $gulf-blue;
   text-align: right;
   padding-bottom: space(40);
 
@@ -130,7 +130,7 @@
 
     @include for-tablet-landscape-down {
       button {
-        color: $san-juan;
+        color: $gulf-blue;
 
         svg {
           margin-left: 6px;
@@ -201,7 +201,7 @@
 
       a {
         display: block;
-        color: $san-juan;
+        color: $gulf-blue;
         margin-bottom: space(32);
         font-size: pxtorem(20px);
         font-family: $font-primary;

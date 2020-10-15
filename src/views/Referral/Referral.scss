@@ -14,7 +14,7 @@
 }
 
 .referral {
-  color: $san-juan;
+  color: $gulf-blue;
   max-width: 1260px;
 
   @include for-tablet-landscape-down {
@@ -95,7 +95,7 @@
 
   &--step {
     margin: space(20) 0;
-    color: $san-juan;
+    color: $gulf-blue;
   }
 
   &--form-time {
@@ -120,7 +120,7 @@
   &--intro {
     border-radius: 19px;
     padding: space(32);
-    color: $san-juan;
+    color: $gulf-blue;
     margin: space(24) 0 !important;
 
     &--inner {
@@ -185,7 +185,7 @@
 }
 
 .referral__button {
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
   border-radius: 9px;
   padding: space(16) !important;
   margin-bottom: space(12) !important;
@@ -206,7 +206,7 @@
     background-color: $hawkes-blue;
 
     svg {
-      color: $san-juan;
+      color: $gulf-blue;
     }
   }
 
@@ -310,7 +310,7 @@
   &--text-area {
     @include body-m;
 
-    border: 2px solid $san-juan;
+    border: 2px solid $gulf-blue;
     resize: none;
     height: pxtorem(100px);
     padding: space(12) !important;
@@ -378,13 +378,13 @@
     margin: space(20) 0;
 
     label {
-      color: $san-juan !important;
+      color: $gulf-blue !important;
     }
   }
 }
 
 .referral__confirmation {
-  color: $san-juan;
+  color: $gulf-blue;
   max-width: pxtorem(1000px);
 
   @include for-phone-only {

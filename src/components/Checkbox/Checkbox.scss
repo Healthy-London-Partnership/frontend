@@ -14,7 +14,7 @@
     @include body-m;
     cursor: pointer;
     margin-bottom: 0;
-    color: $san-juan;
+    color: $gulf-blue;
 
     svg {
       display: none;
@@ -29,7 +29,7 @@
       top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
-      color: $san_juan;
+      color: $gulf-blue;
     }
   }
 
@@ -41,7 +41,7 @@
     vertical-align: middle;
     cursor: pointer;
     background-color: $white;
-    border: 2px solid $san_juan;
+    border: 2px solid $gulf-blue;
     position: relative;
   }
 

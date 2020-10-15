@@ -171,7 +171,7 @@
 
 .service__info {
   padding-top: space(32) !important;
-  color: $san-juan;
+  color: $gulf-blue;
   max-width: 1260px;
 
   @include for-phone-only {
@@ -222,7 +222,7 @@
 
 .service__info__cost--right {
   margin-left: space(32);
-  color: $san-juan;
+  color: $gulf-blue;
 }
 
 .react-player__preview {
@@ -281,7 +281,7 @@
     p {
       @include body-l;
       margin-bottom: space(40);
-      color: $san-juan;
+      color: $gulf-blue;
     }
   }
 
@@ -424,7 +424,7 @@
   &--mobile {
     background-image: none;
     background-color: $white;
-    border: 1px solid $san-juan;
+    border: 1px solid $gulf-blue;
     padding: space(16) space(24) space(24) !important;
     border-radius: 17px 33px 47px 29px;
 

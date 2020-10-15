@@ -21,11 +21,11 @@
     }
 
     &:first-child {
-      border-right: 2px solid $san-juan;
+      border-right: 2px solid $gulf-blue;
 
       @include for-phone-only {
         border-right: none;
-        border-bottom: 2px solid $san-juan;
+        border-bottom: 2px solid $gulf-blue;
       }
     }
   }
@@ -73,7 +73,7 @@
 
 .search__wrapper {
   flex-wrap: nowrap !important;
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
   border-radius: 10px;
   background-color: $white;
 

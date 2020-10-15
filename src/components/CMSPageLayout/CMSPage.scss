@@ -3,7 +3,7 @@
 @import '../../styles/colors.scss';
 
 .cms {
-  color: $san-juan;
+  color: $gulf-blue;
   font-family: $font-primary;
 
   &--contact-card {
@@ -112,7 +112,7 @@
 
   &--title {
     font-size: pxtorem(32px);
-    color: $san-juan;
+    color: $gulf-blue;
     margin-bottom: space(32);
 
     @include for-tablet-landscape-down {
@@ -134,7 +134,7 @@
 
   p {
     @include body-m;
-    color: $san-juan;
+    color: $gulf-blue;
     word-break: break-word;
     margin-bottom: space(16);
     line-height: 1.75rem;
