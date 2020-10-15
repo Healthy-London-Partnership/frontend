@@ -1,0 +1,27 @@
+@import '../../styles/breakpoints.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.home-about {
+  padding: space(120) 0 space(96) 0;
+  background-color: $athens-grey;
+  color: $gulf-blue;
+
+  @include for-phone-only {
+    padding: space(64) space(32);
+  }
+
+  &-wrapper {
+    padding: 0 space(48);
+
+    @include for-phone-only {
+      padding: 0;
+    }
+  }
+
+  &-title {
+    @include heading-xl;
+    margin-bottom: space(20);
+  }
+}
