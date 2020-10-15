@@ -31,18 +31,22 @@ interface IProps extends RouteComponentProps {
 class SearchResultCard extends React.Component<IProps> {
   getIcon = (type: string) => {
     switch (true) {
-      case type === 'service':
-        return 'clipboard';
-      case type === 'group':
-        return 'users';
       case type === 'activity':
         return 'paper-plane';
-      case type === 'club':
-        return 'tshirt';
+      case type === 'advice':
+        return 'people-arrows';
       case type === 'app':
         return 'tablet-alt';
+      case type === 'club':
+        return 'tshirt';
+      case type === 'group':
+        return 'users';
+      case type === 'helpline':
+        return 'phone-alt';
       case type === 'information':
         return 'info';
+      case type === 'service':
+        return 'clipboard';
       default:
         break;
     }
