@@ -53,7 +53,8 @@
     }
 
     &--name {
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
     }
   }
 
@@ -133,7 +134,8 @@
 
     &--heading {
       @include for-tablet-landscape-down {
-        font-family: $font-secondary;
+        font-family: $font-primary;
+        font-weight: 700;
         margin-bottom: space(8);
       }
     }
@@ -170,7 +172,8 @@
 
     &--description {
       font-size: $font-body-l;
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
 
       @include for-tablet-landscape-down {
         font-family: $font-primary;
@@ -285,7 +288,8 @@
 
   &--question {
     padding: 0 space(16);
-    font-family: $font-secondary;
+    font-family: $font-primary;
+    font-weight: 700;
 
     @include for-tablet-landscape-up {
       font-size: $font-heading-m;
@@ -294,7 +298,8 @@
 
     &--large {
       font-size: $font-body-l;
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
     }
   }
 

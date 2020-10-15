@@ -163,7 +163,8 @@
   @include body-s;
 
   span {
-    font-family: $font-secondary;
+    font-family: $font-primary;
+    font-weight: 700;
     margin-left: space(8);
   }
 }
@@ -202,7 +203,8 @@
 }
 
 .service__info__cost--header {
-  font-family: $font-secondary;
+  font-family: $font-primary;
+  font-weight: 700;
 }
 
 .service__info__cost--sub-heading {
@@ -622,7 +624,8 @@
 
 .service__offerings {
   @include body-m;
-  font-family: $font-secondary;
+  font-family: $font-primary;
+  font-weight: 700;
   margin-top: space(24);
   margin-bottom: space(40) !important;
 
