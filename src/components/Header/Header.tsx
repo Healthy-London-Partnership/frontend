@@ -161,7 +161,7 @@ class Header extends Component<IProps> {
                     Supporters
                   </RouterLink>
                   <RouterLink
-                    to="/contact"
+                    to="/funders"
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
                     onClick={() => {
@@ -170,7 +170,7 @@ class Header extends Component<IProps> {
                       }
                     }}
                   >
-                    Contact
+                    Funders
                   </RouterLink>
 
                   <div className="mobile-show tablet-show tablet--large-show medium-show">
