@@ -16,8 +16,8 @@ $font-heading-mobile-l: pxtorem(27px);
 $font-heading-m: pxtorem(22px);
 $font-heading-mobile-m: pxtorem(24px);
 
-$font-heading-s: pxtorem(18px);
-$font-heading-mobile-s: pxtorem(16px);
+$font-heading-s: pxtorem(19px);
+$font-heading-mobile-s: pxtorem(17px);
 
 $font-body-l: pxtorem(20px);
 $font-body-mobile-l: $font-base;
@@ -125,7 +125,7 @@ $font-link-medium: $font-base;
   font-size: $font-heading-s;
   font-family: $font-primary;
   font-weight: normal;
-  line-height: 1.22;
+  line-height: 1.6rem;
 
   @include for-phone-only {
     font-size: $font-heading-mobile-s;

@@ -219,7 +219,7 @@
   .logo {
     display: block;
     float: left;
-    max-width: 260px;
+    max-width: 270px;
     text-align: left;
 
     @include for-phone-only {
@@ -238,6 +238,17 @@
     .logo-byline {
       display: block;
       @include heading-s-light;
+    }
+
+    .logo-icon {
+      display: block;
+      max-width: 88px;
+      margin-top: space(8);
+
+      img {
+        width: 100%;
+        height: auto;
+      }
     }
   }
 

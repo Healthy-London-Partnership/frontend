@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { NavLink as RouterLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import './Header.scss';
+import NHSLogo from '../../assets/images/nhs-logo.svg';
 
 import Button from '../Button';
 import WindowSizeStore from '../../stores/windowSizeStore';
@@ -81,8 +82,9 @@ class Header extends Component<IProps> {
           >
             <figure className="logo">
               <RouterLink to="/" aria-label="Home Link">
-                <span className="logo-heading">NHS Connect</span>
+                <span className="logo-heading">Connect</span>
                 <span className="logo-byline">Search for support and advice for health and wellbeing</span>
+                <span className="logo-icon"><img src={NHSLogo} alt="NHS" /></span>
               </RouterLink>
             </figure>
 
