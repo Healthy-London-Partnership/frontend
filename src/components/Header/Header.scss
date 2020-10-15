@@ -233,12 +233,14 @@
 
     .logo-heading {
       display: block;
+      font-weight: 600;
       @include heading-xl;
     }
 
     .logo-byline {
       display: block;
       @include heading-s-light;
+      font-weight: 600;
     }
 
     .logo-icon {
@@ -355,6 +357,7 @@
 }
 
 .nav {
+  position: relative;
   display: inline-block;
 
   &--primary {
@@ -368,15 +371,31 @@
       padding: 0 space(10) space(32);
       text-align: left;
     }
-  }
 
-  &--active {
-    @include for-desktop-up {
-      background-image: url('../../assets/images/backgrounds/nav-hover.svg');
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      height: auto;
-      padding: 20px;
+    .link {
+      font-size: pxtorem(19px);
+      line-height: 1.6rem;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $gulf-blue;
+        opacity: 0;
+        transition: opacity 0.15s ease-in-out;
+      }
+
+      &--active,
+      &:hover {
+        text-decoration: none;
+
+        &::after {
+          opacity: 1;
+        }
+      }
     }
   }
 }

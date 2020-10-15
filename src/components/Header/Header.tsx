@@ -116,7 +116,7 @@ class Header extends Component<IProps> {
                     exact={true}
                     to="/"
                     className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    activeClassName={cx({ 'link--active': !isMobile })}
                     onClick={() => {
                       if (burgerMenuOpen) {
                         toggleBurgerMenu();
@@ -129,7 +129,7 @@ class Header extends Component<IProps> {
                     to="/about"
                     exact={true}
                     className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    activeClassName={cx({ 'link--active': !isMobile })}
                     onClick={() => {
                       if (burgerMenuOpen) {
                         toggleBurgerMenu();
@@ -141,7 +141,7 @@ class Header extends Component<IProps> {
                   <RouterLink
                     to="/contact"
                     className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    activeClassName={cx({ 'link--active': !isMobile })}
                     onClick={() => {
                       if (burgerMenuOpen) {
                         toggleBurgerMenu();
@@ -153,7 +153,7 @@ class Header extends Component<IProps> {
                   <RouterLink
                     to="/get-involved"
                     className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    activeClassName={cx({ 'link--active': !isMobile })}
                     onClick={() => {
                       if (burgerMenuOpen) {
                         toggleBurgerMenu();
