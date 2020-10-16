@@ -71,26 +71,16 @@ class Header extends Component<IProps> {
               'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
             })}
           >
-            <div
-              className="flex-container flex-container--mobile-no-padding flex-container--justify header--top-row"
-            >
-              <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--button-box">
-                <div id="google_translate_element" />
-              </div>
-              <div className="flex-col mobile-hide tablet--large-hide medium-hide">
-                <Button
-                  text="Give Feedback"
-                  header={true}
-                  icon="comment"
-                  onClick={() => uiStore.toggleFeedbackModal()}
-                />
-              </div>
-              <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--favourite header--top-row--button-box">
-                <RouterLink to="/favourites">
-                  <Button text="Your Favourites" header={true} icon="star" />
-                </RouterLink>
-              </div>
-            </div>
+            <div id="google_translate_element" />
+            <Button
+              text="Give Feedback"
+              header={true}
+              icon="comment"
+              onClick={() => uiStore.toggleFeedbackModal()}
+            />
+            <RouterLink to="/favourites">
+              <Button text="Your Favourites" header={true} icon="star" />
+            </RouterLink>
           </div>
 
           <div className="flex-col flex-col--10 header__nav">
