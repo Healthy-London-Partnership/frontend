@@ -22,12 +22,12 @@ const Contact: React.FunctionComponent<IProps> = ({ cmsStore }) => {
       <MetaData
         title={get(cmsStore, 'contact.title')}
       />
-      <div className="flex-col flex-col--7 flex-col--tablet--8 cms__content">
-        <ReactMarkdown source={get(cmsStore, 'contact.content')} />
-      </div>
-      {cmsStore.hasContactInfo && (
-        <div className="flex-col flex-col--3 flex-col--mobile--10 flex-col--tablet--8 flex-col--tablet-large--4">
-          <div className="cms--contact-card">
+      <div className="flex-container flex-container--no-padding">
+        <div className="flex-col--6">
+          <ReactMarkdown source={get(cmsStore, 'contact.content')} />
+        </div>
+        {cmsStore.hasContactInfo && (
+          <div className="cms__contact-card flex-col flex-col--6">
             <h3>Contact</h3>
             {get(cmsStore, 'global.contact_phone') !== 'Contact phone' && (
               <div className="cms--contact-card--row">
@@ -74,8 +74,8 @@ const Contact: React.FunctionComponent<IProps> = ({ cmsStore }) => {
               )}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </CMSPage>
   );
 };

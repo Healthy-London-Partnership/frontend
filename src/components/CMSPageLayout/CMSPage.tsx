@@ -20,13 +20,11 @@ const CMSPage: React.FunctionComponent<IProps> = ({ title, children, twoColumn, 
         </div>
       </div>
     </div>
-    <main className="flex-container flex-container--justify">
-      {twoColumn ? (
-        children
-      ) : (
-        <div className="flex-col flex-col--10 flex-col--tablet--12 cms__content">{children}</div>
-      )}
-    </main>
+    <div className="cms__content flex-container flex-container--justify">
+      <div className="cms__content__inner flex-col--10">
+        {children}
+      </div>
+    </div>
   </section>
 );
 

@@ -6,18 +6,7 @@
   color: $gulf-blue;
   font-family: $font-primary;
 
-  &--contact-card {
-    padding: space(12) space(24);
-    background-color: $alabaster;
-    border-radius: 19px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-left: space(16);
-
-    @include for-tablet-portrait-down {
-      margin-left: 0;
-    }
-
+  &__contact-card {
     &--row {
       margin-top: space(24);
     }
@@ -81,10 +70,10 @@
 }
 
 .cms__content {
-  display: block;
-  max-width: 1260px;
-  margin: 0 auto;
-  padding: space(120) space(72) space(96) space(72);
+  &__inner {
+    max-width: 1260px;
+    padding: space(120) space(72) space(96) !important;
+  }
 
   h1 {
     @include heading-xl;
