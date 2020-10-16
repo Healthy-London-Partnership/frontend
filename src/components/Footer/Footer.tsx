@@ -43,7 +43,7 @@ const Footer: React.FunctionComponent<IProps> = ({ mobileMenu, cmsStore, uiStore
         <div className="flex-col flex-col--6 flex-col--tablet--12">
           <div className="flex-container flex-container--no-padding">
             <div className="flex-col flex-col--5 flex-col--mobile--7">
-              <h4>Get in touch with Connected Together</h4>
+              <h4>Get in touch with <br/>Connected Together</h4>
               <nav className="footer__social-links" role="menubar" aria-label="Social Media Links">
                 <a
                   href={`https://facebook.com/${get(cmsStore, 'global.facebook_handle')}`}

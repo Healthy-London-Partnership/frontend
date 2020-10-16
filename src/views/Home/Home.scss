@@ -13,7 +13,9 @@
   }
 
   &-wrapper {
-    padding: 0 space(48);
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 0 space(72);
 
     @include for-phone-only {
       padding: 0;

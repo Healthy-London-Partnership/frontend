@@ -218,26 +218,23 @@
 }
 
 .button__header {
-  height: pxtorem(40px);
-  padding: pxtorem(4px) space(16) space(8);
+  min-width: pxtorem(220px);
+  height: auto;
+  padding: space(12) space(16);
   margin: 0 space(12);
-  border-radius: 16px;
-  border: 1px solid $waikawa;
+  border-radius: 40px;
+  border: 2px solid $gulf-blue;
   background-color: $white;
-  color: $waikawa;
+  color: $gulf-blue;
   font-size: $font-body-m;
-  font-weight: normal;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-top: 0;
-
-  @include for-tablet-landscape-down {
-    color: $gulf-blue;
-  }
+  font-weight: 500;
+  line-height: 1.5625rem;
+  background-color: transparent;
+  transition: all 0.1s ease-in-out;
 
   &:hover {
-    border: 2px solid $waikawa;
-    border-top: 0;
+    background-color: $gulf-blue;
+    color: $white;
   }
 
   &:disabled {
@@ -249,8 +246,8 @@
     @include disabled-btn-hover;
   }
 
-  @include for-small-phone {
-    margin: 0;
+  .button__icon {
+    margin-left: space(12);
   }
 }
 

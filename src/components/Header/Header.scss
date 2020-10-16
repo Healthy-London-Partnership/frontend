@@ -8,6 +8,7 @@
   overflow: hidden;
   color: $gulf-blue;
   text-align: right;
+  margin-top: space(24);
   margin-bottom: space(24);
 
   &--grey {
@@ -319,12 +320,7 @@
 }
 
 .header__container {
-  padding: 0 !important;
-
-  @include for-desktop-up {
-    width: 90%;
-    margin: 0 auto;
-  }
+  padding: 0 space(64) !important;
 }
 
 .header__content {
@@ -358,6 +354,12 @@
   @include for-desktop-up {
     padding: 0 !important;
   }
+}
+
+.header__nav {
+  max-width: 1260px;
+  margin-top: space(32);
+  padding: 0 space(24);
 }
 
 .nav {

@@ -7,7 +7,6 @@ import SearchStore from '../../stores/searchStore';
 
 import './Search.scss';
 import CategoryList from '../CategoryList';
-import Personas from '../Personas';
 import SearchInput from '../SearchInput';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';

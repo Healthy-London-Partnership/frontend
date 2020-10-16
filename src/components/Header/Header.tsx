@@ -38,43 +38,11 @@ class Header extends Component<IProps> {
           'header--grey': location.pathname.includes('/referral'),
         })}
       >
-        <div
-          className={cx('flex-col--12', {
-            'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
-          })}
-        >
-          <div
-            className={cx(
-              'flex-container flex-container--mobile-no-padding flex-container--justify header--top-row',
-              {
-                'header--top-row--favourites': location.pathname.includes('/favourites'),
-              }
-            )}
-          >
-            <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--button-box">
-              <div id="google_translate_element" />
-            </div>
-            <div className="flex-col mobile-hide tablet--large-hide medium-hide">
-              <Button
-                text="Give Feedback"
-                header={true}
-                icon="comment"
-                onClick={() => uiStore.toggleFeedbackModal()}
-              />
-            </div>
-            <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--favourite header--top-row--button-box">
-              <RouterLink to="/favourites">
-                <Button text="Favourites" header={true} icon="star" />
-              </RouterLink>
-            </div>
-          </div>
-        </div>
-        <div className="flex-container flex-container--align-center flex-container--justify header__container">
+        <div className="flex-container flex-container--justify header__container">
           <div
             className={cx('flex-col flex-col--6 flex-col--tablet-large--12 header__brand', {
               'header__brand--active': burgerMenuOpen,
               'header__brand--sticky': uiStore.keywordEditOpen,
-              'header__brand--favourites': location.pathname.includes('/favourites'),
             })}
           >
             <figure className="logo">
@@ -98,7 +66,34 @@ class Header extends Component<IProps> {
             </button>
           </div>
 
-          <div className="flex-col flex-col--6 flex-col--tablet-large--12 flex-col--tablet--12 flex-col--medium--6 header__nav">
+          <div
+            className={cx('flex-col--6', {
+              'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
+            })}
+          >
+            <div
+              className="flex-container flex-container--mobile-no-padding flex-container--justify header--top-row"
+            >
+              <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--button-box">
+                <div id="google_translate_element" />
+              </div>
+              <div className="flex-col mobile-hide tablet--large-hide medium-hide">
+                <Button
+                  text="Give Feedback"
+                  header={true}
+                  icon="comment"
+                  onClick={() => uiStore.toggleFeedbackModal()}
+                />
+              </div>
+              <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--favourite header--top-row--button-box">
+                <RouterLink to="/favourites">
+                  <Button text="Your Favourites" header={true} icon="star" />
+                </RouterLink>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-col flex-col--10 header__nav">
             <div
               className={cx('flex-container header__content', {
                 'header__content--active': burgerMenuOpen,
