@@ -37,9 +37,9 @@ class Header extends Component<IProps> {
           active: burgerMenuOpen,
         })}
       >
-        <div className="flex-container header__container">
+        <div className="flex-container flex-container--justify header__container">
           <div
-            className={cx('flex-col flex-col--tablet-large--12 header__brand', {
+            className={cx('flex-col flex-col--5 flex-col--tablet-large--12 header__brand', {
               'header__brand--active': burgerMenuOpen,
               'header__brand--sticky': uiStore.keywordEditOpen,
             })}
@@ -66,7 +66,7 @@ class Header extends Component<IProps> {
           </div>
 
           <div
-            className={cx('header__ctas flex-col', {
+            className={cx('header__ctas flex-col flex-col--7', {
               'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
             })}
           >

@@ -144,4 +144,14 @@ button {
     font-weight: 900;
     color: $gulf-blue;
   }
+
+  &:hover {
+    span &:before {
+      color: $white;
+    }
+  
+    span &:after {
+      color: $white;
+    }
+  }
 }

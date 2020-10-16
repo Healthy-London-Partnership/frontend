@@ -237,7 +237,7 @@
 
   &:hover {
     background-color: $gulf-blue;
-    color: $white;
+    color: $white !important;
   }
 
   &:disabled {
