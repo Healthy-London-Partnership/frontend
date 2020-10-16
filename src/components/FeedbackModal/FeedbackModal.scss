@@ -44,7 +44,7 @@
   }
 
   a {
-    color: $elm;
+    color: $gulf-blue;
   }
 
   @include for-phone-only {
@@ -64,12 +64,20 @@
 }
 
 .modal__close {
-  color: #1f8275;
+  display: flex;
+  justify-content: flex-end;
   cursor: pointer;
   text-align: right;
 
-  svg {
-    vertical-align: middle;
+  button {
+    display: flex;
+    align-items: center;
+    color: $gulf-blue;
+    cursor: pointer;
+
+    svg {
+      margin-left: space(8);
+    }
   }
 }
 
