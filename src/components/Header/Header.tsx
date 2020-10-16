@@ -47,8 +47,6 @@ class Header extends Component<IProps> {
             className={cx(
               'flex-container flex-container--mobile-no-padding flex-container--justify header--top-row',
               {
-                'header--top-row--iceberg':
-                  location.pathname === '/' || location.pathname.includes('/favourites'),
                 'header--top-row--favourites': location.pathname.includes('/favourites'),
               }
             )}
@@ -76,7 +74,6 @@ class Header extends Component<IProps> {
             className={cx('flex-col flex-col--6 flex-col--tablet-large--12 header__brand', {
               'header__brand--active': burgerMenuOpen,
               'header__brand--sticky': uiStore.keywordEditOpen,
-              'header__brand--iceberg': location.pathname === '/',
               'header__brand--favourites': location.pathname.includes('/favourites'),
             })}
           >
@@ -101,7 +98,7 @@ class Header extends Component<IProps> {
             </button>
           </div>
 
-          <div className="flex-col flex-col--6 flex-col--tablet-large--12 flex-col--tablet--12 flex-col--medium--6">
+          <div className="flex-col flex-col--6 flex-col--tablet-large--12 flex-col--tablet--12 flex-col--medium--6 header__nav">
             <div
               className={cx('flex-container header__content', {
                 'header__content--active': burgerMenuOpen,

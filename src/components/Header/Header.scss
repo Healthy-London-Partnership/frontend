@@ -5,11 +5,10 @@
 @import '../../styles/fonts.scss';
 
 .header {
-  background: $white;
   overflow: hidden;
   color: $gulf-blue;
   text-align: right;
-  padding-bottom: space(40);
+  margin-bottom: space(24);
 
   &--grey {
     background-image: url('../../assets/images/backgrounds/referral-header-shape.svg');
@@ -141,7 +140,7 @@
 
   &__brand {
     position: relative;
-    padding: space(12);
+    align-self: flex-start;
     z-index: 1;
 
     @include for-tablet-landscape-down {
@@ -186,6 +185,10 @@
     }
   }
 
+  &__nav {
+    align-self: flex-end;
+  }
+
   &__navigation {
     margin-top: space(8);
 
@@ -222,6 +225,7 @@
     float: left;
     max-width: 270px;
     text-align: left;
+    color: $white;
 
     @include for-phone-only {
       max-width: 240px;
@@ -246,7 +250,7 @@
     .logo-icon {
       display: block;
       max-width: 88px;
-      margin-top: space(8);
+      margin-top: space(12);
 
       img {
         width: 100%;
@@ -375,6 +379,7 @@
     .link {
       font-size: pxtorem(19px);
       line-height: 1.6rem;
+      padding-bottom: 4px;
 
       &::after {
         content: "";

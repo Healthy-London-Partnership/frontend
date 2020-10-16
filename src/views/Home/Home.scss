@@ -9,7 +9,7 @@
   color: $gulf-blue;
 
   @include for-phone-only {
-    padding: space(64) space(32);
+    padding: space(80) space(32) space(56) space(32);
   }
 
   &-wrapper {
