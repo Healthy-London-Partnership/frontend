@@ -65,80 +65,8 @@
     }
   }
 
-  &--top-row {
-    align-items: stretch !important;
-    padding-bottom: space(12) !important;
-
-    &--button-box {
-      display: flex;
-      margin-right: space(8);
-
-      &:last-of-type {
-        margin-right: 0;
-        margin-left: space(8);
-      }
-
-      button {
-        margin: 0;
-      }
-
-      @include for-small-phone {
-        margin: 0;
-        justify-content: center;
-
-        &:last-of-type {
-          margin: 0;
-        }
-      }
-    }
-
-    &--favourites {
-      @include for-tablet-landscape-down {
-        background-color: $iceberg;
-      }
-    }
-
-    &--favourite {
-      @include for-tablet-portrait-down {
-        text-align: center;
-      }
-    }
-
-    &--iceberg {
-      @include for-phone-only {
-        background-color: $iceberg;
-      }
-
-      @include for-phone-only {
-        button {
-          border: none;
-        }
-
-        .goog-te-gadget-simple {
-          border: none !important;
-        }
-      }
-    }
-
-    @include for-small-phone {
-      .goog-te-gadget-simple {
-        margin: 0;
-      }
-    }
-
-    @include for-desktop-up {
-      justify-content: flex-end !important;
-    }
-
-    @include for-tablet-landscape-down {
-      button {
-        color: $gulf-blue;
-
-        svg {
-          margin-left: 6px;
-        }
-      }
-    }
+  &__ctas {
+    display: flex;
   }
 
   &__brand {
@@ -162,20 +90,6 @@
       &--sticky {
         position: fixed;
         background-color: $iceberg;
-      }
-
-      &--iceberg {
-        @include for-phone-only {
-          background-color: $iceberg;
-        }
-      }
-
-      &--favourites {
-        @include for-tablet-landscape-down {
-          background-image: url('../../assets/images/backgrounds/favourites-shape-mobile.svg');
-          background-repeat: no-repeat;
-          background-size: 110% 100%;
-        }
       }
     }
 

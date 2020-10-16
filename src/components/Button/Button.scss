@@ -218,18 +218,20 @@
   }
 }
 
-.button__header {
+.button__header,
+.goog-te-gadget-simple {
   min-width: pxtorem(220px);
-  height: auto;
+  height: 55px;
   padding: space(12) space(16);
-  margin: 0 space(12);
+  margin: 0 space(8);
   border-radius: 40px;
   border: 2px solid $gulf-blue;
   background-color: $white;
-  color: $gulf-blue;
+  color: $gulf-blue !important;
   font-size: $font-body-m;
   font-weight: 500;
   line-height: 1.5625rem;
+  text-align: center;
   background-color: transparent;
   transition: all 0.1s ease-in-out;
 

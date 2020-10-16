@@ -21,7 +21,7 @@ interface IProps extends RouteComponentProps {
 @observer
 class Header extends Component<IProps> {
   render() {
-    const { windowSizeStore, uiStore, location } = this.props;
+    const { windowSizeStore, uiStore } = this.props;
 
     // injected stores must be typed as optional, but will always be there if injected. Allows workound for destructuring values from store
     if (!windowSizeStore || !uiStore) {
@@ -37,9 +37,9 @@ class Header extends Component<IProps> {
           active: burgerMenuOpen,
         })}
       >
-        <div className="flex-container flex-container--justify header__container">
+        <div className="flex-container header__container">
           <div
-            className={cx('flex-col flex-col--6 flex-col--tablet-large--12 header__brand', {
+            className={cx('flex-col flex-col--tablet-large--12 header__brand', {
               'header__brand--active': burgerMenuOpen,
               'header__brand--sticky': uiStore.keywordEditOpen,
             })}
@@ -66,7 +66,7 @@ class Header extends Component<IProps> {
           </div>
 
           <div
-            className={cx('flex-col--6', {
+            className={cx('header__ctas flex-col', {
               'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
             })}
           >
