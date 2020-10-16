@@ -5,8 +5,6 @@
 
 .home-about {
   padding: space(120) 0 space(96) 0;
-  background-color: $athens-grey;
-  color: $gulf-blue;
 
   @include for-phone-only {
     padding: space(80) space(32) space(56) space(32);

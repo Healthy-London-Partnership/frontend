@@ -20,6 +20,11 @@ body {
   position: inherit !important; // Google translate fix
 }
 
+.main {
+  background-color: $athens-grey;
+  color: $gulf-blue;
+}
+
 h1 {
   @include heading-l;
 }

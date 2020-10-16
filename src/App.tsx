@@ -66,21 +66,23 @@ class App extends Component {
         <Router>
           <ScrollToTop>
             <Header />
-            <Switch>
-              <Route path="/" exact={true} component={Home} />
-              <Route path="/results" component={Results} />
-              <Route path="/services/:service" component={Service} />
-              <Route path="/favourites" component={Favourites} />
-              <Route path="/referral" component={Referral} />
-              <Route path="/about" component={About} />
-              <Route path="/contact" component={Contact} />
-              <Route path="/get-involved" component={GetInvolved} />
-              <Route path="/privacy-policy" component={Privacy} />
-              <Route path="/terms-and-conditions" component={Terms} />
-              <Route path="/duty-to-refer" component={DutyToRefer} />
+            <main className="main">
+              <Switch>
+                <Route path="/" exact={true} component={Home} />
+                <Route path="/results" component={Results} />
+                <Route path="/services/:service" component={Service} />
+                <Route path="/favourites" component={Favourites} />
+                <Route path="/referral" component={Referral} />
+                <Route path="/about" component={About} />
+                <Route path="/contact" component={Contact} />
+                <Route path="/get-involved" component={GetInvolved} />
+                <Route path="/privacy-policy" component={Privacy} />
+                <Route path="/terms-and-conditions" component={Terms} />
+                <Route path="/duty-to-refer" component={DutyToRefer} />
 
-              <Route component={NotFound} />
-            </Switch>
+                <Route component={NotFound} />
+              </Switch>
+            </main>
             <FeedbackModal />
             <HomeScreenPrompt />
             <Footer />

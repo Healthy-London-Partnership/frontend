@@ -46,74 +46,29 @@
 }
 
 .cms__header {
-  background-image: url('../../assets/images/backgrounds/cms-page-header.svg');
   position: relative;
-  background-size: 110% 100%;
-  background-position: 50%;
-  background-repeat: no-repeat;
   padding: space(40) 0;
-  margin: space(32) 0 space(72);
+  background: rgb(0,94,184);
+  background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
 
   .flex-container {
     max-width: 1260px;
   }
 
-  @include for-tablet-portrait-down {
-    background-image: url('../../assets/images/backgrounds/cms-page-header-mobile.svg');
-
-    margin-bottom: space(32);
-    margin-top: space(52);
-
-    .flex-col {
-      width: 41.66667%;
-    }
-  }
-
-  @include for-tablet-portrait-down {
-    .flex-col {
-      width: 100%;
-    }
-  }
-
-  @include for-tablet-landscape-up {
-    &:before {
-      position: absolute;
-      content: url('../../assets/images/trees/jordy-lg.svg');
-      top: -25px;
-      right: 20%;
-    }
-
-    &:after {
-      position: absolute;
-      content: url('../../assets/images/trees/iceberg-lg.svg');
-      top: -25px;
-      right: 15%;
-    }
+  &__inner {
+    max-width: 1260px;
+    padding: space(48) space(72);
+    margin-bottom: -52px;
+    position: relative;
+    border-radius: 13px;
+    background-color: $white;
+    box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
   }
 }
 
 .cms__title-card {
-  background-image: url('../../assets/images/backgrounds/cms-page-header-inner.svg');
-  background-size: 100% 100%;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  padding: space(48);
-  box-sizing: border-box;
-
-  @include for-phone-only {
-    padding: space(48) space(24);
-    background-size: 110% 100%;
-  }
-
-  @include for-tablet-portrait-down {
-    padding: space(48);
-    background-size: 100% 100%;
-  }
-
   &--title {
-    font-size: pxtorem(32px);
-    color: $gulf-blue;
-    margin-bottom: space(32);
+    font-size: pxtorem(48px);
 
     @include for-tablet-landscape-down {
       margin-bottom: space(16);
@@ -126,7 +81,10 @@
 }
 
 .cms__content {
+  display: block;
   max-width: 1260px;
+  margin: 0 auto;
+  padding: space(120) space(72) space(96) space(72);
 
   h1 {
     @include heading-xl;
@@ -134,10 +92,13 @@
 
   p {
     @include body-m;
-    color: $gulf-blue;
     word-break: break-word;
     margin-bottom: space(16);
     line-height: 1.75rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   a {
