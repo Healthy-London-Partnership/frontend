@@ -5,7 +5,17 @@ import map from 'lodash/map';
 import { latLngBounds, LatLngBounds } from 'leaflet';
 import { observer, inject } from 'mobx-react';
 
-import { ActivityMarker, GroupMarker, ServiceMarker, ClubMarker, ActiveMarker } from './icons';
+import {
+  ActiveMarker,
+  ActivityMarker,
+  AdviceMarker,
+  AppMarker,
+  ClubMarker,
+  GroupMarker,
+  HelplineMarker,
+  InformationMarker,
+  ServiceMarker
+} from './icons';
 import List from './../ListView/List';
 
 import './MapView.scss';
@@ -78,16 +88,24 @@ class MapView extends Component<IProps, IState> {
 
   getMarkerType = (type: string) => {
     switch (true) {
-      case type === 'service':
-        return ServiceMarker;
-      case type === 'group':
-        return GroupMarker;
-      case type === 'activity':
-        return ActivityMarker;
-      case type === 'club':
-        return ClubMarker;
       case type === 'active':
         return ActiveMarker;
+      case type === 'activity':
+        return ActivityMarker;
+      case type === 'advice':
+        return AdviceMarker;
+      case type === 'app':
+        return AppMarker;
+      case type === 'club':
+        return ClubMarker;
+      case type === 'group':
+        return GroupMarker;
+      case type === 'helpline':
+        return HelplineMarker;
+      case type === 'information':
+        return InformationMarker;
+      case type === 'service':
+        return ServiceMarker;
       default:
         break;
     }
