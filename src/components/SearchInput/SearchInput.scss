@@ -5,18 +5,19 @@
 @import '../../styles/fonts.scss';
 
 .search__input {
-  margin-bottom: 48px;
+  margin-bottom: 64px;
 
   @include for-phone-only {
     margin-bottom: 48px !important;
   }
 
   &__item {
+    position: relative;
     padding: 0 space(24);
     margin: space(10) 0;
 
     @include for-phone-only {
-      padding: space(12) 0 space(32);
+      padding: space(12) 0 space(24);
       margin: 0 space(20);
     }
 
@@ -83,13 +84,15 @@
 }
 
 .search__location__link {
-  float: right;
-  margin-top: space(12);
-  margin-right: calc(50% - 59px);
+  position: absolute;
+  bottom: -52px;
+  left: 20px;
 
   @include for-phone-only {
-    float: left;
-    margin-right: 0;
+    position: relative;
+    bottom: auto;
+    left: -4px;
+    margin-top: space(20);
   }
 
   .link__icon--left {
