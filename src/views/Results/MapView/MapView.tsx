@@ -90,54 +90,50 @@ class MapView extends Component<IProps, IState> {
     this.addMarkers([...resultsStore.results.entries()][0]);
 
     return (
-      <main className="flex-container flex-container--justify">
-        <div className="flex-col--tablet--12 flex-col--10">
-          <div className="flex-container flex-container--space flex-container--row-reverse map">
-            <div className="flex-col--6 flex-col--mobile--12 map__map-container">
-              <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
-                <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
-                {[...resultsStore.results.entries()].map((results, i) => {
-                  results[1].map((result: any) => {return result.service_locations.map((serviceLocation: IServiceLocation) => {
-                      return (
-                        <Marker
-                          key={serviceLocation.id}
-                          position={[serviceLocation.location.lat, serviceLocation.location.lon]}
-                          icon={this.getMarker(result.type)}
-                        />
-                      );
-                    });
-                  })
-
-                  return null;
-                })}
-              </Map>
-            </div>
-            
-            <div className="flex-col--6 flex-col--mobile--12 map__results-container">
-              {resultsStore.results.size ? (
-                [...resultsStore.results.entries()].map((results, i) => {
-                  const [title, resultsList] = results;
-
+      <div className="flex-container flex-container--no-padding flex-container--space flex-container--row-reverse map">
+        <div className="flex-col--6 flex-col--mobile--12 map__map-container">
+          <Map cente={CENTRE_OF_KINGSTON} attributionControl={false} bounds={this.state.bounds}>
+            <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
+            {[...resultsStore.results.entries()].map((results, i) => {
+              results[1].map((result: any) => {return result.service_locations.map((serviceLocation: IServiceLocation) => {
                   return (
-                    <List
-                      key={title}
-                      title={title}
-                      resultsList={resultsList}
-                      resultsStore={resultsStore}
+                    <Marker
+                      key={serviceLocation.id}
+                      position={[serviceLocation.location.lat, serviceLocation.location.lon]}
+                      icon={this.getMarker(result.type)}
                     />
                   );
-                })
-              ) : (
-                <h1>
-                  {resultsStore.isPostcodeSearch
-                    ? 'There are currently no service offers available in your area.'
-                    : 'There are currently no service offers available.'}
-                </h1>
-              )}  
-            </div>
-          </div>
+                });
+              })
+
+              return null;
+            })}
+          </Map>
         </div>
-      </main>
+        
+        <div className="flex-col--6 flex-col--mobile--12 map__results-container">
+          {resultsStore.results.size ? (
+            [...resultsStore.results.entries()].map((results, i) => {
+              const [title, resultsList] = results;
+
+              return (
+                <List
+                  key={title}
+                  title={title}
+                  resultsList={resultsList}
+                  resultsStore={resultsStore}
+                />
+              );
+            })
+          ) : (
+            <h1>
+              {resultsStore.isPostcodeSearch
+                ? 'There are currently no service offers available in your area.'
+                : 'There are currently no service offers available.'}
+            </h1>
+          )}  
+        </div>
+      </div>
     );
   }
 }

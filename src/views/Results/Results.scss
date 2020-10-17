@@ -12,7 +12,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  color: $gulf-blue;
+  margin: 0 -20px;
 
   &__title {
     @include for-phone-only {
@@ -63,46 +63,30 @@
 }
 
 .results__search-box {
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  color: $gulf-blue;
   position: relative;
-
-  @include for-tablet-landscape-up {
-    padding: space(48) 0 space(16) !important;
-    background-image: url('../../assets/images/backgrounds/results-shape.svg');
-
-    &:before {
-      content: url('../../assets/images/trees/peurto-small.svg');
-      position: absolute;
-      top: 3px;
-      right: 400px;
-    }
-
-    &:after {
-      content: url('../../assets/images/telephone-boxes-shapes.svg');
-      position: absolute;
-      top: 0;
-      right: 100px;
-    }
-  }
-
-  @include for-tablet-landscape-down {
-    padding: space(24) space(8) !important;
-    background-color: $iceberg;
-
-    &:after {
-      content: none;
-    }
-
-    &:before {
-      content: none;
-    }
-  }
+  background: rgb(0,94,184);
+  background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
 
   @include for-phone-only {
     h1 {
       font-size: $font-body-l;
+    }
+  }
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+    max-width: 1260px;
+    padding: space(48) space(72);
+    margin-bottom: -52px;
+    position: relative;
+    border-radius: 13px;
+    background-color: $white;
+    box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
+
+    @include for-phone-only {
+      margin-bottom: -32px;
+      padding: space(24);
     }
   }
 
@@ -118,7 +102,10 @@
 }
 
 .results__list {
-  margin-top: space(48);
+  &__inner {
+    max-width: 1260px;
+    padding: space(120) space(72) space(96) !important;
+  }
 
   &--has-national-results {
     .search-result-card {
@@ -148,7 +135,7 @@
 
 .pagination {
   display: flex;
-  margin: space(48) 0;
+  margin-top: space(48);
   list-style: none;
 
   li {
@@ -166,7 +153,7 @@
   text-decoration: none;
 
   span {
-    color: $elm;
+    color: $gulf-blue;
   }
 
   &:hover {
@@ -189,20 +176,7 @@
 }
 
 .results__filters {
-  @include for-tablet-landscape-up {
-    @include search-container();
-
-    padding: space(20) !important;
-    align-items: flex-end;
-  }
-
-  @include for-tablet-portrait-down {
-    padding: 0 !important;
-  }
-
-  @include for-desktop-up {
-    padding: space(20) space(32) !important;
-  }
+  margin-bottom: space(56) !important;
 }
 
 .results__keyword-filters--heading {

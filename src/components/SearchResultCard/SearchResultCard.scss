@@ -7,7 +7,7 @@
   border: 2px solid $gulf-blue;
   border-radius: 10px;
   color: $gulf-blue;
-  margin: space(8);
+  margin: space(10);
   height: max-content;
   cursor: pointer;
 
@@ -16,7 +16,7 @@
   }
 
   @include for-tablet-landscape-up {
-    width: 30%;
+    width: calc(33% - 20px);
     margin-bottom: space(16);
   }
 
