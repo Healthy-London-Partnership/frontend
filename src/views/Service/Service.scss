@@ -5,16 +5,23 @@
 
 .service__header {
   position: relative;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: space(64);
-  color: $white;
+  background: rgb(0,94,184);
+  background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
 
-  .flex-container {
+  &__inner {
+    width: 100%;
+    height: 100%;
     max-width: 1260px;
+    padding: space(48) space(72) space(72) space(72);
+    margin-bottom: -52px;
+    position: relative;
+    border-radius: 13px;
+    background-color: $white;
+    box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
 
-    @include for-tablet-landscape-down {
-      padding: 0 !important;
+    @include for-phone-only {
+      margin-bottom: -32px;
+      padding: space(24);
     }
   }
 
@@ -24,72 +31,22 @@
     }
   }
 
-  &--activity {
-    background-image: url('../../assets/images/backgrounds/activity-header-shape-lg.svg');
-
-    @include for-tablet-portrait-down {
-      background-image: url('../../assets/images/backgrounds/activity-header-shape-mobile.svg');
-    }
-  }
-
-  &--club {
-    background-image: url('../../assets/images/backgrounds/club-header-shape-lg.svg');
-
-    @include for-tablet-portrait-down {
-      background-image: url('../../assets/images/backgrounds/club-header-shape-mobile.svg');
-    }
-  }
-
-  &--group {
-    background-image: url('../../assets/images/backgrounds/group-header-shape-lg.svg');
-
-    @include for-tablet-portrait-down {
-      background-image: url('../../assets/images/backgrounds/group-header-shape-mobile.svg');
-    }
-  }
-
-  &--service {
-    background-image: url('../../assets/images/backgrounds/service-header-shape-lg.svg');
-
-    @include for-tablet-portrait-down {
-      background-image: url('../../assets/images/backgrounds/service-header-shape-mobile.svg');
-    }
-    &:after {
-      content: '' !important;
-    }
-  }
-
-  @include for-phone-only {
-    padding: space(32) space(24) 0 space(24) !important;
-  }
-
-  @include for-tablet-portrait-down {
-    padding: space(32) space(24);
-  }
-
   h1 {
-    margin-bottom: space(20);
+    margin-bottom: space(8);
   }
 
   button {
+    display: block;
     @include body-s;
     background-color: transparent;
     border: 2px solid $white;
     font-family: $font-primary;
     font-weight: normal;
-    margin-left: space(12);
+    padding: 0;
+    margin-top: space(8);
 
     @include for-phone-only {
       visibility: hidden;
-    }
-  }
-
-  @include for-tablet-landscape-up {
-    &:after {
-      content: url('../../assets/images/trees/iceberg-small.svg');
-      position: absolute;
-      top: 0px;
-      right: 32%;
     }
   }
 }
@@ -99,10 +56,6 @@
   margin-bottom: space(32) !important;
   width: 100%;
   align-items: stretch;
-
-  .criteria_card:nth-of-type(odd) {
-    background-color: $alabaster;
-  }
 
   &--no-padding {
     @include for-tablet-portrait-up {
@@ -116,45 +69,15 @@
 }
 
 .service__header__logo {
-  position: absolute;
-  top: pxtorem(16px);
-  right: 10%;
-  background-size: 100% 100%;
-  padding: space(20);
-
-  @include for-phone-only {
-    right: 0;
-  }
-
-  @include for-tablet-landscape-up {
-    background-image: url('../../assets/images/backgrounds/service-logo-background.svg');
-  }
+  margin-right: space(24);
 
   img {
-    height: pxtorem(175px);
-    width: pxtorem(175px);
-    object-fit: contain;
+    height: pxtorem(125px);
+    width: pxtorem(125px);
 
     @include for-tablet-portrait-down {
       height: pxtorem(50px);
       width: pxtorem(50px);
-      border-radius: 50%;
-    }
-  }
-
-  @include for-tablet-landscape-up {
-    &:before {
-      content: url('../../assets/images/trees/iceberg-lg.svg');
-      position: absolute;
-      bottom: -15px;
-      right: -60px;
-    }
-
-    &:after {
-      content: url('../../assets/images/trees/peurto-small.svg');
-      position: absolute;
-      bottom: -15px;
-      right: -105px;
     }
   }
 }
@@ -170,9 +93,8 @@
 }
 
 .service__info {
-  padding-top: space(32) !important;
-  color: $gulf-blue;
   max-width: 1260px;
+  padding: space(120) space(72) space(96) !important;
 
   @include for-phone-only {
     padding-left: 0 !important;
@@ -193,13 +115,10 @@
 }
 
 .service__info__cost {
-  background-color: $iceberg !important;
-
-  @include for-tablet-landscape-up {
-    border-radius: 19px;
-    padding: space(24);
-    margin-right: 20%;
-  }
+  border-radius: 19px;
+  padding: space(24);
+  background-color: $gulf-blue !important;
+  color: $white;
 }
 
 .service__info__cost--header {
@@ -208,11 +127,11 @@
 }
 
 .service__info__cost--sub-heading {
-  color: $waikawa;
+  color: $white;
 }
 
 .service__info__cost--icon {
-  color: $puerto-rico;
+  color: $downy;
   font-size: 36px;
 }
 
@@ -510,7 +429,7 @@
   }
 
   &--sidebar {
-    background-color: $alabaster;
+    background-color: $white;
     padding: space(20) !important;
     border-radius: 19px;
   }
@@ -542,8 +461,9 @@
 .service__contact-card {
   padding: 40px !important;
   padding-top: 0 !important;
-  background-color: $alabaster;
-  border-radius: 19px;
+  background-color: $white;
+  border-radius: 13px;
+  overflow: hidden;
 
   .flex-col {
     overflow: hidden;
@@ -585,10 +505,10 @@
 }
 
 .service__share-card {
-  background-image: url('../../assets/images/backgrounds/service-share-background.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-color: $white;
+  border-radius: 13px;
   padding: space(20);
+  text-align: center;
 
   h4 {
     display: inline;
@@ -597,7 +517,7 @@
   }
 
   a {
-    margin: 0 space(8);
+    margin-left: space(12);
   }
 }
 

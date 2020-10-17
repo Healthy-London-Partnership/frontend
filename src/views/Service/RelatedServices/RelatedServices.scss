@@ -4,14 +4,9 @@
 @import '../../../styles/breakpoints.scss';
 
 .related-services {
-  background-image: url('../../../assets/images/backgrounds/related-services-background.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  font-family: $font-primary;
-
+  background-color: $downy;
   padding: space(96) space(64);
   text-align: center;
-  color: $gulf-blue;
 
   @include for-tablet-landscape-down {
     padding: space(64) space(24);
