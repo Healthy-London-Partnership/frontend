@@ -105,6 +105,10 @@
   &__inner {
     max-width: 1260px;
     padding: space(120) space(72) space(96) !important;
+
+    @include for-tablet-landscape-down {
+      padding: space(64) space(16) !important;
+    }
   }
 
   &--has-national-results {

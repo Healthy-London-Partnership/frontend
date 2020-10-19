@@ -48,7 +48,7 @@ class Results extends Component<IProps> {
           metaDescription={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
         />
         <div className="results__search-box flex-container flex-container--justify">
-          <div className="results__search-box__inner flex-col--10 flex-col--12--tablet">
+          <div className="results__search-box__inner flex-col--10 flex-col--tablet-large--12">
             <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
             <Keyword />
           </div>
