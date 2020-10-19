@@ -14,12 +14,10 @@
 }
 
 .referral {
-  color: $gulf-blue;
   max-width: 1260px;
-
-  @include for-tablet-landscape-down {
-    padding-top: space(16) !important;
-  }
+  padding-top: space(32) !important;
+  padding-bottom: space(32) !important;
+  color: $gulf-blue;
 
   &--container {
     align-items: center !important;
@@ -82,7 +80,7 @@
   }
 
   &--back {
-    color: $elm;
+    color: $gulf-blue;
     line-height: 26px;
     padding-left: space(16) !important;
     text-decoration: underline;
@@ -337,7 +335,7 @@
 
     &--toggle {
       font-size: pxtorem(18px);
-      color: $elm;
+      color: $gulf-blue;
       text-decoration: underline;
 
       &--open {
@@ -358,7 +356,7 @@
 .referral__terms {
   a {
     @include body-s;
-    color: $elm;
+    color: $gulf-blue;
     cursor: pointer;
   }
 
@@ -418,7 +416,7 @@
   }
 
   a {
-    color: $elm;
+    color: $gulf-blue;
   }
 
   h1 {
