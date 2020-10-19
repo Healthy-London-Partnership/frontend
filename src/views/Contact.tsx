@@ -23,7 +23,7 @@ const Contact: React.FunctionComponent<IProps> = ({ cmsStore }) => {
         title={get(cmsStore, 'contact.title')}
       />
       <div className="flex-container flex-container--no-padding">
-        <div className="flex-col--6">
+        <div className="flex-col flex-col--6">
           <ReactMarkdown source={get(cmsStore, 'contact.content')} />
         </div>
         {cmsStore.hasContactInfo && (

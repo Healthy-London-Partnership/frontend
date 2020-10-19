@@ -52,6 +52,10 @@
     border-radius: 13px;
     background-color: $white;
     box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
+
+    @include for-tablet-landscape-down {
+      padding: space(24) space(32);
+    }
   }
 }
 
@@ -73,6 +77,10 @@
   &__inner {
     max-width: 1260px;
     padding: space(120) space(72) space(96) !important;
+
+    @include for-tablet-landscape-down {
+      padding: space(96) 0 space(64) !important;
+    }
   }
 
   h1 {

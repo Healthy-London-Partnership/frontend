@@ -13,7 +13,7 @@ interface IProps {
 const CMSPage: React.FunctionComponent<IProps> = ({ title, children, twoColumn, breadcrumb }) => (
   <section className="cms">
     <div className="cms__header flex-container flex-container--justify">
-      <div className="cms__header__inner flex-col--10">
+      <div className="cms__header__inner flex-col--10 flex-col--tablet-large--12">
         <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: breadcrumb, url: '' }]} />
         <div className="cms__title-card">
           <h1 className="cms__title-card--title">{title}</h1>

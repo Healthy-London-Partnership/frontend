@@ -21,6 +21,10 @@
   border-radius: 10px;
   color: $gulf-blue;
 
+  @include for-phone-only {
+    padding: space(20) space(20) space(64);
+  }
+
   .flex-container {
     padding: 0 !important;
   }
