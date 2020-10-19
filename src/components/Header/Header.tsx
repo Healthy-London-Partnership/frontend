@@ -66,9 +66,7 @@ class Header extends Component<IProps> {
           </div>
 
           <div
-            className={cx('header__ctas flex-col flex-col--7', {
-              'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
-            })}
+            className="header__ctas flex-col flex-col--7 mobile-hide tablet--large-hide medium-hide"
           >
             <div id="google_translate_element" />
             <Button
@@ -82,7 +80,7 @@ class Header extends Component<IProps> {
             </RouterLink>
           </div>
 
-          <div className="flex-col flex-col--10 header__nav">
+          <div className="flex-col flex-col--10 flex-col--tablet-large--12 header__nav">
             <div
               className={cx('flex-container header__content', {
                 'header__content--active': burgerMenuOpen,
