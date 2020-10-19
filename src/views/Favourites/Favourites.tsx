@@ -47,7 +47,7 @@ class Favourites extends Component<IProps> {
           metaDescription="Favourites"
         />
         <div className="favourites__header flex-container flex-container--justify">
-          <div className="favourites__header__inner flex-col--10">
+          <div className="favourites__header__inner flex-col--10 flex-col--tablet-large--12">
             <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Favourites', url: '' }]} />
             <div className="flex-col flex-col--12 favourites__header--heading">
               <h1>{get(cmsStore, 'favourites.title')}</h1>
@@ -64,7 +64,7 @@ class Favourites extends Component<IProps> {
         </div>
 
         <div className="favourites__content flex-container flex-container--justify">
-          <div className="favourites__content__inner flex-col--10">
+          <div className="favourites__content__inner flex-col--10 flex-col--tablet-large--12">
             {!!favouritesStore.favourites.length ? (
               <div className="flex-container flex-container--no-padding flex-container--justify">
                 <div className="flex-col text-align-center favourites__count">

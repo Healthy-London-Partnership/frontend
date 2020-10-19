@@ -18,6 +18,14 @@
     @include for-phone-only {
       padding: 0;
     }
+
+    p {
+      margin-bottom: space(24);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &-title {

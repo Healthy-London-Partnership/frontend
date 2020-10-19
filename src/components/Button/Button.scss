@@ -5,9 +5,9 @@
 
 @mixin disabled-btn {
   &:disabled {
-    color: $mercury;
+    color: $lynch;
     background-color: inherit;
-    border: 2px solid $mercury;
+    border: 2px solid $lynch;
     opacity: 0.75;
   }
 }
@@ -94,7 +94,7 @@
 }
 
 .button--disabled {
-  background-color: $mercury;
+  background-color: $lynch;
   opacity: 0.75;
 
   &:hover {

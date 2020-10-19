@@ -21,6 +21,10 @@
     border-radius: 13px;
     background-color: $white;
     box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
+
+    @include for-phone-only {
+      padding: space(32) space(24);
+    }
   }
 
   &--heading {
@@ -36,6 +40,7 @@
   &--share {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: space(16);
 
     svg {
@@ -80,6 +85,10 @@
   &__inner {
     max-width: 1260px;
     padding: space(120) space(72) space(96) !important;
+
+    @include for-tablet-portrait-down {
+      padding: space(88) space(24) space(48) !important;
+    }
   }
 }
 .favourites__card {
@@ -94,6 +103,10 @@
 
   &--outer {
     width: calc(33% - 16px);
+
+    @include for-tablet-portrait-down {
+      width: 100%;
+    }
   }
 
   &--inner {

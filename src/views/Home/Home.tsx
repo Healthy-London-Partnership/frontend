@@ -12,7 +12,8 @@ const Home: React.FunctionComponent = () => {
           <div className="flex-col flex-col--10">
             <div className="home-about-wrapper">
               <h2 className="home-about-title">About Connect</h2>
-              <p>Text that sells the platform! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum non libero, aliquet a. Sit vestibulum nibh adipiscing odio sed. Ut turpis sodales non elit dictum commodo, morbi tempus. Volutpat phasellus tellus suscipit aliquam. Pretium non laoreet arcu risus, molestie sed risus, tellus.</p>
+              <p>NHS Connect is a new service, pioneered by the NHS and leading Councils, that gives you the ability to find the health and wellbeing support that meets your needs.</p>
+              <p>Connect is currently available in a small group of pilot London boroughs: Camden, Merton, Hillingdon, Kensington and Chelsea, Southwark and Westminster. We’ll be adding many more local areas at the end of 2020; prior to that we’ll continue to make lots of improvements to the system as a whole.</p>
             </div>
           </div>
         </div>
