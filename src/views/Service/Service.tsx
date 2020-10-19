@@ -118,7 +118,7 @@ class Service extends Component<IProps> {
           metaDescription={service.description}
         />
         <div className={`service__header service__header--${get(service, 'type')} flex-container flex-container--justify`}>
-          <div className="service__header__inner flex-col--10 flex--12--tablet">
+          <div className="service__header__inner flex-col flex-col--10 flex--tablet-large--12">
             <Breadcrumb
               crumbs={[
                 { text: 'Home', url: '/' },

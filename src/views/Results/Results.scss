@@ -181,6 +181,10 @@
 
 .results__filters {
   margin-bottom: space(56) !important;
+
+  @include for-phone-only {
+    margin-bottom: space(32) !important;
+  }
 }
 
 .results__keyword-filters--heading {

@@ -20,8 +20,8 @@
     box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
 
     @include for-phone-only {
-      margin-bottom: -32px;
-      padding: space(24);
+      margin-bottom: -32px !important;
+      padding: space(24) !important;
     }
   }
 
@@ -56,6 +56,10 @@
   margin-bottom: space(32) !important;
   width: 100%;
   align-items: stretch;
+
+  @include for-phone-only {
+    margin-bottom: space(20) !important;
+  }
 
   &--no-padding {
     @include for-tablet-portrait-up {
@@ -97,8 +101,7 @@
   padding: space(120) space(72) space(96) !important;
 
   @include for-phone-only {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding: space(64) space(16) space(48) !important;
   }
 
   p {
