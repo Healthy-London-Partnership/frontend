@@ -42,6 +42,10 @@ Parameters:
       www subdomain (must be in us-east-1).
     Type: String
 
+  LambdaOriginRewriteFunctionArn:
+    Description: The ARN for the Lambda origin rewrite function (must be in us-east-1).
+    Type: String
+
   LambdaRedirectFunctionArn:
     Description: The ARN for the Lambda redirect function (must be in us-east-1).
     Type: String
@@ -145,6 +149,9 @@ Resources:
               - Ref: Bucket
           LambdaFunctionAssociations:
           - EventType: origin-request
+            LambdaFunctionARN:
+              Ref: LambdaOriginRewriteFunctionArn
+          - EventType: viewer-request
             LambdaFunctionARN:
               Ref: LambdaRedirectFunctionArn
           ViewerProtocolPolicy: redirect-to-https
