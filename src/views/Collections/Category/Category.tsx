@@ -57,15 +57,13 @@ class Category extends Component<IProps> {
           title={`${category.name}`}
           metaDescription={`${category.intro}`}
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: category.name, url: '' }]} />
-        <div className="category__search-box">
-          <div className="flex-container flex-container--justify">
-            <div className="flex-col--tablet--12 flex-col--10">
-              <div className="flex-container">
-                <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="category__heading"><FontAwesomeIcon icon={category.icon} /> {category.name}</h1>
-                  <p className="category__intro">{category.intro}</p>
-                </div>
+        <div className="category__search-box flex-container flex-container--justify">
+          <div className="category__search-box__inner flex-col--tablet--12 flex-col--10">
+            <div className="flex-container">
+              <div className="flex-col flex-col--8 flex-col--standard--12">
+                <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: category.name, url: '' }]} />
+                <h1 className="category__heading"><FontAwesomeIcon icon={category.icon} /> {category.name}</h1>
+                <p className="category__intro">{category.intro}</p>
               </div>
             </div>
           </div>

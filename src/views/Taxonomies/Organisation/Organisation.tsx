@@ -53,14 +53,12 @@ class Organisation extends Component<IProps> {
         <MetaData
           title={`${taxonomyOrganisation.name}`}
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: taxonomyOrganisation.name, url: '' }]} />
-        <div className="taxonomy__search-box">
-          <div className="flex-container flex-container--justify">
-            <div className="flex-col--tablet--12 flex-col--10">
-              <div className="flex-container">
-                <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="taxonomy__heading">{taxonomyOrganisation.name}</h1>
-                </div>
+        <div className="taxonomy__search-box flex-container flex-container--justify">
+          <div className="taxonomy__search-box__inner flex-col--tablet--12 flex-col--10">
+            <div className="flex-container">
+              <div className="flex-col flex-col--8 flex-col--standard--12">
+                <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: taxonomyOrganisation.name, url: '' }]} />
+                <h1 className="taxonomy__heading">{taxonomyOrganisation.name}</h1>
               </div>
             </div>
           </div>

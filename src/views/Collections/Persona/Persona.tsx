@@ -61,21 +61,22 @@ class Persona extends Component<IProps> {
           title={`${persona.name}`}
           metaDescription={`${persona.intro}`}
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: persona.name, url: '' }]} />
-        <div className="persona__search-box">
-          <div className="flex-container flex-container--justify">
-            <div className="flex-col--tablet--12 flex-col--10">
-              <div className="flex-container flex-container--no-space flex-container--no-wrap flex-container--align-center">
-                <div className="flex-col persona__search-box__logo">
-                  <img
-                    src={`${apiBase}/collections/personas/${persona.id}/image.png?max_dimension=300`}
-                    alt={`Services relating to ${persona.name}`}
-                  />
-                </div>
-                <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="persona__heading">{persona.name}</h1>
-                  <p className="persona__intro">{persona.intro}</p>
-                </div>
+      
+        <div className="persona__search-box flex-container flex-container--justify">
+          <div className="persona__search-box__inner flex-col--tablet--12 flex-col--10">
+            <div className="flex-container">
+            <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: persona.name, url: '' }]} />
+            </div>
+            <div className="flex-container flex-container--no-space flex-container--no-wrap flex-container--align-center">
+              <div className="flex-col persona__search-box__logo">
+                <img
+                  src={`${apiBase}/collections/personas/${persona.id}/image.png?max_dimension=300`}
+                  alt={`Services relating to ${persona.name}`}
+                />
+              </div>
+              <div className="flex-col flex-col--8 flex-col--standard--12">
+                <h1 className="persona__heading">{persona.name}</h1>
+                <p className="persona__intro">{persona.intro}</p>
               </div>
             </div>
           </div>
