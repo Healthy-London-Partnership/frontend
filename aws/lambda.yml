@@ -80,15 +80,12 @@ Resources:
             };
 
             // Rewrite URLs
-            for (const [from, to] of map) {
-              if (newUri.natch(`^(\/${from})(\/|\/\?.*|\?.*)?$`)) {
+            for (const [from, to] of Object.entries(map)) {
+              if (newUri.match(`^(\\/${from})(\\/|\\/\\?.*|\\?.*)?$`)) {
                 hasChanged = true;
               }
 
-              newUri = newUri.replace(
-                `^(\/${from})(\/|\/\?.*|\?.*)?$`,
-                `/${to}$2`
-              );
+              newUri = newUri.replace(from, to);
             }
 
             // Continue as normal
