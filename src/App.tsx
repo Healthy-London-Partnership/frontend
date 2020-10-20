@@ -17,9 +17,11 @@ import Results from './views/Results';
 import Service from './views/Service';
 import Favourites from './views/Favourites';
 import Referral from './views/Referral';
-import About from './views/About';
-import Contact from './views/Contact';
-import GetInvolved from './views/GetInvolved';
+import AboutConnect from './views/AboutConnect';
+import Providers from './views/Providers';
+import Supporters from './views/Supporters';
+import Funders from './views/Funders';
+import Contact from './views/Contact'
 import Privacy from './views/Privacy';
 import DutyToRefer from './views/DutyToRefer';
 
@@ -82,9 +84,11 @@ class App extends Component {
               <Route path="/services/:service" component={Service} />
               <Route path="/favourites" component={Favourites} />
               <Route path="/referral" component={Referral} />
-              <Route path="/about" component={About} />
+              <Route path="/about-connect" component={AboutConnect} />
+              <Route path="/providers" component={Providers} />
+              <Route path="/supporters" component={Supporters} />
+              <Route path="/funders" component={Funders} />
               <Route path="/contact" component={Contact} />
-              <Route path="/get-involved" component={GetInvolved} />
               <Route path="/privacy-policy" component={Privacy} />
               <Route path="/terms-and-conditions" component={Terms} />
               <Route path="/duty-to-refer" component={DutyToRefer} />

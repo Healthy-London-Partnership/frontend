@@ -124,7 +124,7 @@ class Header extends Component<IProps> {
                     Home
                   </RouterLink>
                   <RouterLink
-                    to="/about"
+                    to="/about-connect"
                     exact={true}
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
@@ -134,10 +134,10 @@ class Header extends Component<IProps> {
                       }
                     }}
                   >
-                    About
+                    About Connect
                   </RouterLink>
                   <RouterLink
-                    to="/contact"
+                    to="/providers"
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
                     onClick={() => {
@@ -146,10 +146,10 @@ class Header extends Component<IProps> {
                       }
                     }}
                   >
-                    Contact
+                    Providers
                   </RouterLink>
                   <RouterLink
-                    to="/get-involved"
+                    to="/supporters"
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
                     onClick={() => {
@@ -158,7 +158,19 @@ class Header extends Component<IProps> {
                       }
                     }}
                   >
-                    Get Involved
+                    Supporters
+                  </RouterLink>
+                  <RouterLink
+                    to="/funders"
+                    className="link link__inline link--large link__header"
+                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    onClick={() => {
+                      if (burgerMenuOpen) {
+                        toggleBurgerMenu();
+                      }
+                    }}
+                  >
+                    Funders
                   </RouterLink>
 
                   <div className="mobile-show tablet-show tablet--large-show medium-show">

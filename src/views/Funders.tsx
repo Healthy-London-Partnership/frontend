@@ -11,20 +11,20 @@ interface IProps {
   cmsStore: CMSStore;
 }
 
-const GetInvolved: React.FunctionComponent<IProps> = ({ cmsStore }) => {
+const Funders: React.FunctionComponent<IProps> = ({ cmsStore }) => {
   if (!cmsStore) {
     return null;
   }
 
   return (
-    <CMSPage title={get(cmsStore, 'get_involved.title')} breadcrumb="Get Involved">
+    <CMSPage title={get(cmsStore, 'funders.title')} breadcrumb="Funders">
       <MetaData
-        title="Get Involved"
-        metaDescription={get(cmsStore, 'get_involved.content')}
+        title={get(cmsStore, 'funders.title')}
+        metaDescription={get(cmsStore, 'funders.content')}
       />
-      <ReactMarkdown source={get(cmsStore, 'get_involved.content')} />
+      <ReactMarkdown source={get(cmsStore, 'funders.content')} />
     </CMSPage>
   );
 };
 
-export default inject('cmsStore')(observer(GetInvolved));
+export default inject('cmsStore')(observer(Funders));

@@ -12,7 +12,7 @@ interface IProps {
   cmsStore: CMSStore;
 }
 
-const About: React.FunctionComponent<IProps> = ({ cmsStore }) => {
+const AboutConnect: React.FunctionComponent<IProps> = ({ cmsStore }) => {
   if (!cmsStore) {
     return null;
   }
@@ -20,7 +20,7 @@ const About: React.FunctionComponent<IProps> = ({ cmsStore }) => {
   const video = get(cmsStore, 'about.video_url');
 
   return (
-    <CMSPage title={get(cmsStore, 'about.title')} breadcrumb="About">
+    <CMSPage title={get(cmsStore, 'about.title')} breadcrumb="About Connect">
       <MetaData
         title={get(cmsStore, 'about.title')}
         metaDescription={get(cmsStore, 'about.content')}
@@ -38,4 +38,4 @@ const About: React.FunctionComponent<IProps> = ({ cmsStore }) => {
   );
 };
 
-export default inject('cmsStore')(observer(About));
+export default inject('cmsStore')(observer(AboutConnect));
