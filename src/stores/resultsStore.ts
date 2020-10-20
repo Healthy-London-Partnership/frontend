@@ -4,12 +4,10 @@ import get from 'lodash/get';
 import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
-import map from 'lodash/map';
 
 import { apiBase } from '../config/api';
 import {
   IParams,
-  ICategory,
   IPersona,
   IOrganisation,
   IService,
@@ -20,10 +18,12 @@ import { queryRegex, querySeparator } from '../utils/utils';
 
 export default class ResultsStore {
   @observable keyword: string = '';
-  @observable categoryIds: string[] = [];
-  @observable categories: ICategory[] = [];
-  @observable personaId: string = '';
+  @observable category: any;
   @observable persona: IPersona | null = null;
+  @observable categories: [] | null = [];
+  @observable personas: [] | null = [];
+  @observable taxonomyCategory: any;
+  @observable taxonomyOrganisation: any;
   @observable organisations: IOrganisation[] | null = [];
   @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
@@ -44,16 +44,6 @@ export default class ResultsStore {
   }
 
   @computed
-  get isPersonaSearch() {
-    return !!this.persona;
-  }
-
-  @computed
-  get isCategorySearch() {
-    return !!this.categoryIds.length;
-  }
-
-  @computed
   get isPostcodeSearch() {
     return !!this.postcode;
   }
@@ -61,10 +51,12 @@ export default class ResultsStore {
   @action
   clear() {
     this.keyword = '';
-    this.categoryIds = [];
-    this.categories = [];
-    this.personaId = '';
+    this.category = '';
     this.persona = null;
+    this.categories = null;
+    this.personas = null;
+    this.taxonomyCategory = '';
+    this.taxonomyOrganisation = '';
     this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
@@ -80,26 +72,56 @@ export default class ResultsStore {
   }
 
   @action
-  getCategory = () => {
-    return Promise.all(
-      this.categoryIds.map((id: string) => {
-        return axios
-          .get(`${apiBase}/collections/categories/${id}`)
-          .then(response => get(response, 'data.data'))
-          .then(data => this.categories.push(data))
-          .catch(error => console.error(error));
-      })
-    );
+  getAllCollections = async () => {
+    axios
+      .get(`${apiBase}/collections/categories`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.categories = data)
+      .catch(error => console.error(error));
+
+    axios
+      .get(`${apiBase}/collections/personas`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.personas = data)
+      .catch(error => console.error(error));
   };
 
   @action
-  getPersona = async () => {
-    try {
-      const persona = await axios.get(`${apiBase}/collections/personas/${this.personaId}`);
-      this.persona = get(persona, 'data.data', '');
-    } catch (e) {
-      console.error(e);
-    }
+  getCategory = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/categories/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.category = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getPersona = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/personas/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.persona = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getTaxonomiesCategory = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/taxonomies/categories/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.taxonomyCategory = data)
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getTaxonomiesOrganisation = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/taxonomies/organisations/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.taxonomyOrganisation = data)
+      .catch(error => console.error(error));
   };
 
   getSearchTerms = () => {
@@ -111,14 +133,6 @@ export default class ResultsStore {
   @action
   setSearchTerms = async (searchTerms: { [key: string]: any }) => {
     forEach(searchTerms, (key, value) => {
-      if (value === 'category') {
-        this.categoryIds = key.split(',');
-      }
-
-      if (value === 'persona') {
-        this.personaId = key;
-      }
-
       if (value === 'search_term') {
         this.keyword = key;
       }
@@ -140,14 +154,6 @@ export default class ResultsStore {
       }
     });
 
-    if (this.categoryIds) {
-      await this.getCategory();
-    }
-
-    if (this.personaId) {
-      await this.getPersona();
-    }
-
     if (this.postcode) {
       await this.geolocate();
     }
@@ -157,11 +163,6 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-    // const categories = map(this.categories, 'name');
-
-    if (this.persona) {
-      params.persona = get(this.persona, 'name');
-    }
 
     if (this.is_free) {	
       params.is_free = this.is_free;	
@@ -173,6 +174,14 @@ export default class ResultsStore {
 
     if (this.keyword) {
       params.query = this.keyword;
+    }
+
+    if (this.category) {
+      params.category = this.category.name;
+    }
+
+    if (this.persona) {
+      params.persona = this.persona.name;
     }
 
     if (size(this.locationCoords)) {
@@ -194,14 +203,23 @@ export default class ResultsStore {
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
     let itemsPerPage;
+    let searchUrl;
 
     if(isNational) {
       itemsPerPage = Math.round(this.itemsPerPage / 2);
     } else {
       itemsPerPage = this.itemsPerPage;
     }
+    
+    if(this.category || this.persona) {
+      searchUrl = `${apiBase}/search?page=${this.currentPage}`;
+    } else if(this.view === 'map') {
+      searchUrl = `${apiBase}/search`;
+    } else {
+      searchUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
+    }
 
-    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`, params);
+    const { data } = await axios.post(searchUrl, params);
     this.totalItems += get(data, 'meta.total', 0);
 
     if(!isNational) {
@@ -211,17 +229,6 @@ export default class ResultsStore {
     }
 
     this.getOrganisations();
-  };
-
-  @action
-  ordered = () => {
-    const categories = map(this.categories, 'name');
-    // reorder categories based on list in URL
-    const order = [...this.results.entries()].sort((a, b) => {
-      return categories.indexOf(a[0]) - categories.indexOf(b[0]);
-    });
-
-    this.results = new Map(order);
   };
 
   @action
@@ -318,11 +325,15 @@ export default class ResultsStore {
       );
 
       const location = get(geolocation, 'data.results[0].geometry.location', {});
-
-      this.locationCoords = {
-        lon: location.lng,
-        lat: location.lat,
-      };
+      
+      if(location) {
+        this.locationCoords = {
+          lon: location.lng,
+          lat: location.lat,
+        };
+      } else {
+        alert('we could not find a location for the address entered');
+      }
     } catch (e) {
       console.error(e);
     }
