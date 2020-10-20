@@ -1,0 +1,86 @@
+@import '../../../styles/breakpoints.scss';
+@import '../../../styles/mixins.scss';
+@import '../../../styles/colors.scss';
+@import '../../../styles/fonts.scss';
+
+.persona__search-box {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: $san-juan;
+  position: relative;
+
+  @include for-tablet-landscape-up {
+    padding: space(48) 0 space(16) !important;
+    background-image: url('../../../assets/images/backgrounds/results-shape.svg');
+
+    &:before {
+      content: url('../../../assets/images/trees/peurto-small.svg');
+      position: absolute;
+      top: 3px;
+      right: 400px;
+    }
+
+    &:after {
+      content: url('../../../assets/images/telephone-boxes-shapes.svg');
+      position: absolute;
+      top: 0;
+      right: 100px;
+    }
+  }
+
+  @include for-tablet-landscape-down {
+    padding: space(24) 0 !important;
+    background-color: $iceberg;
+
+    &:after {
+      content: none;
+    }
+
+    &:before {
+      content: none;
+    }
+
+    .flex-container {
+      flex-wrap: wrap;
+    }
+  }
+
+  @include for-phone-only {
+    h1 {
+      font-size: $font-body-l;
+    }
+  }
+
+  &__logo {
+    padding-right: space(32);
+
+    img {
+      max-width: 180px;
+    }
+  }
+}
+
+.persona__heading {
+  margin-bottom: space(24);
+
+  svg {
+    margin-right: space(8);
+    font-size: pxtorem(22px);
+    line-height: pxtorem(22px);
+  }
+}
+
+.persona__list {
+  margin-top: space(48);
+
+  &__items {
+    li {
+      white-space: pre;
+      word-break: break-all;
+    }
+
+    a {
+      display: inline-block;
+    }
+  }
+}

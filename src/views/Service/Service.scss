@@ -32,6 +32,22 @@
     }
   }
 
+  &--advice {
+    background-image: url('../../assets/images/backgrounds/advice-header-shape-lg.svg');
+
+    @include for-tablet-portrait-down {
+      background-image: url('../../assets/images/backgrounds/advice-header-shape-mobile.svg');
+    }
+  }
+  
+  &--app {
+    background-image: url('../../assets/images/backgrounds/app-header-shape-lg.svg');
+
+    @include for-tablet-portrait-down {
+      background-image: url('../../assets/images/backgrounds/app-header-shape-mobile.svg');
+    }
+  }
+
   &--club {
     background-image: url('../../assets/images/backgrounds/club-header-shape-lg.svg');
 
@@ -45,6 +61,22 @@
 
     @include for-tablet-portrait-down {
       background-image: url('../../assets/images/backgrounds/group-header-shape-mobile.svg');
+    }
+  }
+
+  &--helpline {
+    background-image: url('../../assets/images/backgrounds/helpline-header-shape-lg.svg');
+
+    @include for-tablet-portrait-down {
+      background-image: url('../../assets/images/backgrounds/helpline-header-shape-mobile.svg');
+    }
+  }
+
+  &--information {
+    background-image: url('../../assets/images/backgrounds/information-header-shape-lg.svg');
+
+    @include for-tablet-portrait-down {
+      background-image: url('../../assets/images/backgrounds/information-header-shape-mobile.svg');
     }
   }
 

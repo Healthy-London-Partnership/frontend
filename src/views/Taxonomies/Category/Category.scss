@@ -1,0 +1,60 @@
+@import '../../../styles/breakpoints.scss';
+@import '../../../styles/mixins.scss';
+@import '../../../styles/colors.scss';
+@import '../../../styles/fonts.scss';
+
+.taxonomy__search-box {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: $san-juan;
+  position: relative;
+
+  @include for-tablet-landscape-up {
+    padding: space(48) 0 space(32) !important;
+    background-image: url('../../../assets/images/backgrounds/results-shape.svg');
+
+    &:before {
+      content: url('../../../assets/images/trees/peurto-small.svg');
+      position: absolute;
+      top: 3px;
+      right: 400px;
+    }
+
+    &:after {
+      content: url('../../../assets/images/telephone-boxes-shapes.svg');
+      position: absolute;
+      top: 0;
+      right: 100px;
+    }
+  }
+
+  @include for-tablet-landscape-down {
+    padding: space(24) 0 !important;
+    background-color: $iceberg;
+
+    &:after {
+      content: none;
+    }
+
+    &:before {
+      content: none;
+    }
+  }
+
+  @include for-phone-only {
+    h1 {
+      font-size: $font-body-l;
+    }
+  }
+}
+
+.taxonomy__list {
+  margin-top: space(32);
+  margin-bottom: space(16);
+
+  li {
+    a {
+      display: inline-block;   
+    }
+  }
+}

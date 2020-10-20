@@ -37,7 +37,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
 
                           return (
                             <List
-                              key={title}
+                              key={i}
                               title={title}
                               resultsList={resultsList}
                               resultsStore={resultsStore}
@@ -56,7 +56,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
 
                             return (
                               <List
-                                key={title}
+                                key={i}
                                 title={title}
                                 resultsList={resultsList}
                                 resultsStore={resultsStore}
