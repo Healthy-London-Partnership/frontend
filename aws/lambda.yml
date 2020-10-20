@@ -71,18 +71,30 @@ Resources:
             // Extract the URI from the request
             const oldUri = request.uri;
             let newUri = oldUri;
+            let hasChanged = false;
 
-            // Redirect "/about" to "/about-connect"
-            newUri = newUri.replace(
-              /^(\/about)(\/|\/\?.*|\?.*)?$/g,
-              '/about-connect$2'
-            );
+            // Initialise the path mapping
+            const map = {
+              about: 'about-connect',
+              'get-involved': 'provider'
+            };
 
-            // Redirect "/get-involved" to "/provider"
-            newUri = newUri.replace(
-              /^(\/get-involved)(\/|\/\?.*|\?.*)?$/g,
-              '/provider$2'
-            );
+            // Rewrite URLs
+            for (const [from, to] of map) {
+              if (newUri.natch(`^(\/${from})(\/|\/\?.*|\?.*)?$`)) {
+                hasChanged = true;
+              }
+
+              newUri = newUri.replace(
+                `^(\/${from})(\/|\/\?.*|\?.*)?$`,
+                `/${to}$2`
+              );
+            }
+
+            // Continue as normal
+            if (!hasChanged) {
+              return callback(null, request);
+            }
 
             // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
             console.log(`Old URI: ${oldUri}`);
@@ -100,7 +112,7 @@ Resources:
               },
             };
 
-            // Return to CloudFront
+            // Immediately return response to CloudFront
             return callback(null, response);
           };
       Handler: index.handler
