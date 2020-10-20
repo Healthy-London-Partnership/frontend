@@ -33,12 +33,6 @@ class Results extends Component<IProps> {
     }
   }
 
-  componentWillUnmount() {
-    const { resultsStore } = this.props;
-
-    resultsStore.clear();
-  }
-
   render() {
     const { resultsStore, history } = this.props;
     return (

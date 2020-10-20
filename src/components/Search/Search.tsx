@@ -19,10 +19,6 @@ interface IProps extends RouteComponentProps {
 @inject('windowSizeStore', 'cmsStore')
 @observer
 class Search extends React.Component<IProps> {
-  componentWillUnmount() {
-    SearchStore.clear();
-  }
-
   render() {
     const { windowSizeStore, cmsStore } = this.props;
 

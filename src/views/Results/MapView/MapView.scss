@@ -51,10 +51,3 @@
     margin: 0 0 space(16) 0;
   }
 }
-
-.leaflet-popup-content {
-  @include for-phone-only {
-    width: 70vw;
-    height: 90%;
-  }
-}

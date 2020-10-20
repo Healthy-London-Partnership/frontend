@@ -12,7 +12,7 @@ interface IProps extends RouteComponentProps {
 
 const CategoryList: React.FunctionComponent<IProps> = ({ history, categories, covid = false }) => (
   <Fragment>
-    {categories.map(({ name, id, icon }) => (
+    {categories.map(({ name, id, icon, slug }) => (
       <Button
         category={true}
         text={name}
@@ -21,8 +21,7 @@ const CategoryList: React.FunctionComponent<IProps> = ({ history, categories, co
         icon={icon}
         onClick={() => {
           history.push({
-            pathname: '/results',
-            search: `?category=${id}`,
+            pathname: `/collections/categories/${slug}`,
           });
         }}
         covid={covid}

@@ -48,14 +48,14 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                 )}
                 {nationalResults.size > 0 && (
                   <Fragment>
-                    <div className={[...results.entries()][0][1].length ? 'flex-col results__list__national-results' : 'flex-col--12'}>
+                    <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--4 results__list__national-results' : 'flex-col--12'}>
                       {nationalResults.size && (
                         [...nationalResults.entries()].map((results, i) => {
                           const [title, resultsList] = results;
 
                           return (
                             <List
-                              key={title}
+                              key={i}
                               title={title}
                               resultsList={resultsList}
                               resultsStore={resultsStore}
