@@ -48,7 +48,6 @@ const Button: React.FunctionComponent<IProps> = ({
     type={type}
     onClick={onClick}
   >
-    {text}
     {icon && (
       <FontAwesomeIcon
         icon={icon}
@@ -57,6 +56,7 @@ const Button: React.FunctionComponent<IProps> = ({
         })}
       />
     )}
+    {text}
   </button>
 );
 

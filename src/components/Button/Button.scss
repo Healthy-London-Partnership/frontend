@@ -65,10 +65,10 @@
     }
 
     svg {
-      margin-left: space(8);
+      margin-right: space(8);
 
       @include for-tablet-portrait-down {
-        margin-left: space(16);
+        margin-right: space(16);
       }
     }
   }
@@ -133,19 +133,19 @@
 }
 
 .button__icon--small {
-  margin-left: space(16);
+  margin-right: space(16);
 
   @include for-phone-only {
-    margin-left: space(8);
+    margin-right: space(8);
   }
 }
 
 .button__icon--medium {
-  margin-left: space(24);
+  margin-right: space(24);
 }
 
 .button__icon--large {
-  margin-left: space(16);
+  margin-right: space(16);
 }
 
 .button__alt {
@@ -180,7 +180,7 @@
   height: pxtorem(50px);
 
   svg {
-    margin-left: space(16);
+    margin-right: space(16);
   }
 }
 
@@ -191,7 +191,7 @@
   line-height: 1.16;
 
   svg {
-    margin-left: space(16);
+    margin-right: space(16);
   }
 }
 
@@ -208,7 +208,7 @@
 
   svg {
     height: 0.875em;
-    margin-left: space(12);
+    margin-right: space(12);
   }
 
   &:hover {
@@ -250,7 +250,7 @@
   }
 
   .button__icon {
-    margin-left: space(12);
+    margin-right: space(12);
   }
 }
 
