@@ -5,7 +5,7 @@ import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
 
-import { apiBase } from '../config/api';
+import { apiBase, nhsApiSubscriptionKey } from '../config/api';
 import {
   IParams,
   IPersona,
@@ -29,6 +29,7 @@ export default class ResultsStore {
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable nationalResults: Map<string, IService[]> = new Map();
+  @observable nhsResult: any;
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
@@ -61,6 +62,7 @@ export default class ResultsStore {
     this.order = 'relevance';
     this.results = new Map();
     this.nationalResults = new Map();
+    this.nhsResult = '';
     this.fetched = false;
     this.organisations = [];
     this.currentPage = 1;
@@ -228,7 +230,28 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
+    if(this.keyword) {
+      await this.fetchNhsConditions();
+    }
+
     this.getOrganisations();
+  };
+
+  @action
+  fetchNhsConditions = async () => {
+    await axios.get('https://api.nhs.uk/conditions/' + this.keyword.replace(/\s+/g, '-').toLowerCase(), {
+      headers: {
+        'subscription-key': `${nhsApiSubscriptionKey}`,
+      },
+      params: {
+        modules: false,
+      }
+    })
+    .then(response => {
+      console.log(response);
+      this.nhsResult = response.data;
+    })
+    .catch(this.nhsResult = null);
   };
 
   @action

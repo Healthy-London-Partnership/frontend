@@ -11,6 +11,7 @@ import MapView from './MapView';
 
 import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
+import Cta from '../../components/Cta';
 
 interface IProps {
   location: Location;
@@ -67,6 +68,22 @@ class Results extends Component<IProps> {
               </div>
             </div>
           </div>
+          
+          {resultsStore.nhsResult && 
+            <div className="flex-container flex-container--justify results__nhs-results">
+              <div className="flex-col--tablet--12 flex-col--10">
+                <div className="flex-container">
+                  <div className="flex-col flex-col--12">
+                    <Cta
+                      title={resultsStore.nhsResult.about.name}
+                      description={resultsStore.nhsResult.description}
+                      buttonUrl={resultsStore.nhsResult.url.replace('api.nhs.uk', 'www.nhs.uk')}
+                      />
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
 
           {resultsStore.view === 'grid' ? (	
             <ListView resultsStore={resultsStore} history={history} />	
