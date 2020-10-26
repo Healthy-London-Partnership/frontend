@@ -5,24 +5,57 @@
 
 .cta {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
   padding: space(32);
   background-color: $nhs-blue;
   color: $white;
   border-radius: 10px;
 
+  @include for-tablet-landscape-down {
+    padding: space(24);
+  }
+
   &-info {
-    flex: 0 0 620px;
+    flex: 1 1 620px;
+    margin-right: space(32);
+
+    @include for-tablet-landscape-down {
+      margin-right: 0;
+    }
+  }
+
+  &-logo {
+    max-width: 120px;
+    margin-right: space(32);
+
+    @include for-tablet-landscape-down {
+      margin-bottom: space(16);
+    }
+
+    img {
+      width: 100%;
+    }
   }
 
   &-title {
     margin-bottom: space(8);
   }
 
+  &-description {
+    @include for-tablet-landscape-down {
+      margin-bottom: space(24);
+    }
+  }
+
   .button {
+    margin-left: auto;
     background-color: transparent;
     color: $white;
     border: 2px solid $white;
+
+    @include for-tablet-landscape-down {
+      margin-left: 0;
+    }
   }
 }

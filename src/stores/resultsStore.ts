@@ -243,15 +243,13 @@ export default class ResultsStore {
       headers: {
         'subscription-key': `${nhsApiSubscriptionKey}`,
       },
-      params: {
-        modules: false,
-      }
     })
     .then(response => {
-      console.log(response);
       this.nhsResult = response.data;
     })
-    .catch(this.nhsResult = null);
+    .catch(error => {
+      this.nhsResult = null;
+    });
   };
 
   @action
