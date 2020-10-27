@@ -69,7 +69,7 @@ class Results extends Component<IProps> {
             </div>
           </div>
           
-          {resultsStore.nhsResult && 
+          {resultsStore.nhsResult &&
             <div className="flex-container flex-container--justify results__nhs-results">
               <div className="flex-col--tablet--12 flex-col--10">
                 <div className="flex-container">

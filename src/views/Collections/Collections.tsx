@@ -68,7 +68,7 @@ class Category extends Component<IProps> {
                   {categories ? (
                     <ul className="category__list__items">
                       {[...categories].map((category: ICategory, i: number) => {
-                        let categoryUrl = window.location.href + 'categories/' + category.slug;
+                        let categoryUrl = window.location.href + '/categories/' + category.slug;
                         return <li key={i}><Link href={categoryUrl} text={`${category.name} (${categoryUrl})`} size={'medium'} /></li>
                       })}
                     </ul>
@@ -91,7 +91,7 @@ class Category extends Component<IProps> {
                     {personas ? (
                       <ul className="persona__list__items">
                         {[...personas].map((persona: IPersona, i: number) => {
-                          let personaUrl = window.location.href + 'personas/' + persona.slug;
+                          let personaUrl = window.location.href + '/personas/' + persona.slug;
                           return <li key={i}><Link href={personaUrl} text={`${persona.name} (${personaUrl})`} size={'medium'} /></li>
                         })}
                       </ul>

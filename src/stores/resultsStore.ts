@@ -230,7 +230,7 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
-    if(this.keyword) {
+    if(this.keyword || this.category || this.persona) {
       await this.fetchNhsConditions();
     }
 
@@ -239,7 +239,21 @@ export default class ResultsStore {
 
   @action
   fetchNhsConditions = async () => {
-    await axios.get('https://api.nhs.uk/conditions/' + this.keyword.replace(/\s+/g, '-').toLowerCase(), {
+    let searchSlug;
+
+    if(this.keyword) {
+      searchSlug = this.keyword.replace(/\s+/g, '-').toLowerCase();
+    } else if(this.category) {
+      console.log(this.category);
+      searchSlug = this.category.slug.replace('homepage-', '');
+    } else if(this.persona) {
+      console.log(this.persona);
+      searchSlug = this.persona.slug.replace('homepage-', '');
+    }
+
+    console.log(searchSlug);
+
+    await axios.get('https://api.nhs.uk/conditions/' + searchSlug, {
       headers: {
         'subscription-key': `${nhsApiSubscriptionKey}`,
       },
