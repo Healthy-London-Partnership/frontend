@@ -7,21 +7,29 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: space(32);
+  padding: space(24);
   background-color: $nhs-blue;
   color: $white;
   border-radius: 10px;
 
   @include for-tablet-landscape-down {
-    padding: space(24);
+    padding: space(20);
   }
 
   &-info {
-    flex: 1 1 620px;
-    margin-right: space(32);
+    flex: 0 1 420px;
+    padding-right: space(32);
+
+    @include for-desktop-up {
+      flex: 0 1 465px;
+    }
+
+    @include for-big-desktop-up {
+      flex: 0 1 620px;
+    }
 
     @include for-tablet-landscape-down {
-      margin-right: 0;
+      padding-right: 0;
     }
   }
 
@@ -49,10 +57,12 @@
   }
 
   .button {
+    flex: 0 1 170px;
     margin-left: auto;
     background-color: transparent;
     color: $white;
     border: 2px solid $white;
+    text-align: center;
 
     @include for-tablet-landscape-down {
       margin-left: 0;
