@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { observer, inject } from 'mobx-react';
-import { NavLink as NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import './PublicBetaBanner.scss';
 
@@ -31,7 +31,7 @@ class PublicBetaBanner extends Component<IProps> {
             <span className="public-beta-banner-tag">BETA</span>
           </div>
           <div className="flex-col">
-            <p className="public-beta-banner-information">This is a new service – your <a onClick={() => toggleFeedbackModal()}>feedback</a> will help us to improve it.</p>
+            <p className="public-beta-banner-information">This is a new service – your <button onClick={() => toggleFeedbackModal()}>feedback</button> will help us to improve it.</p>
           </div>
         </div>
       </section>
