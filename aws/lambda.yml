@@ -76,12 +76,14 @@ Resources:
             // Initialise the path mapping
             const map = {
               about: 'about-connect',
-              'get-involved': 'provider'
+              'get-involved': 'providers'
             };
 
             // Rewrite URLs
             for (const [from, to] of Object.entries(map)) {
-              if (newUri.match(`^(\\/${from})(\\/|\\/\\?.*|\\?.*)?$`)) {
+              const regex = new RegExp(`^(\\/${from})(\\/|\\/\\?.*|\\?.*)?$`);
+
+              if (regex.test(newUri)) {
                 hasChanged = true;
               }
 
