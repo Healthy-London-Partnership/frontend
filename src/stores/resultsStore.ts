@@ -29,6 +29,7 @@ export default class ResultsStore {
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable nationalResults: Map<string, IService[]> = new Map();
+  @observable liveActivities: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
@@ -61,6 +62,7 @@ export default class ResultsStore {
     this.order = 'relevance';
     this.results = new Map();
     this.nationalResults = new Map();
+    this.liveActivities = new Map();
     this.fetched = false;
     this.organisations = [];
     this.currentPage = 1;
@@ -228,7 +230,50 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
+    if(params.location) {
+      this.fetchLiveActivities(params.location);
+    }
+
     this.getOrganisations();
+  };
+
+  @action
+  fetchLiveActivities = async (location: any) => {
+    const { data } = await axios.get('https://search.imin.co/events-api/v2/event-series', {
+      headers: {
+        'X-API-KEY': 'jAyxqV1IVTlcPeQV2aujF05X0483cOKu'
+      },
+      params: {
+        'geo[radial]': `${location.lat},${location.lon},5`,
+        mode: 'upcoming-sessions',
+        limit: 3,
+        page: this.currentPage
+      }
+    });
+
+    let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
+      return {
+        contact_name: activity.organizer.name ? activity.organizer.name : null,
+        contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
+        description: activity.description ? activity.description : null,
+        gallery_items: activity.image ? activity.image : null,
+        has_logo: activity.image ? true : false,
+        logo_url: activity.image ? activity.image[0].url : null,
+        id: activity.identifier ? activity.identifier : null,
+        intro: activity.description ? this.truncateString(activity.description, 150) : null,
+        is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
+        name: activity.name ? activity.name : null,
+        open_active: true,
+        organisation_id: activity.organizer ? activity.organizer.id : null,
+        organisation: activity.organizer ? activity.organizer.name : null,
+        service_locations: [],
+        slug: activity.identifier ? activity.identifier : null,
+        type: 'activity',
+        video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
+      };
+    });
+
+    this.liveActivities.set('Live Activities', liveActivitiesMapped);
   };
 
   @action
@@ -369,5 +414,14 @@ export default class ResultsStore {
     this.results = new Map();
     this.nationalResults = new Map();
     this.loading = true;	
+  };
+
+  @action
+  truncateString = (str: string, num: number) => {
+    if (str.length <= num) {
+      return str
+    }
+
+    return str.slice(0, num) + '...'
   };
 }
