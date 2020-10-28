@@ -31,6 +31,11 @@ class InstructionModal extends Component<any> {
         className="modal instruction-modal"
         shouldCloseOnEsc={true}
         shouldCloseOnOverlayClick={true}
+        style={{
+          overlay: {
+            zIndex: 100003000
+          }
+        }}
       >
         <div className="instruction-modal__main">
           <div className="instruction-modal__close">
