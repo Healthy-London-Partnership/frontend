@@ -5,7 +5,7 @@ import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
 
-import { apiBase } from '../config/api';
+import { apiBase, iminApiKey, iminApiBase } from '../config/api';
 import {
   IParams,
   IPersona,
@@ -239,9 +239,9 @@ export default class ResultsStore {
 
   @action
   fetchLiveActivities = async (location: any) => {
-    const { data } = await axios.get('https://search.imin.co/events-api/v2/event-series', {
+    const { data } = await axios.get(`${iminApiBase}`, {
       headers: {
-        'X-API-KEY': 'jAyxqV1IVTlcPeQV2aujF05X0483cOKu'
+        'X-API-KEY': `${iminApiKey}`
       },
       params: {
         'geo[radial]': `${location.lat},${location.lon},5`,
