@@ -50,6 +50,7 @@ import ServiceDisabled from './ServiceDisabled';
 
 interface RouteParams {
   service: string;
+  activity: string;
 }
 
 interface IProps extends RouteComponentProps<RouteParams> {
@@ -84,14 +85,22 @@ class Service extends Component<IProps> {
   componentDidMount() {
     const { serviceStore, match } = this.props;
 
-    serviceStore.fetchService(match.params.service);
+    if(match.params.service) {
+      serviceStore.fetchService(match.params.service);
+    } else if(match.params.activity) {
+      serviceStore.fetchActivity(match.params.activity);
+    }
   }
 
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
       const { serviceStore, match } = this.props;
 
-      serviceStore.fetchService(match.params.service);
+      if(match.params.service) {
+        serviceStore.fetchService(match.params.service);
+      } else if(match.params.activity) {
+        serviceStore.fetchActivity(match.params.activity);
+      }
     }
   }
 

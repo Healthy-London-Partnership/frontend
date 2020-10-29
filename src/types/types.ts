@@ -57,7 +57,7 @@ export interface IService {
   gallery_items: [];
   has_logo: boolean;
   id: string;
-  intro: string;
+  intro: null | string;
   is_free: boolean;
   is_national: boolean;
   last_modified_at: string;
