@@ -41,6 +41,7 @@ import FeedbackModal from './components/FeedbackModal';
 import Footer from './components/Footer/Footer';
 import MetaData from './components/MetaData';
 import HomeScreenPrompt from './components/HomeScreenPrompt';
+import PublicBetaBanner from './components/PublicBetaBanner';
 
 // add all free font awesome icons to project
 library.add(fas, fab);
@@ -72,6 +73,7 @@ class App extends Component {
         <MetaData />
         <Router>
           <ScrollToTop>
+            <PublicBetaBanner />
             <Header />
             <main className="main">
               <Switch>

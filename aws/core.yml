@@ -151,9 +151,6 @@ Resources:
           - EventType: origin-request
             LambdaFunctionARN:
               Ref: LambdaOriginRewriteFunctionArn
-          - EventType: viewer-request
-            LambdaFunctionARN:
-              Ref: LambdaRedirectFunctionArn
           ViewerProtocolPolicy: redirect-to-https
         DefaultCacheBehavior:
           AllowedMethods:
@@ -169,6 +166,11 @@ Resources:
             - "-"
             - - S3
               - Ref: Bucket
+          LambdaFunctionAssociations:
+          - EventType: viewer-request
+            LambdaFunctionARN:
+              Ref: LambdaRedirectFunctionArn
+          ViewerProtocolPolicy: redirect-to-https
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Enabled: True
