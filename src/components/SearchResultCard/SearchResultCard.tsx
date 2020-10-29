@@ -69,7 +69,9 @@ class SearchResultCard extends React.Component<IProps> {
           resultsStore.view === 'map'  ?
           this.props.activeIdHandler(result.id) :
           history.push({
-            pathname: `/services/${result.slug}`,
+            pathname: result.open_active ?
+            `/activities/${result.slug}` :
+            `/services/${result.slug}`,
           });
         }}
         tabIndex={0}

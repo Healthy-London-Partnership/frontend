@@ -102,6 +102,7 @@ class Service extends Component<IProps> {
   render() {
     const { serviceStore, uiStore } = this.props;
     const { service, locations, relatedServices } = serviceStore;
+    
     if (!service) {
       return null;
     }
