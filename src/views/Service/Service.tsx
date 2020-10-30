@@ -151,7 +151,14 @@ class Service extends Component<IProps> {
             </div>
             <div className="flex-col flex-col--mobile--3">
               <div className="service__header__logo">
-                <img src={getImg(service)} alt={`${service.name} logo`} />
+                {service.logo_url ? (
+                  <img
+                    src={service.logo_url}
+                    alt={service.name}
+                  />
+                ) : (
+                  <img src={getImg(service)} alt={`${service.name} logo`} />
+                )}
               </div>
             </div>
           </div>
@@ -255,7 +262,7 @@ class Service extends Component<IProps> {
                 <div className="flex-container flex-container--align-center service__section service__section--no-padding service__information">
                   <div className="flex-col flex-col--12 flex-col--mobile--12">
                     <ReactMarkdown
-                      source={service.intro}
+                      // source={service.intro}
                       className="service__markdown service__markdown--intro"
                     />
                   </div>
@@ -340,7 +347,7 @@ class Service extends Component<IProps> {
                     <ReferralCard id={service.id} />
                   </div>
                 )}
-
+                
                 <Accordian
                   title={`How can I contact this ${service.type}?`}
                   className="service__accordian mobile-show"

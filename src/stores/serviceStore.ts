@@ -53,28 +53,58 @@ export default class ServiceStore {
     console.log(data);
 
     const activity = data;
+    let today = new Date();
 
-    // this.service = {
-    //   contact_name: activity.organizer.name ? activity.organizer.name : null,
-    //   contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
-    //   description: activity.description ? activity.description : null,
-    //   gallery_items: activity.image ? activity.image : null,
-    //   has_logo: activity.image ? true : false,
-    //   logo_url: activity.image ? activity.image[0].url : null,
-    //   id: activity.identifier ? activity.identifier : null,
-    //   intro: activity.description ? this.truncateString(activity.description, 150) : null,
-    //   is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
-    //   name: activity.name ? activity.name : null,
-    //   open_active: true,
-    //   organisation_id: activity.organizer ? activity.organizer.id : null,
-    //   organisation: activity.organizer ? activity.organizer.name : null,
-    //   service_locations: [],
-    //   slug: activity.identifier ? activity.identifier : null,
-    //   type: 'activity',
-    //   video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
-    // };
+    console.log(activity);
 
-    // console.log(this.service);
+    this.service = {
+      contact_email: activity.organizer.email ? activity.organizer.email : null,
+      contact_name: activity.organizer.name ? activity.organizer.name : null,
+      contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
+      criteria: {
+        age_group: '',
+        disability: '',
+        employment: '',
+        gender: activity.genderRestriction ? activity.genderRestriction.replace(/([a-z])([A-Z])/g, '$1 $2').replace('oa:', '') : null,
+        housing: '',
+        income: '',
+        language: '',
+        other: '',
+      },
+      created_at: today.toISOString(),
+      description: activity.description ? activity.description : null,
+      fees_text: null,
+      fees_url: null,
+      gallery_items: activity.image ? activity.image : null,
+      has_logo: activity.image ? true : false,
+      id: activity.identifier ? activity.identifier : null,
+      intro: activity.description ? this.truncateString(activity.description, 150) : null,
+      is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
+      is_national: false,
+      last_modified_at: today.toISOString(),
+      logo_url: activity.image ? activity.image[0].url : null,
+      name: activity.name ? activity.name : null,
+      offerings: [],
+      open_active: true,
+      organisation_id: activity.organizer ? activity.organizer.id : null,
+      organisation: activity.organizer ? activity.organizer : null,
+      referral_button_text: null,
+      referral_email: null,
+      referral_method: 'none',
+      referral_url: null,
+      service_locations: activity.location ? activity.location : null,
+      show_referral_disclaimer: false,
+      slug: activity.identifier ? activity.identifier : null,
+      social_medias: [],
+      status: '',
+      testimonial: null,
+      type: 'activity',
+      updated_at: today.toISOString(),
+      url: '',
+      useful_infos: [],
+      video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
+      wait_time: null,
+    };
   };
 
   @action
