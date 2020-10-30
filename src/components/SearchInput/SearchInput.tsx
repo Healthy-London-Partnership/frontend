@@ -161,6 +161,7 @@ class SearchInput extends React.Component<IProps, IState> {
                 }
               />
               <button
+                type="button"
                 className="link link--medium search__location__link"
                 onClick={(e) => {
                   e.preventDefault();

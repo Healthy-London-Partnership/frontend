@@ -23,13 +23,13 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
 
   return (
     <Fragment>
-      <div className="flex-container flex-container--justify flex-container--no-padding">
-        <div className="flex-col">
+      <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -10px'}}>
+        <div className="flex-col flex-col--12">
           <div className="flex-container flex-container--justify flex-container--no-padding">
             {(results.size || nationalResults.size) ? (
               <Fragment>
                 {results.size > 0 && (
-                  <div className={nationalResults.size ? 'flex-col results__list--has-national-results' : 'flex-col--12'}>
+                  <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
                     {results.size && (
                       [...results.entries()].map((results, i) => {
                         const [title, resultsList] = results;
@@ -48,7 +48,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                 )}
                 {nationalResults.size > 0 && (
                   <Fragment>
-                    <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--4 results__list__national-results' : 'flex-col--12'}>
+                    <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--standard--6 flex-col--4 results__list__national-results' : 'flex-col flex-col--12'}>
                       {nationalResults.size && (
                         [...nationalResults.entries()].map((results, i) => {
                           const [title, resultsList] = results;

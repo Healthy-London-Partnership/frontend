@@ -12,7 +12,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 -20px;
 
   &__title {
     @include for-phone-only {
@@ -107,16 +106,20 @@
     padding: space(120) space(72) space(96) !important;
 
     @include for-tablet-portrait-down {
-      padding: space(64) space(16) !important;
+      padding: space(88) space(16) !important;
+    }
+
+    @include for-phone-only {
+      padding: space(80) space(16) !important;
     }
   }
 
   &--has-national-results {
     .search-result-card {
-      width: calc(50% - 16px);
+      width: 100%;
 
-      @include for-tablet-landscape-down {
-        width: 100%;
+      @include for-standard-up {
+        width: calc(50% - 20px);
       }
     }
   }
