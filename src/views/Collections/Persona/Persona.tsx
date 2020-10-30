@@ -85,7 +85,7 @@ class Persona extends Component<IProps> {
         <div className="persona__list">
           <div className="flex-container flex-container--justify">
             {results.size > 0 ? (
-              <div className="flex-col--tablet--12 flex-col--10 results__list">
+              <div className="flex-col--12 results__list">
                 {results.size && (
                   [...results.entries()].map((results, i) => {
                     const [title, resultsList] = results;

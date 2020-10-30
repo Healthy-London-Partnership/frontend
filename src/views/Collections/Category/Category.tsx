@@ -58,7 +58,7 @@ class Category extends Component<IProps> {
           metaDescription={`${category.intro}`}
         />
         <div className="category__search-box flex-container flex-container--justify">
-          <div className="category__search-box__inner flex-col--tablet--12 flex-col--10">
+          <div className="category__search-box__inner flex-col--tablet--12 flex-col--12">
             <div className="flex-container">
               <div className="flex-col flex-col--8 flex-col--standard--12">
                 <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: category.name, url: '' }]} />
@@ -72,7 +72,7 @@ class Category extends Component<IProps> {
         <div className="category__list">
           <div className="flex-container flex-container--justify">
             {results.size > 0 ? (
-              <div className="flex-col--tablet--12 flex-col--10 results__list">
+              <div className="flex-col--12 results__list">
                 {results.size && (
                   [...results.entries()].map((results, i) => {
                     const [title, resultsList] = results;

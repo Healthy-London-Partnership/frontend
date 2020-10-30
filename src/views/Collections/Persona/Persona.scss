@@ -25,7 +25,13 @@
   }
 
   &__logo {
-    margin-right: space(16);
+    max-width: 160px;
+    margin-right: space(24);
+
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 }
 

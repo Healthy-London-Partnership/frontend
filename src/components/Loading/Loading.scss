@@ -1,6 +1,10 @@
 @import '../../styles/mixins.scss';
 @import '../../styles/colors.scss';
 
+.loading-container {
+  padding: space(64) 0;  
+}
+
 #loading {
   display: block;
   margin: 0 auto;
