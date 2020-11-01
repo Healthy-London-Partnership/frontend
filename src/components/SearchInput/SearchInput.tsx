@@ -160,25 +160,27 @@ class SearchInput extends React.Component<IProps, IState> {
                   this.handleInputChange(e.target.value, 'postcode')
                 }
               />
+              <button
+                type="button"
+                className="link link--medium search__location__link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.getLocation();
+                }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</button>
             </div>
             <div
               className={cx('flex-col search__submit', {
                 'flex-col--mobile--12 search__submit': isMobile,
               })}>
               <Button
+                size="large"
                 text={showButtonText ? "Search" : ""}
                 icon="search"
                 type="submit"
                 onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.checkValidation(e)}
               />
             </div>
-          </div>
-          <button
-            className="link link--medium search__location__link"
-            onClick={(e) => {
-              e.preventDefault();
-              this.getLocation();
-            }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</button>
+          </div>          
         </div>
       </Fragment>
     );

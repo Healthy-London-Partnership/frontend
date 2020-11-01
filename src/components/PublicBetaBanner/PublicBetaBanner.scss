@@ -17,17 +17,17 @@
     display: block;
     margin-right: space(16);
     padding: space(8);
-    font-family: $font-secondary;
+    font-weight: 700;
     background-color: $nhs-blue;
     color: $white;
   }
 
   &-information {
-    font-size: $font-body-xs;
+    font-size: $font-body-s;
 
     button {
       padding: 0;
-      font-size: $font-body-xs;
+      font-size: $font-body-s;
       text-decoration: underline;
       cursor: pointer;
     }

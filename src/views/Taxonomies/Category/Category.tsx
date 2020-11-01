@@ -54,14 +54,12 @@ class Category extends Component<IProps> {
         <MetaData
           title={`${taxonomyCategory.name}`}
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: taxonomyCategory.name, url: '' }]} />
-        <div className="taxonomy__search-box">
-          <div className="flex-container flex-container--justify">
-            <div className="flex-col--tablet--12 flex-col--10">
-              <div className="flex-container">
-                <div className="flex-col flex-col--8 flex-col--standard--12">
-                  <h1 className="taxonomy__heading"><FontAwesomeIcon icon={taxonomyCategory.icon} /> {taxonomyCategory.name}</h1>
-                </div>
+        <div className="taxonomy__search-box flex-container flex-container--justify">
+          <div className="taxonomy__search-box__inner flex-col--tablet--12 flex-col--10">
+            <div className="flex-container">
+              <div className="flex-col flex-col--8 flex-col--standard--12">
+                <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: taxonomyCategory.name, url: '' }]} />
+                <h1 className="taxonomy__heading"><FontAwesomeIcon icon={taxonomyCategory.icon} /> {taxonomyCategory.name}</h1>
               </div>
             </div>
           </div>
@@ -70,24 +68,20 @@ class Category extends Component<IProps> {
         <div className="taxonomy__list">
           <div className="flex-container flex-container--justify">
             {taxonomyCategory.children.length > 0 ? (
-              <div className="flex-col--tablet--12 flex-col--10 taxonomy__list">
-                <div className="flex-container">
-                  <div className="flex-col flex-col--8 flex-col--standard--12">
-                    <ul>
-                      {taxonomyCategory.children.map((item: any, i: number) => {
-                        return (
-                          <li key={i}>
-                            <Link
-                              size={'medium'}
-                              text={item.name}
-                              href={'/taxonomies/categories/' + item.slug}
-                              />
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </div>
+              <div className="flex-col flex-col--12">
+                <ul>
+                  {taxonomyCategory.children.map((item: any, i: number) => {
+                    return (
+                      <li key={i}>
+                        <Link
+                          size={'medium'}
+                          text={item.name}
+                          href={'/taxonomies/categories/' + item.slug}
+                          />
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             ) : (
               <div className="flex-col--tablet--12 flex-col--10">

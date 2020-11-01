@@ -5,11 +5,13 @@
 @import '../../styles/fonts.scss';
 
 .header {
-  background: $white;
   overflow: hidden;
-  color: $san-juan;
+  color: $gulf-blue;
   text-align: right;
-  padding-bottom: space(40);
+  padding-top: space(24);
+  padding-bottom: space(24);
+  background: rgb(0,94,184);
+  background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
 
   &--grey {
     background-image: url('../../assets/images/backgrounds/referral-header-shape.svg');
@@ -35,10 +37,6 @@
   @include for-tablet-landscape-down {
     z-index: 999;
     padding: 0;
-
-    .flex-col {
-      margin-bottom: 0;
-    }
   }
 
   &.active {
@@ -63,126 +61,40 @@
     }
   }
 
-  &--top-row {
-    align-items: stretch !important;
-    padding-bottom: space(12) !important;
-
-    &--button-box {
-      display: flex;
-      margin-right: space(8);
-
-      &:last-of-type {
-        margin-right: 0;
-        margin-left: space(8);
-      }
-
-      button {
-        margin: 0;
-      }
-
-      @include for-small-phone {
-        margin: 0;
-        justify-content: center;
-
-        &:last-of-type {
-          margin: 0;
-        }
-      }
-    }
-
-    &--favourites {
-      @include for-tablet-landscape-down {
-        background-color: $iceberg;
-      }
-    }
-
-    &--favourite {
-      @include for-tablet-portrait-down {
-        text-align: center;
-      }
-    }
-
-    &--iceberg {
-      @include for-phone-only {
-        background-color: $iceberg;
-      }
-
-      @include for-phone-only {
-        button {
-          border: none;
-        }
-
-        .goog-te-gadget-simple {
-          border: none !important;
-        }
-      }
-    }
-
-    @include for-small-phone {
-      .goog-te-gadget-simple {
-        margin: 0;
-      }
-    }
-
-    @include for-desktop-up {
-      justify-content: flex-end !important;
-    }
-
-    @include for-tablet-landscape-down {
-      button {
-        color: $san-juan;
-
-        svg {
-          margin-left: 6px;
-        }
-      }
-    }
+  &__ctas {
+    display: flex;
+    justify-content: flex-end;
   }
 
   &__brand {
     position: relative;
-    padding: space(12);
+    align-self: flex-start;
     z-index: 1;
 
     @include for-tablet-landscape-down {
-      padding: space(12) space(24) space(24) !important;
+      padding: space(16) 0 !important;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: space(16);
+      margin-bottom: 0 !important;
       width: 100% !important;
-
-      &--active {
-        padding-bottom: space(48) !important;
-        background-color: $iceberg;
-      }
 
       &--sticky {
         position: fixed;
         background-color: $iceberg;
       }
-
-      &--iceberg {
-        @include for-phone-only {
-          background-color: $iceberg;
-        }
-      }
-
-      &--favourites {
-        @include for-tablet-landscape-down {
-          background-image: url('../../assets/images/backgrounds/favourites-shape-mobile.svg');
-          background-repeat: no-repeat;
-          background-size: 110% 100%;
-        }
-      }
     }
 
     @include for-phone-only {
-      padding: space(8) space(12) space(24) !important;
+      padding: space(16) !important;
+    }
+  }
 
-      &--active {
-        padding-bottom: space(48) !important;
-      }
+  &__nav {
+    align-self: flex-end;
+
+    @include for-tablet-landscape-down {
+      margin-bottom: 0 !important;
     }
   }
 
@@ -200,11 +112,12 @@
       }
 
       a {
-        display: block;
-        color: $san-juan;
-        margin-bottom: space(32);
+        display: block !important;
+        color: $gulf-blue;
+        margin-bottom: space(16);
         font-size: pxtorem(20px);
-        font-family: $font-secondary;
+        font-family: $font-primary;
+        font-weight: 700;
         cursor: pointer;
         text-decoration: none;
         text-align: left;
@@ -219,8 +132,9 @@
   .logo {
     display: block;
     float: left;
-    max-width: 260px;
+    max-width: 270px;
     text-align: left;
+    color: $white;
 
     @include for-phone-only {
       max-width: 240px;
@@ -232,19 +146,31 @@
 
     .logo-heading {
       display: block;
+      font-weight: 600;
       @include heading-xl;
     }
 
     .logo-byline {
       display: block;
       @include heading-s-light;
+      font-weight: 600;
+    }
+
+    .logo-icon {
+      display: block;
+      max-width: 88px;
+      margin-top: space(12);
+
+      img {
+        width: 100%;
+        height: auto;
+      }
     }
   }
 
   .nav-trigger {
     display: none;
     float: right;
-    margin: pxtorem(4px) 0;
     padding: 0;
     border: none;
     background: transparent;
@@ -286,8 +212,9 @@
 
     &.active {
       position: absolute;
-      right: 12px;
-      bottom: 10px;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
 
       span:before {
         content: 'Close';
@@ -301,11 +228,12 @@
 }
 
 .header__container {
-  padding: 0 !important;
-
   @include for-desktop-up {
-    width: 90%;
-    margin: 0 auto;
+    padding: 0 space(64) !important;
+  }
+
+  @include for-phone-only {
+    padding: 0 !important;
   }
 }
 
@@ -313,28 +241,7 @@
   @include for-tablet-landscape-down {
     background-image: url('../../assets/images/backgrounds/home-white-shape-mobile.svg');
     width: 100%;
-    background-repeat: no-repeat;
-    background-size: 110% 100%;
-    background-color: $iceberg;
-
-    &--active {
-      margin-bottom: 0 !important;
-      &:before {
-        content: url('../../assets/images/trees/pink-small.svg');
-        top: -45px;
-        left: 45%;
-        position: absolute;
-        z-index: 50;
-      }
-
-      &:after {
-        content: url('../../assets/images/trees/peurto-small.svg');
-        top: -45px;
-        left: 55%;
-        position: absolute;
-        z-index: 50;
-      }
-    }
+    background-color: $white;
   }
 
   @include for-desktop-up {
@@ -342,7 +249,17 @@
   }
 }
 
+.header__nav {
+  max-width: 1260px;
+  
+  @include for-desktop-up {
+    margin-top: space(32);
+    padding: 0 space(24);
+  }
+}
+
 .nav {
+  position: relative;
   display: inline-block;
 
   &--primary {
@@ -352,19 +269,38 @@
     @include for-tablet-landscape-down {
       float: none;
       display: block;
-      margin: space(16);
-      padding: 0 space(10) space(32);
+      padding: space(16) 0;
       text-align: left;
     }
-  }
 
-  &--active {
-    @include for-desktop-up {
-      background-image: url('../../assets/images/backgrounds/nav-hover.svg');
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      height: auto;
-      padding: 20px;
+    .link {
+      display: inline-block;
+      font-size: pxtorem(19px);
+      line-height: 1.6rem;
+      padding-bottom: 4px;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $gulf-blue;
+        opacity: 0;
+        transform: scaleX(0);
+        transition: opacity, transform 0.2s ease-in-out;
+      }
+
+      &--active,
+      &:hover {
+        text-decoration: none;
+
+        &::after {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+      }
     }
   }
 }

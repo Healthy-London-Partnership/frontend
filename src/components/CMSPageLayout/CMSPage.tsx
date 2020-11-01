@@ -12,23 +12,19 @@ interface IProps {
 
 const CMSPage: React.FunctionComponent<IProps> = ({ title, children, twoColumn, breadcrumb }) => (
   <section className="cms">
-    <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: breadcrumb, url: '' }]} />
-    <div className="cms__header">
-      <div className="flex-container flex-container--mobile-no-padding">
-        <div className="flex-col flex-col--5 flex-col--tablet-large--6">
-          <div className="cms__title-card">
-            <h1 className="cms__title-card--title">{title}</h1>
-          </div>
+    <div className="cms__header flex-container flex-container--justify">
+      <div className="cms__header__inner flex-col--10 flex-col--tablet-large--12">
+        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: breadcrumb, url: '' }]} />
+        <div className="cms__title-card">
+          <h1 className="cms__title-card--title">{title}</h1>
         </div>
       </div>
     </div>
-    <main className="flex-container flex-container--justify">
-      {twoColumn ? (
-        children
-      ) : (
-        <div className="flex-col flex-col--6 flex-col--tablet--8 cms__content">{children}</div>
-      )}
-    </main>
+    <div className="cms__content flex-container flex-container--justify">
+      <div className="cms__content__inner flex-col--10">
+        {children}
+      </div>
+    </div>
   </section>
 );
 
