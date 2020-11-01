@@ -66,7 +66,7 @@ class Category extends Component<IProps> {
                   {categories ? (
                     <ul className="category__list__items">
                       {[...categories].map((category: ICategory, i: number) => {
-                        let categoryUrl = window.location.href + 'categories/' + category.slug;
+                        let categoryUrl = window.location.href + '/categories/' + category.slug;
                         return <li key={i}><Link href={categoryUrl} text={`${category.name} (${categoryUrl})`} size={'medium'} /></li>
                       })}
                     </ul>
