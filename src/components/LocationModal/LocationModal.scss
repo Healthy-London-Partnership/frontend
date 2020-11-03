@@ -12,9 +12,9 @@
   overflow: auto;
   border-radius: 4px;
   outline: none;
-  padding: 20px;
+  padding: space(32);
   width: 100%;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
   box-sizing: border-box;
   border-radius: 10px;
@@ -25,14 +25,11 @@
   }
 
   @include for-phone-only {
+    padding: space(16);
+
     .flex-col {
       margin-bottom: 0;
     }
-  }
-
-  button {
-    margin-top: 0 !important;
-    margin-bottom: space(32) !important;
   }
 
   input {
@@ -54,6 +51,10 @@
   }
 }
 
+.location-modal__close {
+  margin-bottom: space(32);
+}
+
 .location-modal__title {
   margin-bottom: space(12);
 }
@@ -64,19 +65,21 @@
 
 .location-modal__question {
   position: relative;
-  padding: space(16) 0;
-  margin-bottom: space(16) !important;
+  padding: space(16);
+  margin-top: 0 !important;
+  margin-bottom: space(24) !important;
   border: 2px solid $gulf-blue;
   border-radius: 7px;
 
   @include for-phone-only {
+    padding: space(16) !important;
     margin-bottom: space(16) !important;
   }
 
   label {
     display: block;
     margin-bottom: space(8);
-    padding: 0 space(16);
+    padding: 0;
     font-family: $font-primary;
     font-weight: 700;
     font-size: $font-heading-m;
@@ -85,7 +88,7 @@
   input {
     width: 100%;
     height: auto;
-    padding: 0 space(16);
+    padding: 0;
     border: none;
   }
 }

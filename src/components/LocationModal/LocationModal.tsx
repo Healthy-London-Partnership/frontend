@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { inject, observer } from 'mobx-react';
 import UIStore from '../../stores/uiStore';
+import Select from 'react-select';
 
 import './LocationModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,6 +16,11 @@ interface IProps extends RouteComponentProps {
   resultsStore?: ResultsStore;
 }
 
+const radiusOptions = [
+  { value: 5, label: '5km' },
+  { value: 10, label: '10km' },
+]
+
 @inject('uiStore', 'resultsStore')
 @observer
 class LocationModal extends Component<IProps, any> {
@@ -23,6 +29,7 @@ class LocationModal extends Component<IProps, any> {
 
     this.state = {
       postcode: '',
+      radius: 5,
     };
   }
 
@@ -64,7 +71,7 @@ class LocationModal extends Component<IProps, any> {
         shouldCloseOnOverlayClick={true}
       >
         <div className="flex-container">
-          <div className="flex-col flex-col--12 modal__close">
+          <div className="flex-col flex-col--12 location-modal__close modal__close">
             <button onClick={() => uiStore.toggleLocationModal()} aria-label="Close modal">
               Close <FontAwesomeIcon icon="times" />
             </button>
@@ -83,6 +90,13 @@ class LocationModal extends Component<IProps, any> {
                   this.handleInputChange(e.target.value, 'postcode')
                 }
               />
+            </div>
+            <div className="flex-col flex-col--12 modal__question location-modal__question">
+              <label htmlFor="radius">Within a radius of:</label>
+              <Select
+                options={radiusOptions}
+                defaultValue={radiusOptions[0]}
+                isSearchable={false} />
             </div>
             <Button
               size="small"
