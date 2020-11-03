@@ -39,6 +39,7 @@ class LocationModal extends Component<IProps, any> {
     e.preventDefault();
     if(this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
+      resultsStore!.setIsLiveActivity(true);
       this.props.history.push({
         pathname: '/results',
         search: resultsStore!.amendSearch()

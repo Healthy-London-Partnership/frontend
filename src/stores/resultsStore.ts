@@ -29,6 +29,7 @@ export default class ResultsStore {
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable nationalResults: Map<string, IService[]> = new Map();
+  @observable isliveActivity: boolean = false;
   @observable liveActivities: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
@@ -62,6 +63,7 @@ export default class ResultsStore {
     this.order = 'relevance';
     this.results = new Map();
     this.nationalResults = new Map();
+    this.isliveActivity = false;
     this.liveActivities = new Map();
     this.fetched = false;
     this.organisations = [];
@@ -246,10 +248,12 @@ export default class ResultsStore {
       params: {
         'geo[radial]': `${location.lat},${location.lon},5`,
         mode: 'upcoming-sessions',
-        limit: 3,
+        limit: 9,
         page: this.currentPage
       }
     });
+
+    this.totalItems = data['imin:totalItems'];
 
     let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
       return {
@@ -357,6 +361,10 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('search_term', url);
     }
 
+    if (!this.isliveActivity) {
+      url = this.updateQueryStringParameter('is_live_activity', true);
+    }
+
     this.results = new Map();
     this.nationalResults = new Map();
     return url;
@@ -406,6 +414,11 @@ export default class ResultsStore {
   @action	
   toggleIsFree = () => {
     this.is_free = !this.is_free;
+  };
+
+  @action
+  setIsLiveActivity = (setting: boolean) => {
+    this.isliveActivity = setting;
   };
 
   @action	

@@ -18,6 +18,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
     return <Loading />;
   }
 
+  const isLiveActivity = resultsStore.isliveActivity;
   const liveActivities = resultsStore.liveActivities;
   const results = resultsStore.results;
   const nationalResults = resultsStore.nationalResults;
@@ -29,27 +30,12 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
           <div className="flex-container flex-container--justify flex-container--no-padding">
             {(results.size || nationalResults.size) ? (
               <Fragment>
-                {liveActivities && (
-                  [...liveActivities.entries()].map((results, i) => {
-                    const [title, resultsList] = results;
-
-                    return (
-                      <List
-                        key={i}
-                        title={title}
-                        resultsList={resultsList}
-                        resultsStore={resultsStore}
-                      />
-                    );
-                  })
-                )}
-                
-                {results.size > 0 && (
-                  <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
-                    {results.size && (
-                      [...results.entries()].map((results, i) => {
+                {isLiveActivity ? (
+                  <Fragment>
+                    {liveActivities && (
+                      [...liveActivities.entries()].map((results, i) => {
                         const [title, resultsList] = results;
-
+    
                         return (
                           <List
                             key={i}
@@ -60,27 +46,48 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                         );
                       })
                     )}
-                  </div>
-                )}
-                
-                {nationalResults.size > 0 && (
+                  </Fragment>
+                ) : (
                   <Fragment>
-                    <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--standard--6 flex-col--4 results__list__national-results' : 'flex-col flex-col--12'}>
-                      {nationalResults.size && (
-                        [...nationalResults.entries()].map((results, i) => {
-                          const [title, resultsList] = results;
-
-                          return (
-                            <List
-                              key={i}
-                              title={title}
-                              resultsList={resultsList}
-                              resultsStore={resultsStore}
-                            />
-                          );
-                        })
-                      )}
-                    </div>
+                    {results.size > 0 && (
+                      <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
+                        {results.size && (
+                          [...results.entries()].map((results, i) => {
+                            const [title, resultsList] = results;
+    
+                            return (
+                              <List
+                                key={i}
+                                title={title}
+                                resultsList={resultsList}
+                                resultsStore={resultsStore}
+                              />
+                            );
+                          })
+                        )}
+                      </div>
+                    )}
+                    
+                    {nationalResults.size > 0 && (
+                      <Fragment>
+                        <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--standard--6 flex-col--4 results__list__national-results' : 'flex-col flex-col--12'}>
+                          {nationalResults.size && (
+                            [...nationalResults.entries()].map((results, i) => {
+                              const [title, resultsList] = results;
+    
+                              return (
+                                <List
+                                  key={i}
+                                  title={title}
+                                  resultsList={resultsList}
+                                  resultsStore={resultsStore}
+                                />
+                              );
+                            })
+                          )}
+                        </div>
+                      </Fragment>
+                    )}
                   </Fragment>
                 )}
               </Fragment>
