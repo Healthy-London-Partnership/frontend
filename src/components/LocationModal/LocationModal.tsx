@@ -7,11 +7,16 @@ import './LocationModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Input from '../Input';
 import Button from '../Button';
+import ResultsStore from '../../stores/resultsStore';
+import { withRouter, RouteComponentProps } from 'react-router';
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   uiStore?: UIStore;
+  resultsStore?: ResultsStore;
 }
 
+@inject('uiStore', 'resultsStore')
+@observer
 class LocationModal extends Component<IProps, any> {
   constructor(props: IProps) {
     super(props);
@@ -26,6 +31,21 @@ class LocationModal extends Component<IProps, any> {
     this.setState({
       [field]: string,
     });
+  };
+
+  checkValidation(e: React.ChangeEvent<HTMLButtonElement>) {
+    const { resultsStore } = this.props;
+
+    e.preventDefault();
+    if(this.state.postcode) {
+      resultsStore!.postcodeChange(this.state.postcode);
+      this.props.history.push({
+        pathname: '/results',
+        search: resultsStore!.amendSearch()
+      });
+    } else {
+      alert('Please fill in your location for us to find physical activities near you.');
+    }
   };
 
   render() {
@@ -49,7 +69,7 @@ class LocationModal extends Component<IProps, any> {
             </button>
           </div>
           <div className="flex-col flex-col--12 ">
-            <h4 className="modal__title location-modal__title">To find the 'physical activities' that are most relevant to you we would like you to enter your location below:</h4>
+            <h4 className="modal__title location-modal__title">Please enter your location to find physical activities near you:</h4>
           </div>
           <form className="modal__form location-modal__form flex-container flex-container--no-padding flex-container--right">
             <div className="flex-col flex-col--12 modal__question location-modal__question">
@@ -66,9 +86,7 @@ class LocationModal extends Component<IProps, any> {
             <Button
               size="small"
               text="Find Physical Activities"
-              onClick={(e: any) => {
-                
-              }}
+              onClick={(e: React.ChangeEvent<HTMLButtonElement>) => this.checkValidation(e)}
               type="submit"
             />
           </form>
@@ -80,4 +98,4 @@ class LocationModal extends Component<IProps, any> {
 
 Modal.setAppElement('#root');
 
-export default inject('uiStore')(observer(LocationModal));
+export default withRouter(observer(LocationModal));
