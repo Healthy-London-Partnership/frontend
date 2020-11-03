@@ -24,15 +24,30 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
 
   return (
     <Fragment>
-      <main>
-        <div className="flex-container flex-container--justify">
-          <div className="flex-col--tablet--12 flex-col--10">
-            <div className="flex-container flex-container--justify">
-              {(results.size || nationalResults.size) ? (
-                <Fragment>
-                  <div className="flex-col--tablet--12">
-                    {liveActivities && (
-                      [...liveActivities.entries()].map((results, i) => {
+      <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -10px'}}>
+        <div className="flex-col flex-col--12">
+          <div className="flex-container flex-container--justify flex-container--no-padding">
+            {(results.size || nationalResults.size) ? (
+              <Fragment>
+                {liveActivities && (
+                  [...liveActivities.entries()].map((results, i) => {
+                    const [title, resultsList] = results;
+
+                    return (
+                      <List
+                        key={i}
+                        title={title}
+                        resultsList={resultsList}
+                        resultsStore={resultsStore}
+                      />
+                    );
+                  })
+                )}
+                
+                {results.size > 0 && (
+                  <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
+                    {results.size && (
+                      [...results.entries()].map((results, i) => {
                         const [title, resultsList] = results;
 
                         return (
@@ -46,10 +61,13 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                       })
                     )}
                   </div>
-                  {results.size > 0 && (
-                    <div className={nationalResults.size ? 'flex-col--tablet--12 flex-col--8 results__list--has-national-results' : 'flex-col--12'}>
-                      {results.size && (
-                        [...results.entries()].map((results, i) => {
+                )}
+                
+                {nationalResults.size > 0 && (
+                  <Fragment>
+                    <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--standard--6 flex-col--4 results__list__national-results' : 'flex-col flex-col--12'}>
+                      {nationalResults.size && (
+                        [...nationalResults.entries()].map((results, i) => {
                           const [title, resultsList] = results;
 
                           return (
@@ -63,41 +81,21 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                         })
                       )}
                     </div>
-                  )}
-                  {nationalResults.size > 0 && (
-                    <Fragment>
-                      <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--4 results__list__national-results' : 'flex-col--12'}>
-                        {nationalResults.size && (
-                          [...nationalResults.entries()].map((results, i) => {
-                            const [title, resultsList] = results;
-
-                            return (
-                              <List
-                                key={i}
-                                title={title}
-                                resultsList={resultsList}
-                                resultsStore={resultsStore}
-                              />
-                            );
-                          })
-                        )}
-                      </div>
-                    </Fragment>
-                  )}
-                </Fragment>
-              ) : (
-                <div className="results__container">
-                  <h1>
-                    {resultsStore.isPostcodeSearch
-                      ? 'There are currently no service offers available in your area.'
-                      : 'There are currently no service offers available.'}
-                  </h1>
-                </div>
-              )}
-            </div>
+                  </Fragment>
+                )}
+              </Fragment>
+            ) : (
+              <div className="results__container">
+                <h1>
+                  {resultsStore.isPostcodeSearch
+                    ? 'There are currently no service offers available in your area.'
+                    : 'There are currently no service offers available.'}
+                </h1>
+              </div>
+            )}
           </div>
         </div>
-      </main>
+      </div>
 
       <div className="flex-container flex-container--justify pagnation__container">
         {resultsStore.totalItems > resultsStore.itemsPerPage && (	

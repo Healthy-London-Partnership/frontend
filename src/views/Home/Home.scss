@@ -1,0 +1,35 @@
+@import '../../styles/breakpoints.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.home-about {
+  padding: space(120) 0 space(96) 0;
+
+  @include for-phone-only {
+    padding: space(80) space(32) space(56) space(32);
+  }
+
+  &-wrapper {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 0 space(72);
+
+    @include for-phone-only {
+      padding: 0;
+    }
+
+    p {
+      margin-bottom: space(24);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &-title {
+    @include heading-xl;
+    margin-bottom: space(20);
+  }
+}

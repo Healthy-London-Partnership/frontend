@@ -12,6 +12,16 @@ interface IProps extends RouteComponentProps {
 
 const CategoryList: React.FunctionComponent<IProps> = ({ history, categories, covid = false }) => (
   <Fragment>
+    <Button
+      category={true}
+      text="Physical Activity"
+      key="Physical Activity"
+      size="small"
+      icon="running"
+      onClick={() => {
+      }}
+      covid={covid}
+    />
     {categories.map(({ name, id, icon, slug }) => (
       <Button
         category={true}

@@ -179,11 +179,11 @@ export default class ResultsStore {
     }
 
     if (this.category) {
-      params.category = this.category.name;
+      params.category = this.category.slug;
     }
 
     if (this.persona) {
-      params.persona = this.persona.name;
+      params.persona = this.persona.slug;
     }
 
     if (size(this.locationCoords)) {

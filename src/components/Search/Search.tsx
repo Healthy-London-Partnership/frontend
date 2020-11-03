@@ -7,7 +7,6 @@ import SearchStore from '../../stores/searchStore';
 
 import './Search.scss';
 import CategoryList from '../CategoryList';
-import Personas from '../Personas';
 import SearchInput from '../SearchInput';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
@@ -20,10 +19,6 @@ interface IProps extends RouteComponentProps {
 @inject('windowSizeStore', 'cmsStore')
 @observer
 class Search extends React.Component<IProps> {
-  componentWillUnmount() {
-    SearchStore.clear();
-  }
-
   render() {
     const { windowSizeStore, cmsStore } = this.props;
 
@@ -52,11 +47,6 @@ class Search extends React.Component<IProps> {
             </div>
           </form>
         </section>
-        {SearchStore.personas.length && (
-          <section>
-            <Personas personas={SearchStore.personas} />
-          </section>
-        )}
       </Fragment>
     );
   }

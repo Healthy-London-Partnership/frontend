@@ -19,7 +19,11 @@
   margin: 0 auto;
   box-sizing: border-box;
   border-radius: 10px;
-  color: $san-juan;
+  color: $gulf-blue;
+
+  @include for-phone-only {
+    padding: space(20) space(20) space(64);
+  }
 
   .flex-container {
     padding: 0 !important;
@@ -36,7 +40,7 @@
   textarea {
     @include body-m;
     width: 100%;
-    border: 2px solid $san-juan;
+    border: 2px solid $gulf-blue;
     resize: none;
     height: pxtorem(260px);
     padding: space(12) !important;
@@ -44,7 +48,7 @@
   }
 
   a {
-    color: $elm;
+    color: $gulf-blue;
   }
 
   @include for-phone-only {
@@ -64,12 +68,20 @@
 }
 
 .modal__close {
-  color: #1f8275;
+  display: flex;
+  justify-content: flex-end;
   cursor: pointer;
   text-align: right;
 
-  svg {
-    vertical-align: middle;
+  button {
+    display: flex;
+    align-items: center;
+    color: $gulf-blue;
+    cursor: pointer;
+
+    svg {
+      margin-left: space(8);
+    }
   }
 }
 

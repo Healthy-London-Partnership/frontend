@@ -4,10 +4,11 @@
 @import '../../styles/fonts.scss';
 
 .search-result-card {
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
   border-radius: 10px;
-  color: $san-juan;
-  margin: space(8);
+  background-color: $white;
+  color: $gulf-blue;
+  margin: space(10);
   height: max-content;
   cursor: pointer;
   overflow: hidden;
@@ -21,7 +22,7 @@
   }
 
   @include for-tablet-landscape-up {
-    width: 30%;
+    width: calc(33% - 20px);
     margin-bottom: space(16);
   }
 
@@ -119,7 +120,7 @@
 }
 
 .search-result-card__tag--service {
-  background-color: $san-juan;
+  background-color: $gulf-blue;
 }
 
 .search-result-card__tag--group {
@@ -176,7 +177,7 @@
 }
 
 .search-result-card__footer {
-  background-color: $san-juan;
+  background-color: $gulf-blue;
   padding: space(16);
   color: $white;
   text-align: center;

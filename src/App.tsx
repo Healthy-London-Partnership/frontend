@@ -6,7 +6,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider, observer } from 'mobx-react';
 
-import Home from './views/Home';
+import Home from './views/Home/Home';
 import NotFound from './views/NotFound/NotFound';
 import Collections from './views/Collections/Collections';
 import CollectionsCategory from './views/Collections/Category/Category';
@@ -41,6 +41,7 @@ import FeedbackModal from './components/FeedbackModal';
 import Footer from './components/Footer/Footer';
 import MetaData from './components/MetaData';
 import HomeScreenPrompt from './components/HomeScreenPrompt';
+import PublicBetaBanner from './components/PublicBetaBanner';
 
 // add all free font awesome icons to project
 library.add(fas, fab);
@@ -72,30 +73,33 @@ class App extends Component {
         <MetaData />
         <Router>
           <ScrollToTop>
+            <PublicBetaBanner />
             <Header />
-            <Switch>
-              <Route path="/" exact={true} component={Home} />
-              <Route path="/collections" exact={true} component={Collections} />
-              <Route path="/collections/categories/:category" component={CollectionsCategory} />
-              <Route path="/collections/personas/:persona" component={CollectionsPersona} />
-              <Route path="/taxonomies/categories/:category" component={TaxonomiesCategory} />
-              <Route path="/taxonomies/organisations/:organisation" component={TaxonomiesOrganisation} />
-              <Route path="/results" component={Results} />
-              <Route path="/activities/:activity" component={Service} />
-              <Route path="/services/:service" component={Service} />
-              <Route path="/favourites" component={Favourites} />
-              <Route path="/referral" component={Referral} />
-              <Route path="/about-connect" component={AboutConnect} />
-              <Route path="/providers" component={Providers} />
-              <Route path="/supporters" component={Supporters} />
-              <Route path="/funders" component={Funders} />
-              <Route path="/contact" component={Contact} />
-              <Route path="/privacy-policy" component={Privacy} />
-              <Route path="/terms-and-conditions" component={Terms} />
-              <Route path="/duty-to-refer" component={DutyToRefer} />
+            <main className="main">
+              <Switch>
+                <Route path="/" exact={true} component={Home} />
+                <Route path="/collections" exact={true} component={Collections} />
+                <Route path="/collections/categories/:category" component={CollectionsCategory} />
+                <Route path="/collections/personas/:persona" component={CollectionsPersona} />
+                <Route path="/taxonomies/categories/:category" component={TaxonomiesCategory} />
+                <Route path="/taxonomies/organisations/:organisation" component={TaxonomiesOrganisation} />
+                <Route path="/results" component={Results} />
+                <Route path="/activities/:activity" component={Service} />
+                <Route path="/services/:service" component={Service} />
+                <Route path="/favourites" component={Favourites} />
+                <Route path="/referral" component={Referral} />
+                <Route path="/about-connect" component={AboutConnect} />
+                <Route path="/providers" component={Providers} />
+                <Route path="/supporters" component={Supporters} />
+                <Route path="/funders" component={Funders} />
+                <Route path="/contact" component={Contact} />
+                <Route path="/privacy-policy" component={Privacy} />
+                <Route path="/terms-and-conditions" component={Terms} />
+                <Route path="/duty-to-refer" component={DutyToRefer} />
 
-              <Route component={NotFound} />
-            </Switch>
+                <Route component={NotFound} />
+              </Switch>
+            </main>
             <FeedbackModal />
             <HomeScreenPrompt />
             <Footer />
