@@ -39,6 +39,7 @@ export default class ResultsStore {
   @observable locationCoords: IGeoLocation | {} = {};
   @observable fetched: boolean = false;
   @observable view: 'grid' | 'map' = 'grid';
+  @observable radius: number = 5;
 
   @computed
   get isKeywordSearch() {
@@ -73,6 +74,7 @@ export default class ResultsStore {
     this.postcode = '';
     this.locationCoords = {};
     this.view = 'grid';
+    this.radius = 5;
   }
 
   @action
@@ -155,6 +157,14 @@ export default class ResultsStore {
 
       if (value === 'postcode') {
         this.postcode = key;
+      }
+
+      if (value === 'live_activity') {
+        this.isLiveActivity = key;
+      }
+
+      if (value === 'radius') {
+        this.radius = key;
       }
     });
 
@@ -246,7 +256,7 @@ export default class ResultsStore {
         'X-API-KEY': `${iminApiKey}`
       },
       params: {
-        'geo[radial]': `${location.lat},${location.lon},5`,
+        'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
         mode: 'upcoming-sessions',
         limit: 9,
         page: this.currentPage
@@ -326,6 +336,11 @@ export default class ResultsStore {
     this.postcode = postcode.replace(' ', '');
   };
 
+  @action
+  radiusChange = (radius: number) => {
+    this.radius = radius;
+  };
+
   amendSearch = () => {
     let url = window.location.search;
 
@@ -361,8 +376,20 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('search_term', url);
     }
 
+    if (this.isLiveActivity) {
+      url = this.updateQueryStringParameter('live_activity', this.isLiveActivity, url);
+    }
+
     if (!this.isLiveActivity) {
-      url = this.updateQueryStringParameter('is_live_activity', true);
+      url = this.removeQueryStringParameter('live_activity', url);
+    }
+
+    if (this.radius) {
+      url = this.updateQueryStringParameter('radius', this.radius, url);
+    }
+
+    if (!this.radius) {
+      url = this.removeQueryStringParameter('radius', url);
     }
 
     this.results = new Map();

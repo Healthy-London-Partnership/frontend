@@ -25,7 +25,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
 
   return (
     <Fragment>
-      <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -10px'}}>
+      <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -16px'}}>
         <div className="flex-col flex-col--12">
           <div className="flex-container flex-container--justify flex-container--no-padding">
             {(results.size || nationalResults.size) ? (

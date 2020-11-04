@@ -11,12 +11,27 @@ import MapView from './MapView';
 
 import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
+import Select from '../../components/Select';
 
 interface IProps {
   location: Location;
   resultsStore: ResultStore;
   history: History;
 }
+
+const activityTypeOptions = [
+  {
+    value: 'activity-1',
+    text: 'Activity 1'
+  }
+]
+
+const activitySortOptions = [
+  {
+    value: 'nearest',
+    text: 'Nearest'
+  }
+]
 
 class Results extends Component<IProps> {
   componentDidMount() {
@@ -51,13 +66,38 @@ class Results extends Component<IProps> {
         <div className="results__list flex-container flex-container--justify">
           <div className="results__list__inner flex-col--tablet--12 flex-col--10">
             <div className="results__filters flex-container flex-container--no-padding flex-container--align-center flex-container--space">
-              <div className="flex-col flex-col--6">
+              <div className="flex-col results__filters__col">
                 {!!resultsStore.results.size && !resultsStore.loading && (	
                   <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>	
                 )}	
               </div>	
-              <div className="flex-col flex-col--6">	
+              <div className="flex-col results__filters__col">
+              {resultsStore.isLiveActivity ? (
+                <div className="flex-container flex-container--no-padding flex-container--no-space results__filters">
+                  <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">
+                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type</label>
+                    <Select
+                      className="results__filters__select"
+                      options={activityTypeOptions}
+                      id="activity_type"
+                      placeholder="Select an activity type"
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                    />
+                  </div>
+                  <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">
+                    <label htmlFor="activity_type" className="results__filters__heading">Sort by</label>
+                    <Select
+                      className="results__filters__select"
+                      options={activitySortOptions}
+                      id="sort_by"
+                      placeholder="Select sorting method"
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                    />
+                  </div>
+                </div>
+              ) : (
                 <ViewFilter />
+              )}
               </div>
             </div>
             {resultsStore.view === 'grid' ? (	

@@ -41,12 +41,14 @@ class LocationModal extends Component<IProps, any> {
   };
 
   checkValidation(e: React.ChangeEvent<HTMLButtonElement>) {
-    const { resultsStore } = this.props;
+    const { resultsStore, uiStore } = this.props;
 
     e.preventDefault();
     if(this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
+      resultsStore!.radiusChange(this.state.radius);
       resultsStore!.setIsLiveActivity(true);
+      uiStore!.toggleLocationModal();
       this.props.history.push({
         pathname: '/results',
         search: resultsStore!.amendSearch()
@@ -98,7 +100,9 @@ class LocationModal extends Component<IProps, any> {
                 options={activityRadiusOptions}
                 id="activity_radius"
                 placeholder="Select a radius"
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  this.handleInputChange(e.target.value, 'radius')
+                }}
               />
             </div>
             <Button

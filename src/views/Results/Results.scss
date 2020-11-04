@@ -183,16 +183,16 @@
 }
 
 .results__filters {
-  margin-top: space(48) !important;
-
-  @include for-phone-only {
-    margin-top: space(32) !important;
-  }
+  margin-bottom: space(24) !important;
 
   &__col {
     padding-right: space(24);
 
     @include for-phone-only {
+      padding-right: 0;
+    }
+
+    &:last-child {
       padding-right: 0;
     }
   }
