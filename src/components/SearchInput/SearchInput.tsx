@@ -28,6 +28,7 @@ interface IProps extends RouteComponentProps {
 interface IState {
   keyword: string;
   postcode: string;
+  radius: number;
   locationCoords: any;
 }
 
@@ -45,12 +46,13 @@ class SearchInput extends React.Component<IProps, IState> {
     this.state = {
       keyword: '',
       postcode: '',
+      radius: 5,
       locationCoords: null,
     };
   }
 
   componentDidMount() {
-    const { search_term, postcode } = queryString.parse(this.props.location.search);
+    const { search_term, postcode, radius } = queryString.parse(this.props.location.search);
     const { resultsStore } = this.props;
 
     if (!resultsStore) {
@@ -68,6 +70,12 @@ class SearchInput extends React.Component<IProps, IState> {
         postcode: postcode as string,
       });
     }
+
+    if (radius) {
+      this.setState({
+        radius: Number(radius),
+      })
+    }
   }
 
   handleInputChange = (string: string, field: string) => {
@@ -84,6 +92,7 @@ class SearchInput extends React.Component<IProps, IState> {
     if(this.state.keyword || this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
       resultsStore!.handleKeywordChange(this.state.keyword);
+      resultsStore!.radiusChange(this.state.radius);
       this.props.history.push({
         pathname: '/results',
         search: resultsStore!.amendSearch()
@@ -189,7 +198,9 @@ class SearchInput extends React.Component<IProps, IState> {
                   selected={resultsStore.radius}
                   id="activity_radius"
                   placeholder="Select a radius"
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    this.handleInputChange(e.target.value, 'radius');
+                  }}
                 />
               </div>
             }
