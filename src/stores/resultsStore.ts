@@ -29,7 +29,7 @@ export default class ResultsStore {
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable nationalResults: Map<string, IService[]> = new Map();
-  @observable isliveActivity: boolean = false;
+  @observable isLiveActivity: boolean = false;
   @observable liveActivities: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
@@ -63,7 +63,7 @@ export default class ResultsStore {
     this.order = 'relevance';
     this.results = new Map();
     this.nationalResults = new Map();
-    this.isliveActivity = false;
+    this.isLiveActivity = false;
     this.liveActivities = new Map();
     this.fetched = false;
     this.organisations = [];
@@ -361,7 +361,7 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('search_term', url);
     }
 
-    if (!this.isliveActivity) {
+    if (!this.isLiveActivity) {
       url = this.updateQueryStringParameter('is_live_activity', true);
     }
 
@@ -418,7 +418,7 @@ export default class ResultsStore {
 
   @action
   setIsLiveActivity = (setting: boolean) => {
-    this.isliveActivity = setting;
+    this.isLiveActivity = setting;
   };
 
   @action	

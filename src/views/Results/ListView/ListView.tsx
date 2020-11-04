@@ -18,7 +18,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
     return <Loading />;
   }
 
-  const isLiveActivity = resultsStore.isliveActivity;
+  const isLiveActivity = resultsStore.isLiveActivity;
   const liveActivities = resultsStore.liveActivities;
   const results = resultsStore.results;
   const nationalResults = resultsStore.nationalResults;

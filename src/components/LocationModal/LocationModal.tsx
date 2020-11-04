@@ -16,7 +16,7 @@ interface IProps extends RouteComponentProps {
   resultsStore?: ResultsStore;
 }
 
-const radiusOptions = [
+const activityRadiusOptions = [
   { value: 5, text: '5 miles' },
   { value: 10, text: '10 miles' },
 ]
@@ -92,11 +92,11 @@ class LocationModal extends Component<IProps, any> {
               />
             </div>
             <div className="flex-col flex-col--12 modal__question location-modal__question">
-              <label htmlFor="radius">Within a radius of:</label>
+              <label htmlFor="activity_radius">Within a radius of:</label>
               <Select
                 className="location-modal__select"
-                options={radiusOptions}
-                id="activity-radius"
+                options={activityRadiusOptions}
+                id="activity_radius"
                 placeholder="Select a radius"
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
               />
