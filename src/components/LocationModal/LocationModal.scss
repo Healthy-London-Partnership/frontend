@@ -92,3 +92,11 @@
     border: none;
   }
 }
+
+.location-modal__select {
+  display: block;
+  padding: 0 !important;
+  border: none !important;
+  max-width: unset !important;
+  background-position: 100% 50% !important;
+}

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { inject, observer } from 'mobx-react';
 import UIStore from '../../stores/uiStore';
-import Select from 'react-select';
 
 import './LocationModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +9,7 @@ import Input from '../Input';
 import Button from '../Button';
 import ResultsStore from '../../stores/resultsStore';
 import { withRouter, RouteComponentProps } from 'react-router';
+import Select from '../Select';
 
 interface IProps extends RouteComponentProps {
   uiStore?: UIStore;
@@ -17,8 +17,8 @@ interface IProps extends RouteComponentProps {
 }
 
 const radiusOptions = [
-  { value: 5, label: '5km' },
-  { value: 10, label: '10km' },
+  { value: 5, text: '5 miles' },
+  { value: 10, text: '10 miles' },
 ]
 
 @inject('uiStore', 'resultsStore')
@@ -94,9 +94,12 @@ class LocationModal extends Component<IProps, any> {
             <div className="flex-col flex-col--12 modal__question location-modal__question">
               <label htmlFor="radius">Within a radius of:</label>
               <Select
+                className="location-modal__select"
                 options={radiusOptions}
-                defaultValue={radiusOptions[0]}
-                isSearchable={false} />
+                id="activity-radius"
+                placeholder="Select a radius"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+              />
             </div>
             <Button
               size="small"

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import './Select.scss';
 
 interface IOption {
-  value: string;
+  value: any;
   text: string;
 }
 
