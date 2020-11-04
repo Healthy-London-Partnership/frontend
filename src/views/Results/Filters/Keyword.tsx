@@ -80,8 +80,8 @@ class Keyword extends Component<IProps, IState> {
               <SearchInput showButtonText={false} keywordFieldLabel="Keyword" postcodeFieldLabel="Location" />
             </div>
           </div>
-          <div className="flex-col--2 flex-col--tablet--12">
-            {!resultsStore.isLiveActivity ? (
+          {!resultsStore.isLiveActivity &&
+            <div className="flex-col--2 flex-col--tablet--12">
               <Checkbox	
                 id="is_free"	
                 label="<strong>Cost</strong><br>Free"
@@ -95,18 +95,8 @@ class Keyword extends Component<IProps, IState> {
                 }}	
                 className="results__keyword-edit-checkbox"	
               />
-            ) : (
-              <Checkbox	
-                id="virtual_activities"	
-                label="<strong>Virtual</strong><br>Activities"
-                checked={false}	
-                onChange={() => {	
-                  
-                }}	
-                className="results__filters__checkbox"	
-              />
-            )}
-          </div>
+            </div>
+          }
         </div>
       </form>
     );

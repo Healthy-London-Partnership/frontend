@@ -12,6 +12,7 @@ import MapView from './MapView';
 import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
 import Select from '../../components/Select';
+import Checkbox from '../../components/Checkbox';
 
 interface IProps {
   location: Location;
@@ -28,8 +29,20 @@ const activityTypeOptions = [
 
 const activitySortOptions = [
   {
-    value: 'nearest',
+    value: 'upcoming-sessions',
+    text: 'Upcoming Sessions'
+  },
+  {
+    value: 'discovery-geo',
     text: 'Nearest'
+  },
+  {
+    value: 'discovery-price-asc',
+    text: 'Price low to high'
+  },
+  {
+    value: 'discovery-price-desc',
+    text: 'Price high to low'
   }
 ]
 
@@ -73,9 +86,9 @@ class Results extends Component<IProps> {
               </div>	
               <div className="flex-col results__filters__col">
               {resultsStore.isLiveActivity ? (
-                <div className="flex-container flex-container--no-padding flex-container--no-space results__filters">
-                  <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">
-                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type</label>
+                <div className="flex-container flex-container--no-padding flex-container--no-space flex-container--align-bottom results__filters">
+                  <div className="flex-col flex-col--tablet--6 flex-col--standard--4 results__filters__col">
+                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Yoga</small></label>
                     <Select
                       className="results__filters__select"
                       options={activityTypeOptions}
@@ -84,7 +97,7 @@ class Results extends Component<IProps> {
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
                     />
                   </div>
-                  <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">
+                  <div className="flex-col flex-col--tablet--6 flex-col--standard--4 results__filters__col">
                     <label htmlFor="activity_type" className="results__filters__heading">Sort by</label>
                     <Select
                       className="results__filters__select"
@@ -92,6 +105,17 @@ class Results extends Component<IProps> {
                       id="sort_by"
                       placeholder="Select sorting method"
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                    />
+                  </div>
+                  <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">
+                    <Checkbox	
+                      id="virtual_activities"	
+                      label="<strong>Virtual</strong><br>Activities"
+                      checked={false}	
+                      onChange={() => {	
+                        
+                      }}	
+                      className="results__filters__checkbox"	
                     />
                   </div>
                 </div>

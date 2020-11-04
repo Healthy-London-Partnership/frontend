@@ -186,6 +186,7 @@ class SearchInput extends React.Component<IProps, IState> {
                 <Select
                   className="results__filters__select results__filters__select--main"
                   options={activityRadiusOptions}
+                  selected={resultsStore.radius}
                   id="activity_radius"
                   placeholder="Select a radius"
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}

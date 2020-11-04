@@ -207,11 +207,17 @@
     @include for-phone-only {
       margin-bottom: space(8);
     }
+
+    small {
+      color: $lynch;
+      font-size: $font-body-xs;
+    }
   }
 
   &__select {
     display: block;
     border-radius: 7px;
+    padding: space(10) space(48) space(10) space(16);
 
     &--main {
       padding: 0 !important;
@@ -222,9 +228,6 @@
   }
 
   &__checkbox {
-    margin-bottom: space(12);
-    padding-left: space(16);
-
     label {
       flex-direction: row-reverse;
 
