@@ -20,6 +20,10 @@ interface IProps {
   history: History;
 }
 
+interface IState {
+  sortBy: string;
+}
+
 const activityTypeOptions = [
   {
     value: 'activity-1',
@@ -46,11 +50,23 @@ const activitySortOptions = [
   }
 ]
 
-class Results extends Component<IProps> {
+class Results extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      sortBy: 'upcoming-sessions',
+    };
+  }
+
   componentDidMount() {
     const { resultsStore } = this.props;
 
     resultsStore.getSearchTerms();
+
+    this.setState({
+      sortBy: resultsStore.sortBy,
+    });
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -60,6 +76,13 @@ class Results extends Component<IProps> {
       resultsStore.getSearchTerms();
     }
   }
+
+  handleInputChange = (string: string, field: string) => {
+    // @ts-ignore
+    this.setState({
+      [field]: string,
+    });
+  };
 
   render() {
     const { resultsStore, history } = this.props;
@@ -104,7 +127,14 @@ class Results extends Component<IProps> {
                       options={activitySortOptions}
                       id="sort_by"
                       placeholder="Select sorting method"
-                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                      selected={resultsStore.sortBy}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        resultsStore!.setSortBy(e.target.value);
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch()
+                        });
+                      }}
                     />
                   </div>
                   <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">

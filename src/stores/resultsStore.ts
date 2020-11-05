@@ -40,6 +40,7 @@ export default class ResultsStore {
   @observable fetched: boolean = false;
   @observable view: 'grid' | 'map' = 'grid';
   @observable radius: number = 5;
+  @observable sortBy: string = 'upcoming-sessions';
 
   @computed
   get isKeywordSearch() {
@@ -75,6 +76,7 @@ export default class ResultsStore {
     this.locationCoords = {};
     this.view = 'grid';
     this.radius = 5;
+    this.sortBy = 'upcoming-sessions';
   }
 
   @action
@@ -165,6 +167,10 @@ export default class ResultsStore {
 
       if (value === 'radius') {
         this.radius = key;
+      }
+
+      if (value === 'sort_by') {
+        this.sortBy = key;
       }
     });
 
@@ -257,7 +263,7 @@ export default class ResultsStore {
       },
       params: {
         'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
-        mode: 'upcoming-sessions',
+        mode: this.sortBy,
         limit: 9,
         page: this.currentPage
       }
@@ -392,6 +398,14 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('radius', url);
     }
 
+    if (this.sortBy) {
+      url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
+    }
+
+    if (!this.sortBy) {
+      url = this.removeQueryStringParameter('sort_by', url);
+    }
+
     this.results = new Map();
     this.nationalResults = new Map();
     return url;
@@ -428,15 +442,6 @@ export default class ResultsStore {
   toggleView = (view: 'map' | 'grid') => {	
     this.view = view;
   };
-
-  @action
-  orderResults = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.order = e.target.value as 'relevance' | 'distance';
-    this.results = new Map();
-    this.nationalResults = new Map();
-
-    this.setParams();
-  };
   
   @action	
   toggleIsFree = () => {
@@ -446,6 +451,11 @@ export default class ResultsStore {
   @action
   setIsLiveActivity = (setting: boolean) => {
     this.isLiveActivity = setting;
+  };
+
+  @action
+  setSortBy = (setting: string) => {
+    this.sortBy = setting;
   };
 
   @action	
