@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { History } from 'history';
+import get from 'lodash/get';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
@@ -140,9 +141,13 @@ class Results extends Component<IProps, IState> {
                     <Checkbox	
                       id="virtual_activities"	
                       label="<strong>Show virtual activities only</strong><br>e.g. Zoom classes"
-                      checked={false}	
+                      checked={get(resultsStore, 'isVirtual', false)}
                       onChange={() => {	
-                        
+                        resultsStore!.toggleIsVirtual();
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch()
+                        });
                       }}	
                       className="results__filters__checkbox"	
                     />

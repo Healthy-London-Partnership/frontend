@@ -41,6 +41,7 @@ export default class ResultsStore {
   @observable view: 'grid' | 'map' = 'grid';
   @observable radius: number = 5;
   @observable sortBy: string = 'upcoming-sessions';
+  @observable isVirtual: boolean = false;
 
   @computed
   get isKeywordSearch() {
@@ -77,6 +78,7 @@ export default class ResultsStore {
     this.view = 'grid';
     this.radius = 5;
     this.sortBy = 'upcoming-sessions';
+    this.isVirtual = false;
   }
 
   @action
@@ -172,6 +174,10 @@ export default class ResultsStore {
       if (value === 'sort_by') {
         this.sortBy = key;
       }
+
+      if (value === 'is_virtual') {
+        this.isVirtual = key;
+      }
     });
 
     if (this.postcode) {
@@ -265,7 +271,8 @@ export default class ResultsStore {
         'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
         mode: this.sortBy,
         limit: 9,
-        page: this.currentPage
+        page: this.currentPage,
+        isVirtual: this.isVirtual ? this.isVirtual : null,
       }
     });
 
@@ -406,6 +413,14 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('sort_by', url);
     }
 
+    if (this.isVirtual) {
+      url = this.updateQueryStringParameter('is_virtual', this.isVirtual, url);
+    }
+
+    if (!this.isVirtual) {
+      url = this.removeQueryStringParameter('is_virtual', url);
+    }
+
     this.results = new Map();
     this.nationalResults = new Map();
     return url;
@@ -456,6 +471,11 @@ export default class ResultsStore {
   @action
   setSortBy = (setting: string) => {
     this.sortBy = setting;
+  };
+
+  @action	
+  toggleIsVirtual = () => {
+    this.isVirtual = !this.isVirtual;
   };
 
   @action	
