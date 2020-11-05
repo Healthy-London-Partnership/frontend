@@ -166,17 +166,19 @@ export default class ResultsStore {
       if (value === 'live_activity') {
         this.isLiveActivity = key;
       }
-
-      if (value === 'radius') {
-        this.radius = key;
-      }
-
-      if (value === 'sort_by') {
-        this.sortBy = key;
-      }
-
-      if (value === 'is_virtual') {
-        this.isVirtual = key;
+      
+      if(this.isLiveActivity) {
+        if (value === 'radius') {
+          this.radius = key;
+        }
+  
+        if (value === 'sort_by') {
+          this.sortBy = key;
+        }
+  
+        if (value === 'is_virtual') {
+          this.isVirtual = key;
+        }
       }
     });
 
@@ -254,7 +256,7 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
-    if(params.location) {
+    if(this.isLiveActivity && params.location) {
       this.fetchLiveActivities(params.location);
     }
 
@@ -397,28 +399,30 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('live_activity', url);
     }
 
-    if (this.radius) {
-      url = this.updateQueryStringParameter('radius', this.radius, url);
-    }
-
-    if (!this.radius) {
-      url = this.removeQueryStringParameter('radius', url);
-    }
-
-    if (this.sortBy) {
-      url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
-    }
-
-    if (!this.sortBy) {
-      url = this.removeQueryStringParameter('sort_by', url);
-    }
-
-    if (this.isVirtual) {
-      url = this.updateQueryStringParameter('is_virtual', this.isVirtual, url);
-    }
-
-    if (!this.isVirtual) {
-      url = this.removeQueryStringParameter('is_virtual', url);
+    if(this.isLiveActivity) {
+      if (this.radius) {
+        url = this.updateQueryStringParameter('radius', this.radius, url);
+      }
+  
+      if (!this.radius) {
+        url = this.removeQueryStringParameter('radius', url);
+      }
+  
+      if (this.sortBy) {
+        url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
+      }
+  
+      if (!this.sortBy) {
+        url = this.removeQueryStringParameter('sort_by', url);
+      }
+  
+      if (this.isVirtual) {
+        url = this.updateQueryStringParameter('is_virtual', this.isVirtual, url);
+      }
+  
+      if (!this.isVirtual) {
+        url = this.removeQueryStringParameter('is_virtual', url);
+      }
     }
 
     this.results = new Map();
