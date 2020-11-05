@@ -21,17 +21,6 @@ interface IProps {
   history: History;
 }
 
-interface IState {
-  sortBy: string;
-}
-
-const activityTypeOptions = [
-  {
-    value: 'activity-1',
-    text: 'Activity 1'
-  }
-]
-
 const activitySortOptions = [
   {
     value: 'upcoming-sessions',
@@ -51,12 +40,12 @@ const activitySortOptions = [
   }
 ]
 
-class Results extends Component<IProps, IState> {
+class Results extends Component<IProps> {
   constructor(props: IProps) {
     super(props);
 
     this.state = {
-      sortBy: 'upcoming-sessions',
+      activityTypes: null,
     };
   }
 
@@ -64,10 +53,7 @@ class Results extends Component<IProps, IState> {
     const { resultsStore } = this.props;
 
     resultsStore.getSearchTerms();
-
-    this.setState({
-      sortBy: resultsStore.sortBy,
-    });
+    resultsStore.getActivityTypes();
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -75,6 +61,7 @@ class Results extends Component<IProps, IState> {
       const { resultsStore } = this.props;
       resultsStore.clear();
       resultsStore.getSearchTerms();
+      resultsStore.getActivityTypes();
     }
   }
 
@@ -114,14 +101,23 @@ class Results extends Component<IProps, IState> {
                     <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Yoga</small></label>
                     <Select
                       className="results__filters__select"
-                      options={activityTypeOptions}
+                      options={resultsStore.activityTypes}
                       id="activity_type"
-                      placeholder="Select an activity type"
-                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
+                      placeholder="Select activity type"
+                      selected={resultsStore.activityType}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        resultsStore!.setActivityType(e.target.value);
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch()
+                        });
+                        console.log(resultsStore.activityType);
+                      }}
                     />
                   </div>
                   <div className="flex-col results__filters__col">
-                    <label htmlFor="activity_type" className="results__filters__heading">Sort by</label>
+                    <label htmlFor="sort_by" className="results__filters__heading">Sort by</label>
+                    
                     <Select
                       className="results__filters__select"
                       options={activitySortOptions}

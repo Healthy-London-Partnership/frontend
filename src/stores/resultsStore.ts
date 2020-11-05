@@ -16,6 +16,8 @@ import {
 
 import { queryRegex, querySeparator } from '../utils/utils';
 
+const skos = require('@openactive/skos');
+
 export default class ResultsStore {
   @observable keyword: string = '';
   @observable category: any;
@@ -40,6 +42,8 @@ export default class ResultsStore {
   @observable fetched: boolean = false;
   @observable view: 'grid' | 'map' = 'grid';
   @observable radius: number = 5;
+  @observable activityTypes: [] | null = [];
+  @observable activityType: string = '';
   @observable sortBy: string = 'upcoming-sessions';
   @observable isVirtual: boolean = false;
 
@@ -77,6 +81,8 @@ export default class ResultsStore {
     this.locationCoords = {};
     this.view = 'grid';
     this.radius = 5;
+    this.activityTypes = [];
+    this.activityType = '';
     this.sortBy = 'upcoming-sessions';
     this.isVirtual = false;
   }
@@ -134,6 +140,30 @@ export default class ResultsStore {
       .catch(error => console.error(error));
   };
 
+  @action
+  getActivityTypes = async () => {
+    const { data } = await axios.get("https://openactive.io/activity-list/activity-list.jsonld");
+    let scheme = new skos.ConceptScheme(data);
+
+    this.activityTypes = this.renderTree(scheme.getTopConcepts(), 1, []);
+  };
+
+  renderTree = (concepts: any, level: any, output: any) => {
+    concepts.forEach((concept: any) => {
+      let label = concept.prefLabel;
+      
+      if (concept.altLabel && concept.altLabel.length > 0) {
+        label = label + ' / ' + concept.altLabel.join(' / ')
+      }
+
+      output.push({
+        value: concept.id.split('#')[1],
+        text: label
+      });
+    });
+    return output;
+  };
+
   getSearchTerms = () => {
     const searchTerms = queryString.parse(window.location.search);
 
@@ -166,19 +196,21 @@ export default class ResultsStore {
       if (value === 'live_activity') {
         this.isLiveActivity = key;
       }
-      
-      if(this.isLiveActivity) {
-        if (value === 'radius') {
-          this.radius = key;
-        }
-  
-        if (value === 'sort_by') {
-          this.sortBy = key;
-        }
-  
-        if (value === 'is_virtual') {
-          this.isVirtual = key;
-        }
+
+      if (value === 'radius') {
+        this.radius = key;
+      }
+
+      if (value === 'activity_type') {
+        this.activityType = key;
+      }
+
+      if (value === 'sort_by') {
+        this.sortBy = key;
+      }
+
+      if (value === 'is_virtual') {
+        this.isVirtual = key;
       }
     });
 
@@ -274,35 +306,38 @@ export default class ResultsStore {
         mode: this.sortBy,
         limit: 9,
         page: this.currentPage,
+        activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
         isVirtual: this.isVirtual ? this.isVirtual : null,
       }
     });
 
     this.totalItems = data['imin:totalItems'];
-
-    let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
-      return {
-        contact_name: activity.organizer.name ? activity.organizer.name : null,
-        contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
-        description: activity.description ? activity.description : null,
-        gallery_items: activity.image ? activity.image : null,
-        has_logo: activity.image ? true : false,
-        logo_url: activity.image ? activity.image[0].url : null,
-        id: activity.identifier ? activity.identifier : null,
-        intro: activity.description ? this.truncateString(activity.description, 150) : null,
-        is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
-        name: activity.name ? activity.name : null,
-        open_active: true,
-        organisation_id: activity.organizer ? activity.organizer.id : null,
-        organisation: activity.organizer ? activity.organizer.name : null,
-        service_locations: [],
-        slug: activity.identifier ? activity.identifier : null,
-        type: 'activity',
-        video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
-      };
-    });
-
-    this.liveActivities.set('Live Activities', liveActivitiesMapped);
+    
+    if(this.totalItems > 0) {
+      let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
+        return {
+          contact_name: activity.organizer.name ? activity.organizer.name : null,
+          contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
+          description: activity.description ? activity.description : null,
+          gallery_items: activity.image ? activity.image : null,
+          has_logo: activity.image ? true : false,
+          logo_url: activity.image ? activity.image[0].url : null,
+          id: activity.identifier ? activity.identifier : null,
+          intro: activity.description ? this.truncateString(activity.description, 150) : null,
+          is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
+          name: activity.name ? activity.name : null,
+          open_active: true,
+          organisation_id: activity.organizer ? activity.organizer.id : null,
+          organisation: activity.organizer ? activity.organizer.name : null,
+          service_locations: [],
+          slug: activity.identifier ? activity.identifier : null,
+          type: 'activity',
+          video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
+        };
+      });
+  
+      this.liveActivities.set('Live Activities', liveActivitiesMapped); 
+    }
   };
 
   @action
@@ -407,6 +442,14 @@ export default class ResultsStore {
       if (!this.radius) {
         url = this.removeQueryStringParameter('radius', url);
       }
+
+      if (this.activityType) {
+        url = this.updateQueryStringParameter('activity_type', this.activityType, url);
+      }
+  
+      if (!this.activityType) {
+        url = this.removeQueryStringParameter('activity_type', url);
+      }
   
       if (this.sortBy) {
         url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
@@ -472,8 +515,11 @@ export default class ResultsStore {
     this.isLiveActivity = setting;
   };
 
-  @action
-  setSortBy = (setting: string) => {
+  @action setActivityType = (activity: string) => {
+    this.activityType = activity;
+  };
+
+  @action setSortBy = (setting: string) => {
     this.sortBy = setting;
   };
 
