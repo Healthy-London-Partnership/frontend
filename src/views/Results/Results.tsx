@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { History } from 'history';
 
@@ -101,16 +101,15 @@ class Results extends Component<IProps, IState> {
 
         <div className="results__list flex-container flex-container--justify">
           <div className="results__list__inner flex-col--tablet--12 flex-col--10">
-            <div className="results__filters flex-container flex-container--no-padding flex-container--align-center flex-container--space">
-              <div className="flex-col results__filters__col">
-                {!!resultsStore.results.size && !resultsStore.loading && (	
-                  <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>	
-                )}	
-              </div>	
-              <div className="flex-col results__filters__col">
+            <div
+              className="results__filters flex-container flex-container--no-padding"
+              style={{
+                alignItems: resultsStore.isLiveActivity ? 'flex-end' : 'center',
+                justifyContent: resultsStore.isLiveActivity ? 'flex-start' : 'space-between'
+              }}>
               {resultsStore.isLiveActivity ? (
-                <div className="flex-container flex-container--no-padding flex-container--no-space flex-container--align-bottom results__filters">
-                  <div className="flex-col flex-col--tablet--6 flex-col--standard--4 results__filters__col">
+                <Fragment>
+                  <div className="flex-col results__filters__col">
                     <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Yoga</small></label>
                     <Select
                       className="results__filters__select"
@@ -120,7 +119,7 @@ class Results extends Component<IProps, IState> {
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { }}
                     />
                   </div>
-                  <div className="flex-col flex-col--tablet--6 flex-col--standard--4 results__filters__col">
+                  <div className="flex-col results__filters__col">
                     <label htmlFor="activity_type" className="results__filters__heading">Sort by</label>
                     <Select
                       className="results__filters__select"
@@ -137,10 +136,10 @@ class Results extends Component<IProps, IState> {
                       }}
                     />
                   </div>
-                  <div className="flex-col flex-col--tablet--6 flex-col--standard--3 results__filters__col">
+                  <div className="flex-col results__filters__col">
                     <Checkbox	
                       id="virtual_activities"	
-                      label="<strong>Virtual</strong><br>Activities"
+                      label="<strong>Show virtual activities only</strong><br>e.g. Zoom classes"
                       checked={false}	
                       onChange={() => {	
                         
@@ -148,10 +147,16 @@ class Results extends Component<IProps, IState> {
                       className="results__filters__checkbox"	
                     />
                   </div>
-                </div>
+                </Fragment>
               ) : (
-                <ViewFilter />
+                <div className="flex-col results__filters__col">
+                  <ViewFilter />
+                </div>
               )}
+              <div className="flex-col results__filters__col" style={{width: resultsStore.isLiveActivity ? '100%' : 'auto'}}>
+                {!!resultsStore.results.size && !resultsStore.loading && (	
+                  <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>	
+                )}	
               </div>
             </div>
             {resultsStore.view === 'grid' ? (	

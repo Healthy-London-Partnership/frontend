@@ -142,6 +142,7 @@
 
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   margin-top: space(48);
   list-style: none;
 
@@ -187,9 +188,11 @@
 
   &__col {
     padding-right: space(24);
+    margin-bottom: space(24);
 
     @include for-phone-only {
       padding-right: 0;
+      margin-bottom: space(20) !important;
     }
 
     &:last-child {
@@ -234,8 +237,6 @@
       span {
         width: 52px !important;
         height: 52px !important;
-        margin-left: 10px !important;
-        margin-right: 0;
       }
 
       svg {

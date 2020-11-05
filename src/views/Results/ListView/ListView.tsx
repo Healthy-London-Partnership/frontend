@@ -28,26 +28,26 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
       <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -16px'}}>
         <div className="flex-col flex-col--12">
           <div className="flex-container flex-container--justify flex-container--no-padding">
-            {(results.size || nationalResults.size) ? (
+            {isLiveActivity ? (
               <Fragment>
-                {isLiveActivity ? (
-                  <Fragment>
-                    {liveActivities && (
-                      [...liveActivities.entries()].map((results, i) => {
-                        const [title, resultsList] = results;
-    
-                        return (
-                          <List
-                            key={i}
-                            title={title}
-                            resultsList={resultsList}
-                            resultsStore={resultsStore}
-                          />
-                        );
-                      })
-                    )}
-                  </Fragment>
-                ) : (
+                {liveActivities && (
+                  [...liveActivities.entries()].map((results, i) => {
+                    const [title, resultsList] = results;
+
+                    return (
+                      <List
+                        key={i}
+                        title={title}
+                        resultsList={resultsList}
+                        resultsStore={resultsStore}
+                      />
+                    );
+                  })
+                )}
+              </Fragment>
+            ) : (
+              <Fragment>
+                {(results.size || nationalResults.size) ? (
                   <Fragment>
                     {results.size > 0 && (
                       <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
@@ -89,17 +89,17 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                       </Fragment>
                     )}
                   </Fragment>
+                ) : (
+                  <div className="results__container">
+                    <h1>
+                      {resultsStore.isPostcodeSearch
+                        ? 'There are currently no service offers available in your area.'
+                        : 'There are currently no service offers available.'}
+                    </h1>
+                  </div>
                 )}
               </Fragment>
-            ) : (
-              <div className="results__container">
-                <h1>
-                  {resultsStore.isPostcodeSearch
-                    ? 'There are currently no service offers available in your area.'
-                    : 'There are currently no service offers available.'}
-                </h1>
-              </div>
-            )}
+            )}         
           </div>
         </div>
       </div>
