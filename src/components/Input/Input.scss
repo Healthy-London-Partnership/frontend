@@ -5,10 +5,10 @@
 .input {
   @include body-m;
   width: 400px;
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
   height: pxtorem(50px);
   padding: space(16);
-  color: $san-juan;
+  color: $gulf-blue;
 
   &--container {
     display: inline;

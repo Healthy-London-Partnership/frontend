@@ -75,9 +75,7 @@ class FeedbackModal extends Component<IProps, any> {
         <div className="flex-container">
           <div className="flex-col flex-col--12 modal__close">
             <button onClick={() => uiStore.toggleFeedbackModal()} aria-label="Close modal">
-              <p>
-                Close <FontAwesomeIcon icon="times" />
-              </p>
+              Close <FontAwesomeIcon icon="times" />
             </button>
           </div>
           <div className="flex-col flex-col--12 ">

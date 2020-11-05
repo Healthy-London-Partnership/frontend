@@ -4,17 +4,12 @@
 @import '../../../styles/breakpoints.scss';
 
 .related-services {
-  background-image: url('../../../assets/images/backgrounds/related-services-background.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  font-family: $font-primary;
-
+  background-color: $downy;
   padding: space(96) space(64);
   text-align: center;
-  color: $san-juan;
 
   @include for-tablet-landscape-down {
-    padding: space(64) space(24);
+    padding: space(64) space(16) space(32);
   }
 
   &--button {
@@ -48,6 +43,10 @@
   &--container {
     align-items: flex-start;
     margin-top: space(48) !important;
+
+    @include for-phone-only {
+      margin-top: space(16) !important;
+    }
   }
 
   &--card {
@@ -59,6 +58,7 @@
 
     @include for-tablet-portrait-down {
       padding: sapce(24) space(16) !important;
+      margin-bottom: space(16) !important;
     }
 
     &--no-padding {

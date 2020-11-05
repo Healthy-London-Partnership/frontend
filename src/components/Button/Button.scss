@@ -5,9 +5,9 @@
 
 @mixin disabled-btn {
   &:disabled {
-    color: $mercury;
+    color: $lynch;
     background-color: inherit;
-    border: 2px solid $mercury;
+    border: 2px solid $lynch;
     opacity: 0.75;
   }
 }
@@ -21,9 +21,10 @@
 }
 
 .button {
-  background-color: $san-juan;
+  background-color: $gulf-blue;
   color: $white;
   font-size: pxtorem(22px);
+  font-weight: 500;
   line-height: 1.15;
   border-radius: 10px;
   border: none;
@@ -64,10 +65,10 @@
     }
 
     svg {
-      margin-left: space(8);
+      margin-right: space(8);
 
       @include for-tablet-portrait-down {
-        margin-left: space(16);
+        margin-right: space(16);
       }
     }
   }
@@ -88,12 +89,12 @@
 
 .button--light {
   background-color: $white;
-  color: $san-juan;
-  border: 2px solid $san-juan;
+  color: $gulf-blue;
+  border: 2px solid $gulf-blue;
 }
 
 .button--disabled {
-  background-color: $mercury;
+  background-color: $lynch;
   opacity: 0.75;
 
   &:hover {
@@ -128,23 +129,23 @@
 }
 
 .button__icon {
-  max-width: 20px;
+  max-width: 32px;
 }
 
 .button__icon--small {
-  margin-left: space(16);
+  margin-right: space(16);
 
   @include for-phone-only {
-    margin-left: space(8);
+    margin-right: space(8);
   }
 }
 
 .button__icon--medium {
-  margin-left: space(24);
+  margin-right: space(24);
 }
 
 .button__icon--large {
-  margin-left: space(16);
+  margin-right: space(16);
 }
 
 .button__alt {
@@ -152,12 +153,12 @@
   border-radius: 40px;
   background-color: $white;
   color: inherit;
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
 
   &:hover {
     box-shadow: none;
     cursor: pointer;
-    border: 3px solid $san-juan;
+    border: 3px solid $gulf-blue;
   }
 
   &:disabled {
@@ -179,7 +180,7 @@
   height: pxtorem(50px);
 
   svg {
-    margin-left: space(16);
+    margin-right: space(16);
   }
 }
 
@@ -190,12 +191,13 @@
   line-height: 1.16;
 
   svg {
-    margin-left: space(16);
+    margin-right: space(16);
   }
 }
 
 .button__category {
   font-size: $font-body-m;
+  font-weight: 500;
   height: pxtorem(50px);
   padding: space(14) space(18);
   margin-right: space(16);
@@ -206,7 +208,7 @@
 
   svg {
     height: 0.875em;
-    margin-left: space(12);
+    margin-right: space(12);
   }
 
   &:hover {
@@ -216,27 +218,26 @@
   }
 }
 
-.button__header {
-  height: pxtorem(40px);
-  padding: pxtorem(4px) space(16) space(8);
-  margin: 0 space(12);
-  border-radius: 16px;
-  border: 1px solid $waikawa;
+.button__header,
+.goog-te-gadget-simple {
+  min-width: pxtorem(220px);
+  height: 55px;
+  padding: space(12) space(16);
+  margin: 0 space(8);
+  border-radius: 40px;
+  border: 2px solid $gulf-blue;
   background-color: $white;
-  color: $waikawa;
+  color: $gulf-blue !important;
   font-size: $font-body-m;
-  font-weight: normal;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-top: 0;
-
-  @include for-tablet-landscape-down {
-    color: $san-juan;
-  }
+  font-weight: 500;
+  line-height: 1.5625rem;
+  text-align: center;
+  background-color: transparent;
+  transition: all 0.1s ease-in-out;
 
   &:hover {
-    border: 2px solid $waikawa;
-    border-top: 0;
+    background-color: $gulf-blue;
+    color: $white !important;
   }
 
   &:disabled {
@@ -248,8 +249,8 @@
     @include disabled-btn-hover;
   }
 
-  @include for-small-phone {
-    margin: 0;
+  .button__icon {
+    margin-right: space(12);
   }
 }
 

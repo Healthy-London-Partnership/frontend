@@ -14,12 +14,10 @@
 }
 
 .referral {
-  color: $san-juan;
   max-width: 1260px;
-
-  @include for-tablet-landscape-down {
-    padding-top: space(16) !important;
-  }
+  padding-top: space(32) !important;
+  padding-bottom: space(32) !important;
+  color: $gulf-blue;
 
   &--container {
     align-items: center !important;
@@ -53,7 +51,8 @@
     }
 
     &--name {
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
     }
   }
 
@@ -81,7 +80,7 @@
   }
 
   &--back {
-    color: $elm;
+    color: $gulf-blue;
     line-height: 26px;
     padding-left: space(16) !important;
     text-decoration: underline;
@@ -94,7 +93,7 @@
 
   &--step {
     margin: space(20) 0;
-    color: $san-juan;
+    color: $gulf-blue;
   }
 
   &--form-time {
@@ -119,7 +118,7 @@
   &--intro {
     border-radius: 19px;
     padding: space(32);
-    color: $san-juan;
+    color: $gulf-blue;
     margin: space(24) 0 !important;
 
     &--inner {
@@ -133,7 +132,8 @@
 
     &--heading {
       @include for-tablet-landscape-down {
-        font-family: $font-secondary;
+        font-family: $font-primary;
+        font-weight: 700;
         margin-bottom: space(8);
       }
     }
@@ -170,7 +170,8 @@
 
     &--description {
       font-size: $font-body-l;
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
 
       @include for-tablet-landscape-down {
         font-family: $font-primary;
@@ -182,7 +183,7 @@
 }
 
 .referral__button {
-  border: 2px solid $san-juan;
+  border: 2px solid $gulf-blue;
   border-radius: 9px;
   padding: space(16) !important;
   margin-bottom: space(12) !important;
@@ -203,7 +204,7 @@
     background-color: $hawkes-blue;
 
     svg {
-      color: $san-juan;
+      color: $gulf-blue;
     }
   }
 
@@ -285,7 +286,8 @@
 
   &--question {
     padding: 0 space(16);
-    font-family: $font-secondary;
+    font-family: $font-primary;
+    font-weight: 700;
 
     @include for-tablet-landscape-up {
       font-size: $font-heading-m;
@@ -294,7 +296,8 @@
 
     &--large {
       font-size: $font-body-l;
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
     }
   }
 
@@ -305,7 +308,7 @@
   &--text-area {
     @include body-m;
 
-    border: 2px solid $san-juan;
+    border: 2px solid $gulf-blue;
     resize: none;
     height: pxtorem(100px);
     padding: space(12) !important;
@@ -332,7 +335,7 @@
 
     &--toggle {
       font-size: pxtorem(18px);
-      color: $elm;
+      color: $gulf-blue;
       text-decoration: underline;
 
       &--open {
@@ -353,7 +356,7 @@
 .referral__terms {
   a {
     @include body-s;
-    color: $elm;
+    color: $gulf-blue;
     cursor: pointer;
   }
 
@@ -373,13 +376,13 @@
     margin: space(20) 0;
 
     label {
-      color: $san-juan !important;
+      color: $gulf-blue !important;
     }
   }
 }
 
 .referral__confirmation {
-  color: $san-juan;
+  color: $gulf-blue;
   max-width: pxtorem(1000px);
 
   @include for-phone-only {
@@ -413,7 +416,7 @@
   }
 
   a {
-    color: $elm;
+    color: $gulf-blue;
   }
 
   h1 {

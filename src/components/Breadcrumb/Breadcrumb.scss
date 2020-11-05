@@ -3,11 +3,7 @@
 @import '../../styles/breakpoints.scss';
 
 .breadcrumb {
-  margin-bottom: space(24) !important;
-
-  @include for-tablet-landscape-down {
-    margin-top: space(24) !important;
-  }
+  margin-bottom: space(16) !important;
 
   &--active {
     color: $mid-grey !important;
@@ -23,37 +19,33 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
+    li {
+      display: inline;
+      margin-left: space(8);
+      font-weight: 500;
+      font-size: pxtorem(16px);
+      color: $gulf-blue;
+
+      @include for-phone-only {
+        font-size: pxtorem(12px) !important;
+        margin-left: space(8) !important;
+      }
+    }
+
     a {
-      text-decoration-color: $elm;
+      font-size: pxtorem(16px);
+      text-decoration: none;
     }
 
     svg {
-      font-size: pxtorem(16px);
+      margin-left: space(8);
+      font-size: pxtorem(12px);
+      color: $gulf-blue;
 
       @include for-phone-only {
+        margin-left: space(8);
         font-size: pxtorem(12px);
       }
-    }
-  }
-
-  li {
-    display: inline;
-    margin-left: space(16);
-    color: $elm;
-    font-size: pxtorem(16px) !important;
-
-    @include for-phone-only {
-      font-size: pxtorem(12px) !important;
-      margin-left: space(8) !important;
-    }
-  }
-
-  svg {
-    margin-left: space(16);
-    color: $elm;
-
-    @include for-phone-only {
-      margin-left: space(8);
     }
   }
 }

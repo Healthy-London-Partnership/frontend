@@ -130,54 +130,44 @@ class MapView extends Component<IProps, IState> {
     }
 
     return (
-      <main className="flex-container flex-container--justify">
-        <div className="flex-col--tablet--12 flex-col--10">
-          <div className="flex-container flex-container--space flex-container--row-reverse map">
-            <div className="flex-col--6 flex-col--mobile--12 map__map-container">
-              <Map
-                center={CENTRE_OF_MAP}
-                attributionControl={false}
-                bounds={this.state.bounds}>
-                <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
-                
-                {this.state.markers.map((marker: any) =>
-                  <Marker	
-                    key={marker.key}
-                    position={[marker.lat, marker.lon]}
-                    icon={this.state.activeMarkerId === marker.id ? this.getMarkerType('active') : this.getMarkerType(marker.type)}
-                    onClick={() => this.setActiveService(marker.id)}
-                  />
-                )}
-              </Map>
-            </div>
+      <div className="flex-container flex-container--no-padding flex-container--space flex-container--row-reverse map">
+        <div className="flex-col--6 flex-col--mobile--12 map__map-container">
+          <Map
+            center={CENTRE_OF_MAP}
+            attributionControl={false}
+            bounds={this.state.bounds}>
+            <TileLayer url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png" />
             
-            <div className="flex-col--6 flex-col--mobile--12 map__results-container">
-              {resultsStore.results.size ? (
-                [...resultsStore.results.entries()].map((results, i) => {
-                  const [title, resultsList] = results;
-
-                  return (
-                    <List
-                      key={i}
-                      activeId={this.state.activeMarkerId}
-                      activeIdHandler={this.setActiveService}
-                      title={title}
-                      resultsList={resultsList}
-                      resultsStore={resultsStore}
-                    />
-                  );
-                })
-              ) : (
-                <h1>
-                  {resultsStore.isPostcodeSearch
-                    ? 'There are currently no service offers available in your area.'
-                    : 'There are currently no service offers available.'}
-                </h1>
-              )}  
-            </div>
-          </div>
+            {this.state.markers.map((marker: any) =>
+              <Marker	
+                key={marker.key}
+                position={[marker.lat, marker.lon]}
+                icon={this.state.activeMarkerId === marker.id ? this.getMarkerType('active') : this.getMarkerType(marker.type)}
+                onClick={() => this.setActiveService(marker.id)}
+              />
+            )}
+          </Map>
         </div>
-      </main>
+        
+        <div className="flex-col--6 flex-col--mobile--12 map__results-container">
+          {resultsStore.results.size && (
+            [...resultsStore.results.entries()].map((results, i) => {
+              const [title, resultsList] = results;
+
+              return (
+                <List
+                  key={i}
+                  activeId={this.state.activeMarkerId}
+                  activeIdHandler={this.setActiveService}
+                  title={title}
+                  resultsList={resultsList}
+                  resultsStore={resultsStore}
+                />
+              );
+            })
+          )}
+        </div>
+      </div>
     );
   }
 }
