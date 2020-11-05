@@ -111,7 +111,6 @@ class Results extends Component<IProps> {
                           pathname: '/results',
                           search: resultsStore!.amendSearch()
                         });
-                        console.log(resultsStore.activityType);
                       }}
                     />
                   </div>

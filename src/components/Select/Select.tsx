@@ -34,7 +34,6 @@ const Select: React.FunctionComponent<IProps> = ({
     defaultValue={selected ? selected : placeholder}
     disabled={disabled}
   >
-    {console.log(options, selected)}
     <option value={placeholder} disabled={true} hidden={true}>
       {placeholder}
     </option>
