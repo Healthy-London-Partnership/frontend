@@ -41,14 +41,6 @@ const activitySortOptions = [
 ]
 
 class Results extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      activityTypes: null,
-    };
-  }
-
   componentDidMount() {
     const { resultsStore } = this.props;
 
@@ -64,13 +56,6 @@ class Results extends Component<IProps> {
       resultsStore.getActivityTypes();
     }
   }
-
-  handleInputChange = (string: string, field: string) => {
-    // @ts-ignore
-    this.setState({
-      [field]: string,
-    });
-  };
 
   render() {
     const { resultsStore, history } = this.props;

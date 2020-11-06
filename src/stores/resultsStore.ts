@@ -42,7 +42,7 @@ export default class ResultsStore {
   @observable fetched: boolean = false;
   @observable view: 'grid' | 'map' = 'grid';
   @observable radius: number = 5;
-  @observable activityTypes: [] | null = [];
+  @observable activityTypes: any[] | null = [];
   @observable activityType: string = '';
   @observable sortBy: string = 'upcoming-sessions';
   @observable isVirtual: boolean = false;
@@ -145,10 +145,10 @@ export default class ResultsStore {
     const { data } = await axios.get("https://openactive.io/activity-list/activity-list.jsonld");
     let scheme = new skos.ConceptScheme(data);
 
-    this.activityTypes = this.renderTree(scheme.getTopConcepts(), 1, []);
+    this.activityTypes = this.renderTree(scheme.getTopConcepts(), []);
   };
 
-  renderTree = (concepts: any, level: any, output: any) => {
+  renderTree = (concepts: any, output: any) => {
     concepts.forEach((concept: any) => {
       let label = concept.prefLabel;
       
