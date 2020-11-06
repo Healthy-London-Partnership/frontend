@@ -137,11 +137,19 @@ class Service extends Component<IProps> {
               ]}
             />
             <div className="flex-container flex-container--no-padding flex-container--no-space flex-container--align-center">
-              <div className="flex-col">
-                <div className="service__header__logo">
-                  <img src={getImg(service)} alt={`${service.name} logo`} />
+              {service.open_active ? (
+                <div className="flex-col">
+                  <div className="service__header__logo">
+                    <img src={service.logo_url} alt={`${service.name} logo`} />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex-col">
+                  <div className="service__header__logo">
+                    <img src={getImg(service)} alt={`${service.name} logo`} />
+                  </div>
+                </div>
+              )}
               <div className="flex-col">
                 <h1>{get(service, 'name')}</h1>
                 <p className="service__header__last-updated">
@@ -242,9 +250,9 @@ class Service extends Component<IProps> {
 
                   <div className="flex-container flex-container--align-center service__media service__section--no-padding">
                     <div className="flex-col flex-col--mobile--12">
-                      <h2 className="service__heading">{`What is this ${get(service, 'type')}?`}</h2>
+                      <h2 className="service__heading">{`What is this ${service.type}?`}</h2>
                     </div>
-                    {!!service.gallery_items.length && (
+                    {service.gallery_items && service.gallery_items.length > 0 && (
                       <div className="flex-container flex-container--mobile-no-padding service__gallery">
                         <GalleryCard gallery={service.gallery_items} />
                       </div>
@@ -259,7 +267,7 @@ class Service extends Component<IProps> {
                   <div className="flex-container flex-container--align-center service__section service__section--no-padding service__information">
                     <div className="flex-col flex-col--12 flex-col--mobile--12">
                       <ReactMarkdown
-                        // source={service.intro}
+                        source={service.intro}
                         className="service__markdown service__markdown--intro"
                       />
                     </div>

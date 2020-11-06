@@ -50,12 +50,8 @@ export default class ServiceStore {
       }
     });
 
-    console.log(data);
-
     const activity = data;
     let today = new Date();
-
-    console.log(activity);
 
     this.service = {
       contact_email: activity.organizer.email ? activity.organizer.email : null,
@@ -78,7 +74,7 @@ export default class ServiceStore {
       gallery_items: activity.image ? activity.image : null,
       has_logo: activity.image ? true : false,
       id: activity.identifier ? activity.identifier : null,
-      intro: activity.description ? this.truncateString(activity.description, 150) : null,
+      intro: this.truncateString(activity.description, 150) ? this.truncateString(activity.description, 150) : '',
       is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
       is_national: false,
       last_modified_at: today.toISOString(),

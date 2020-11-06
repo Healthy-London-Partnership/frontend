@@ -50,7 +50,7 @@ const GalleryThree: React.FunctionComponent<IProps> = ({ gallery }) => (
           {gallery.slice(1).map((image: IGalleryItem, i: number) => (
             <div
               className="flex-col--6 flex-col--mobile--12 gallery-card--image  gallery-card--img"
-              key={image.file_id}
+              key={i}
             >
               <img
                 src={image.url}

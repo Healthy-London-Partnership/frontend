@@ -531,12 +531,10 @@
 }
 
 .service__information {
-  @include for-tablet-landscape-up {
-    background: $alabaster;
-    border-radius: 19px;
-    padding: space(32) !important;
-    margin-top: space(16) !important;
-  }
+  padding: space(32) !important;
+  margin-top: space(16) !important;
+  border-radius: 7px;
+  background-color: $white;
 
   @include for-phone-only {
     h3 {
@@ -564,15 +562,6 @@
 
 .service__heading {
   margin-bottom: space(32);
-
-  @include for-tablet-landscape-up {
-    padding-left: 40px !important;
-    margin-bottom: space(32);
-  }
-
-  @include for-tablet-landscape-down {
-    margin-bottom: space(32);
-  }
 
   @include for-phone-only {
     font-size: $font-body-l !important;
