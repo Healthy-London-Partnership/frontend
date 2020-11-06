@@ -53,14 +53,14 @@ export default class ServiceStore {
     const activity = data;
     let today = new Date();
 
-    console.log(activity.description);
+    console.log(activity);
 
     this.service = {
       contact_email: activity.organizer.email ? activity.organizer.email : null,
       contact_name: activity.organizer.name ? activity.organizer.name : null,
       contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
       criteria: {
-        age_group: '',
+        age_group: (activity.ageRange.minValue ? activity.ageRange.minValue + ' - ' : '') + (activity.ageRange.maxValue ? activity.ageRange.maxValue : ''),
         disability: '',
         employment: '',
         gender: activity.genderRestriction ? activity.genderRestriction.replace(/([a-z])([A-Z])/g, '$1 $2').replace('oa:', '') : null,
