@@ -36,6 +36,7 @@ export default class ServiceStore {
     this.loading = true;
     const serviceData = await axios.get(`${apiBase}/services/${name}?include=organisation`);
     this.service = get(serviceData, 'data.data');
+    console.log(this.service);
 
     this.getServiceLocations();
     this.getRelatedServices(name);
@@ -90,7 +91,7 @@ export default class ServiceStore {
       referral_email: null,
       referral_method: 'none',
       referral_url: null,
-      service_locations: activity.location ? activity.location : null,
+      service_locations: [],
       show_referral_disclaimer: false,
       slug: activity.identifier ? activity.identifier : null,
       social_medias: [],
@@ -103,16 +104,51 @@ export default class ServiceStore {
       video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
       wait_time: null,
     };
+
+    this.locations = [
+      {
+        created_at: '',
+        has_image: false,
+        holiday_opening_hours: [],
+        id: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].id : activity['imin:locationSummary'][0].id,
+        is_open_now: false,
+        location: {
+          accessibility_info: null,
+          address_line_1: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.streetAddress : activity['imin:locationSummary'][0].address.streetAddress,
+          address_line_2: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.addressLocality : activity['imin:locationSummary'][0].address.addressLocality,
+          address_line_3: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.addressRegion :  activity['imin:locationSummary'][0].address.addressRegion,
+          city: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.addressLocality : activity['imin:locationSummary'][0].address.addressLocality,
+          country: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.addressCountry : activity['imin:locationSummary'][0].address.addressCountry,
+          county: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.addressRegion :  activity['imin:locationSummary'][0].address.addressRegion,
+          created_at: '',
+          has_image: false,
+          has_induction_loop: false,
+          has_wheelchair_access: false,
+          id: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].id : activity['imin:locationSummary'][0].id,
+          lat: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].geo.latitude : activity['imin:locationSummary'][0].geo.latitude,
+          lon: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].geo.longitude : activity['imin:locationSummary'][0].geo.longitude,
+          postcode: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].address.postalCode : activity['imin:locationSummary'][0].address.postalCode,
+          updated_at: '',
+        },
+        location_id: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].id : activity['imin:locationSummary'][0].id,
+        name: activity['imin:locationSummary'][1] ? activity['imin:locationSummary'][1].name : activity['imin:locationSummary'][0].name,
+        regular_opening_hours: [],
+        service_id: activity.identifier ? activity.identifier : null,
+        updated_at: '',
+      }
+    ]
   };
 
   @action
   getServiceLocations = async () => {
     if (this.service) {
-      const locationData = await axios.get(
-        `${apiBase}/service-locations?filter[service_id]=${this.service.id}&include=location`
-      );
-
-      this.locations = get(locationData, 'data.data');
+      if(!this.service.open_active) {
+        const locationData = await axios.get(
+          `${apiBase}/service-locations?filter[service_id]=${this.service.id}&include=location`
+        );
+  
+        this.locations = get(locationData, 'data.data');
+      }
     }
   };
 
