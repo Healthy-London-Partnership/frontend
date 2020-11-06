@@ -98,7 +98,7 @@ class LocationModal extends Component<IProps, any> {
               <Select
                 className="location-modal__select"
                 options={activityRadiusOptions}
-                selected={activityRadiusOptions[0]}
+                selected={this.state.radius}
                 id="activity_radius"
                 placeholder="Select a radius"
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
