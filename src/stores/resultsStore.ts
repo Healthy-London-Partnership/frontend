@@ -5,7 +5,7 @@ import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
 
-import { apiBase, iminApiKey, iminApiBase } from '../config/api';
+import { apiBase, nhsApiSubscriptionKey, iminApiKey, iminApiBase } from '../config/api';
 import {
   IParams,
   IPersona,
@@ -31,6 +31,7 @@ export default class ResultsStore {
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable nationalResults: Map<string, IService[]> = new Map();
+  @observable nhsResult: any;
   @observable isLiveActivity: boolean = false;
   @observable liveActivities: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
@@ -70,6 +71,7 @@ export default class ResultsStore {
     this.order = 'relevance';
     this.results = new Map();
     this.nationalResults = new Map();
+    this.nhsResult = '';
     this.isLiveActivity = false;
     this.liveActivities = new Map();
     this.fetched = false;
@@ -151,7 +153,7 @@ export default class ResultsStore {
   renderTree = (concepts: any, output: any) => {
     concepts.forEach((concept: any) => {
       let label = concept.prefLabel;
-      
+
       if (concept.altLabel && concept.altLabel.length > 0) {
         label = label + ' / ' + concept.altLabel.join(' / ')
       }
@@ -178,11 +180,11 @@ export default class ResultsStore {
       }
 
       if (value === 'is_free') {
-        this.is_free = key === 'true' ? true : false;	
+        this.is_free = key === 'true' ? true : false;
       }
 
       if (value === 'view') {
-        this.view = key;	
+        this.view = key;
       }
 
       if (value === 'page') {
@@ -224,11 +226,11 @@ export default class ResultsStore {
   setParams = async () => {
     const params: IParams = {};
 
-    if (this.is_free) {	
-      params.is_free = this.is_free;	
+    if (this.is_free) {
+      params.is_free = this.is_free;
     }
 
-    if (this.view) {	
+    if (this.view) {
       params.view = this.view;
     }
 
@@ -270,7 +272,7 @@ export default class ResultsStore {
     } else {
       itemsPerPage = this.itemsPerPage;
     }
-    
+
     if(this.category || this.persona) {
       searchUrl = `${apiBase}/search?page=${this.currentPage}`;
     } else if(this.view === 'map') {
@@ -288,12 +290,45 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
+    if(this.keyword || this.category || this.persona) {
+      await this.fetchNhsConditions();
+    }
+
     if(this.isLiveActivity && params.location) {
       this.fetchLiveActivities(params.location);
     }
 
     this.getOrganisations();
   };
+
+  @action
+  fetchNhsConditions = async () => {
+    let searchSlug;
+
+    if(this.keyword) {
+      searchSlug = this.keyword.replace(/\s+/g, '-').toLowerCase();
+    } else if(this.category) {
+      console.log(this.category);
+      searchSlug = this.category.slug.replace('homepage-', '');
+    } else if(this.persona) {
+      console.log(this.persona);
+      searchSlug = this.persona.slug.replace('homepage-', '');
+    }
+
+    console.log(searchSlug);
+
+    await axios.get('https://api.nhs.uk/conditions/' + searchSlug, {
+      headers: {
+        'subscription-key': `${nhsApiSubscriptionKey}`,
+      },
+    })
+    .then(response => {
+      this.nhsResult = response.data;
+    })
+    .catch(error => {
+      this.nhsResult = null;
+    });
+  }
 
   @action
   fetchLiveActivities = async (location: any) => {
@@ -312,7 +347,7 @@ export default class ResultsStore {
     });
 
     this.totalItems = data['imin:totalItems'];
-    
+
     if(this.totalItems > 0) {
       let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
         return {
@@ -335,8 +370,8 @@ export default class ResultsStore {
           video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
         };
       });
-  
-      this.liveActivities.set('Live Activities', liveActivitiesMapped); 
+
+      this.liveActivities.set('Live Activities', liveActivitiesMapped);
     }
   };
 
@@ -406,17 +441,17 @@ export default class ResultsStore {
       this.locationCoords = {};
     }
 
-    if (this.is_free) {	
-      url = this.updateQueryStringParameter('is_free', this.is_free, url);	
-    }	
-
-    if (!this.is_free) {	
-      url = this.removeQueryStringParameter('is_free', url);	
+    if (this.is_free) {
+      url = this.updateQueryStringParameter('is_free', this.is_free, url);
     }
 
-    if (this.view) {	
+    if (!this.is_free) {
+      url = this.removeQueryStringParameter('is_free', url);
+    }
+
+    if (this.view) {
       url = this.updateQueryStringParameter('view', this.view, url)
-    }	
+    }
 
     if (this.keyword) {
       url = this.updateQueryStringParameter('search_term', this.keyword, url);
@@ -438,7 +473,7 @@ export default class ResultsStore {
       if (this.radius) {
         url = this.updateQueryStringParameter('radius', this.radius, url);
       }
-  
+
       if (!this.radius) {
         url = this.removeQueryStringParameter('radius', url);
       }
@@ -446,23 +481,23 @@ export default class ResultsStore {
       if (this.activityType) {
         url = this.updateQueryStringParameter('activity_type', this.activityType, url);
       }
-  
+
       if (!this.activityType) {
         url = this.removeQueryStringParameter('activity_type', url);
       }
-  
+
       if (this.sortBy) {
         url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
       }
-  
+
       if (!this.sortBy) {
         url = this.removeQueryStringParameter('sort_by', url);
       }
-  
+
       if (this.isVirtual) {
         url = this.updateQueryStringParameter('is_virtual', this.isVirtual, url);
       }
-  
+
       if (!this.isVirtual) {
         url = this.removeQueryStringParameter('is_virtual', url);
       }
@@ -481,7 +516,7 @@ export default class ResultsStore {
       );
 
       const location = get(geolocation, 'data.results[0].geometry.location', {});
-      
+
       if(location) {
         this.locationCoords = {
           lon: location.lng,
@@ -500,12 +535,12 @@ export default class ResultsStore {
     this.keyword = value;
   };
 
-  @action	
-  toggleView = (view: 'map' | 'grid') => {	
+  @action
+  toggleView = (view: 'map' | 'grid') => {
     this.view = view;
   };
-  
-  @action	
+
+  @action
   toggleIsFree = () => {
     this.is_free = !this.is_free;
   };
@@ -523,17 +558,17 @@ export default class ResultsStore {
     this.sortBy = setting;
   };
 
-  @action	
+  @action
   toggleIsVirtual = () => {
     this.isVirtual = !this.isVirtual;
   };
 
-  @action	
-  paginate = (page: number) => {	
-    this.currentPage = page;	
+  @action
+  paginate = (page: number) => {
+    this.currentPage = page;
     this.results = new Map();
     this.nationalResults = new Map();
-    this.loading = true;	
+    this.loading = true;
   };
 
   @action

@@ -8,6 +8,7 @@ import ResultsStore from '../../../stores/resultsStore';
 
 import MetaData from '../../../components/MetaData/MetaData';
 import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
+import Cta from '../../../components/Cta/Cta';
 import List from '../../../views/Results/ListView/List';
 import Loading from '../../../components/Loading/Loading';
 
@@ -83,6 +84,21 @@ class Persona extends Component<IProps> {
         </div>
 
         <div className="persona__list">
+          {resultsStore.nhsResult &&
+            <div className="flex-container flex-container--justify results__nhs-results">
+              <div className="flex-col--tablet--12 flex-col--10">
+                <div className="flex-container">
+                  <div className="flex-col flex-col--12">
+                    <Cta
+                      title={resultsStore.nhsResult.about.name}
+                      description={resultsStore.nhsResult.description}
+                      buttonUrl={resultsStore.nhsResult.url.replace('api.nhs.uk', 'www.nhs.uk')}
+                      />
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
           <div className="flex-container flex-container--justify">
             {results.size > 0 ? (
               <div className="flex-col--12 results__list">

@@ -89,7 +89,7 @@ class Category extends Component<IProps> {
                     {personas ? (
                       <ul className="persona__list__items">
                         {[...personas].map((persona: IPersona, i: number) => {
-                          let personaUrl = window.location.href + 'personas/' + persona.slug;
+                          let personaUrl = window.location.href + '/personas/' + persona.slug;
                           return <li key={i}><Link href={personaUrl} text={`${persona.name} (${personaUrl})`} size={'medium'} /></li>
                         })}
                       </ul>
