@@ -71,30 +71,32 @@ class Keyword extends Component<IProps, IState> {
       <form>
         <div className="flex-container flex-container--no-padding">
           <div className="flex-col">
-            <h1 className="results__heading">Results found for</h1>
+            <h1 className="results__heading">{resultsStore.isLiveActivity ? 'Physical Activities in your area' : 'Results found for'}</h1>
           </div>
         </div>
-        <div className="flex-container flex-container--no-padding">
+        <div className="flex-container flex-container--no-padding flex-container--align-center">
           <div className="flex-col" style={{flexGrow: 1}}>
             <div className="flex-container flex-container--no-padding">
               <SearchInput showButtonText={false} keywordFieldLabel="Keyword" postcodeFieldLabel="Location" />
             </div>
           </div>
-          <div className="flex-col--2 flex-col--tablet--12">
-            <Checkbox	
-              id="is_free"	
-              label="<strong>Cost</strong><br>Free"
-              checked={get(resultsStore, 'is_free', false)}	
-              onChange={() => {	
-                resultsStore!.toggleIsFree();
-                this.props.history.push({
-                  pathname: '/results',
-                  search: resultsStore!.amendSearch()
-                });
-              }}	
-              className="results__keyword-edit-checkbox"	
-            />	
-          </div>
+          {!resultsStore.isLiveActivity &&
+            <div className="flex-col--2 flex-col--tablet--12">
+              <Checkbox	
+                id="is_free"	
+                label="<strong>Cost</strong><br>Free"
+                checked={get(resultsStore, 'is_free', false)}	
+                onChange={() => {	
+                  resultsStore!.toggleIsFree();
+                  this.props.history.push({
+                    pathname: '/results',
+                    search: resultsStore!.amendSearch()
+                  });
+                }}	
+                className="results__keyword-edit-checkbox"	
+              />
+            </div>
+          }
         </div>
       </form>
     );

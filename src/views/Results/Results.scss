@@ -12,6 +12,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 
   &__title {
     @include for-phone-only {
@@ -142,6 +143,7 @@
 
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   margin-top: space(48);
   list-style: none;
 
@@ -183,21 +185,70 @@
 }
 
 .results__filters {
-  margin-bottom: space(56) !important;
+  margin-bottom: space(24) !important;
 
-  @include for-phone-only {
-    margin-bottom: space(32) !important;
+  &__col {
+    padding-right: space(24);
+    margin-bottom: space(24);
+
+    @include for-phone-only {
+      padding-right: 0;
+      margin-bottom: space(20) !important;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
   }
-}
 
-.results__keyword-filters--heading {
-  font-weight: normal;
-  font-family: $font-primary;
-  font-size: $font-heading-s;
-  margin-bottom: space(10);
+  &__heading {
+    display: block;
+    font-family: $font-primary;
+    font-weight: 700;
+    font-size: $font-heading-s;
+    margin-bottom: space(12);
+  
+    @include for-phone-only {
+      margin-bottom: space(8);
+    }
 
-  @include for-phone-only {
-    margin-bottom: space(8);
+    small {
+      color: $lynch;
+      font-size: $font-body-xs;
+    }
+  }
+
+  &__select {
+    display: block;
+    border-radius: 7px;
+    padding: space(10) space(48) space(10) space(16);
+
+    &--main {
+      padding: 0 !important;
+      border: none !important;
+      max-width: unset !important;
+      background-position: 100% 50% !important;
+    }
+  }
+
+  &__checkbox {
+    label {
+      flex-direction: row-reverse;
+
+      span {
+        width: 52px !important;
+        height: 52px !important;
+      }
+
+      svg {
+        width: 1.25em !important;
+        height: 1.25em !important;
+      }
+
+      p {
+        line-height: pxtorem(26px);
+      }
+    }
   }
 }
 
@@ -387,7 +438,7 @@
 }
 
 .results__keyword-edit-checkbox {
-  margin-top: space(12);
+  margin-bottom: space(12);
   padding-left: space(16);
 
   label {

@@ -1,0 +1,102 @@
+@import '../../styles/breakpoints.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/fonts.scss';
+@import '../../styles/colors.scss';
+
+.location-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: space(32);
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color: $gulf-blue;
+
+  .flex-container {
+    padding: 0 !important;
+  }
+
+  @include for-phone-only {
+    padding: space(16);
+
+    .flex-col {
+      margin-bottom: 0;
+    }
+  }
+
+  input {
+    width: 100%;
+  }
+
+  textarea {
+    @include body-m;
+    width: 100%;
+    border: 2px solid $gulf-blue;
+    resize: none;
+    height: pxtorem(260px);
+    padding: space(12) !important;
+    margin-top: space(12);
+  }
+
+  a {
+    color: $gulf-blue;
+  }
+}
+
+.location-modal__close {
+  margin-bottom: space(32);
+}
+
+.location-modal__title {
+  margin-bottom: space(12);
+}
+
+.location-modal__form {
+  width: 100%;
+}
+
+.location-modal__question {
+  position: relative;
+  padding: space(16);
+  margin-top: 0 !important;
+  margin-bottom: space(24) !important;
+  border: 2px solid $gulf-blue;
+  border-radius: 7px;
+
+  @include for-phone-only {
+    padding: space(16) !important;
+    margin-bottom: space(16) !important;
+  }
+
+  label {
+    display: block;
+    margin-bottom: space(8);
+    padding: 0;
+    font-family: $font-primary;
+    font-weight: 700;
+    font-size: $font-heading-m;
+  }
+
+  input {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: none;
+  }
+}
+
+.location-modal__select {
+  display: block;
+  padding: 0 !important;
+  border: none !important;
+  max-width: unset !important;
+  background-position: 100% 50% !important;
+}

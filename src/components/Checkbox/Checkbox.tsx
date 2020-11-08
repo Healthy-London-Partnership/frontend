@@ -31,12 +31,12 @@ const Checkbox: React.FunctionComponent<IProps> = ({
       aria-label={aria}
     />
     <label htmlFor={id}>
+      <p dangerouslySetInnerHTML={{ __html: label }} />
       <span>
         <span>
           <FontAwesomeIcon icon="check" />
         </span>
       </span>
-      <p dangerouslySetInnerHTML={{ __html: label }} />
     </label>
   </div>
 );

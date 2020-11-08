@@ -84,6 +84,7 @@ class App extends Component {
                 <Route path="/taxonomies/categories/:category" component={TaxonomiesCategory} />
                 <Route path="/taxonomies/organisations/:organisation" component={TaxonomiesOrganisation} />
                 <Route path="/results" component={Results} />
+                <Route path="/activities/:activity" component={Service} />
                 <Route path="/services/:service" component={Service} />
                 <Route path="/favourites" component={Favourites} />
                 <Route path="/referral" component={Referral} />

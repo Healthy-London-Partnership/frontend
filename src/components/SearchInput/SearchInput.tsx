@@ -12,6 +12,7 @@ import UIStore from '../../stores/uiStore';
 import './SearchInput.scss';
 import Input from '../Input';
 import Button from '../Button';
+import Select from '../Select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import WindowSizeStore from '../../stores/windowSizeStore';
 
@@ -27,8 +28,14 @@ interface IProps extends RouteComponentProps {
 interface IState {
   keyword: string;
   postcode: string;
+  radius: number;
   locationCoords: any;
 }
+
+const activityRadiusOptions = [
+  { value: 5, text: '5 miles' },
+  { value: 10, text: '10 miles' },
+]
 
 @inject('resultsStore', 'windowSizeStore', 'uiStore')
 @observer
@@ -39,12 +46,13 @@ class SearchInput extends React.Component<IProps, IState> {
     this.state = {
       keyword: '',
       postcode: '',
+      radius: 5,
       locationCoords: null,
     };
   }
 
   componentDidMount() {
-    const { search_term, postcode } = queryString.parse(this.props.location.search);
+    const { search_term, postcode, radius } = queryString.parse(this.props.location.search);
     const { resultsStore } = this.props;
 
     if (!resultsStore) {
@@ -62,6 +70,12 @@ class SearchInput extends React.Component<IProps, IState> {
         postcode: postcode as string,
       });
     }
+
+    if (radius) {
+      this.setState({
+        radius: Number(radius),
+      })
+    }
   }
 
   handleInputChange = (string: string, field: string) => {
@@ -78,6 +92,7 @@ class SearchInput extends React.Component<IProps, IState> {
     if(this.state.keyword || this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
       resultsStore!.handleKeywordChange(this.state.keyword);
+      resultsStore!.radiusChange(this.state.radius);
       this.props.history.push({
         pathname: '/results',
         search: resultsStore!.amendSearch()
@@ -131,21 +146,23 @@ class SearchInput extends React.Component<IProps, IState> {
               justifyContent: 'start',
             }}
           >
-            <div
-              className={cx('flex-col--6 flex-col--tablet--12 search__input__item', {
-                'flex-col--mobile--12 search__input__item': isMobile,
-              })}
-            >
-              <label htmlFor="search">{keywordFieldLabel}</label>
-              <Input
-                id="search"
-                placeholder="e.g. Anxiety"
-                value={this.state.keyword}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  this.handleInputChange(e.target.value, 'keyword')
-                }
-              />
-            </div>
+            {!resultsStore.isLiveActivity &&
+              <div
+                className={cx('flex-col--6 flex-col--tablet--12 search__input__item', {
+                  'flex-col--mobile--12 search__input__item': isMobile,
+                })}
+              >
+                <label htmlFor="search">{keywordFieldLabel}</label>
+                <Input
+                  id="search"
+                  placeholder="e.g. Anxiety"
+                  value={this.state.keyword}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    this.handleInputChange(e.target.value, 'keyword')
+                  }
+                />
+              </div>
+            }
             <div
               className={cx('flex-col--6 flex-col--tablet--12 search__input__item', {
                 'flex-col--mobile--12 search__input__item': isMobile,
@@ -168,6 +185,25 @@ class SearchInput extends React.Component<IProps, IState> {
                   this.getLocation();
                 }}><FontAwesomeIcon icon="search-location" className="link__icon--left" />Get my location</button>
             </div>
+            {resultsStore.isLiveActivity &&
+              <div
+                className={cx('flex-col--6 flex-col--tablet--12 search__input__item', {
+                  'flex-col--mobile--12 search__input__item': isMobile,
+                })}
+              >
+                <label htmlFor="activity_radius" className="results__filters__heading">Within a radius of</label>
+                <Select
+                  className="results__filters__select results__filters__select--main"
+                  options={activityRadiusOptions}
+                  selected={resultsStore.radius}
+                  id="activity_radius"
+                  placeholder="Select a radius"
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    this.handleInputChange(e.target.value, 'radius');
+                  }}
+                />
+              </div>
+            }
             <div
               className={cx('flex-col search__submit', {
                 'flex-col--mobile--12 search__submit': isMobile,

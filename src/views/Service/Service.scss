@@ -70,6 +70,12 @@
   &--no-margin {
     margin-bottom: 0 !important;
   }
+
+  &--criteria {
+    .flex-col {
+      padding: 0 space(8);
+    }
+  }
 }
 
 .service__header__logo {
@@ -302,22 +308,13 @@
 }
 
 .service__button-container {
-  padding: space(24) 0 !important;
+  .button {
+    width: 100%;
+    margin: 0 space(8) space(16);
 
-  @include for-tablet-landscape-down {
-    svg {
-      display: none;
+    @include for-phone-only {
+      margin-bottom: 0;
     }
-  }
-
-  @include for-phone-only {
-    padding: space(24) !important;
-
-    justify-content: space-evenly !important;
-  }
-
-  &--mobile {
-    text-align: center;
   }
 }
 
@@ -531,12 +528,10 @@
 }
 
 .service__information {
-  @include for-tablet-landscape-up {
-    background: $alabaster;
-    border-radius: 19px;
-    padding: space(32) !important;
-    margin-top: space(16) !important;
-  }
+  padding: space(32) !important;
+  margin-top: space(16) !important;
+  border-radius: 7px;
+  background-color: $white;
 
   @include for-phone-only {
     h3 {
@@ -564,15 +559,6 @@
 
 .service__heading {
   margin-bottom: space(32);
-
-  @include for-tablet-landscape-up {
-    padding-left: 40px !important;
-    margin-bottom: space(32);
-  }
-
-  @include for-tablet-landscape-down {
-    margin-bottom: space(32);
-  }
 
   @include for-phone-only {
     font-size: $font-body-l !important;
