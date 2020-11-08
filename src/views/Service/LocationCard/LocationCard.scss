@@ -81,6 +81,9 @@
 
 .location__container {
   margin-bottom: space(16) !important;
+  background-color: $white;
+  border-radius: 7px;
+  padding: space(24) !important;
 
   &--address {
     @include for-tablet-portrait-up {
@@ -90,11 +93,5 @@
     @include for-desktop-up {
       justify-content: space-between !important;
     }
-  }
-
-  @include for-tablet-landscape-up {
-    background-color: $alabaster;
-    border-radius: 19px;
-    padding: space(24) !important;
   }
 }

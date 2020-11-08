@@ -18,64 +18,88 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
     return <Loading />;
   }
 
+  const isLiveActivity = resultsStore.isLiveActivity;
+  const liveActivities = resultsStore.liveActivities;
   const results = resultsStore.results;
   const nationalResults = resultsStore.nationalResults;
 
   return (
     <Fragment>
-      <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -10px'}}>
+      <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -16px'}}>
         <div className="flex-col flex-col--12">
           <div className="flex-container flex-container--justify flex-container--no-padding">
-            {(results.size || nationalResults.size) ? (
+            {isLiveActivity ? (
               <Fragment>
-                {results.size > 0 && (
-                  <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
-                    {results.size && (
-                      [...results.entries()].map((results, i) => {
-                        const [title, resultsList] = results;
+                {liveActivities && (
+                  [...liveActivities.entries()].map((results, i) => {
+                    const [title, resultsList] = results;
 
-                        return (
-                          <List
-                            key={title}
-                            title={title}
-                            resultsList={resultsList}
-                            resultsStore={resultsStore}
-                          />
-                        );
-                      })
-                    )}
-                  </div>
-                )}
-                {nationalResults.size > 0 && (
-                  <Fragment>
-                    <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--standard--6 flex-col--4 results__list__national-results' : 'flex-col flex-col--12'}>
-                      {nationalResults.size && (
-                        [...nationalResults.entries()].map((results, i) => {
-                          const [title, resultsList] = results;
-
-                          return (
-                            <List
-                              key={i}
-                              title={title}
-                              resultsList={resultsList}
-                              resultsStore={resultsStore}
-                            />
-                          );
-                        })
-                      )}
-                    </div>
-                  </Fragment>
+                    return (
+                      <List
+                        key={i}
+                        title={title}
+                        resultsList={resultsList}
+                        resultsStore={resultsStore}
+                      />
+                    );
+                  })
                 )}
               </Fragment>
             ) : (
-              <div className="results__container">
-                <h1>
-                  {resultsStore.isPostcodeSearch
-                    ? 'There are currently no service offers available in your area.'
-                    : 'There are currently no service offers available.'}
-                </h1>
-              </div>
-            )}
+              <Fragment>
+                {(results.size || nationalResults.size) ? (
+                  <Fragment>
+                    {results.size > 0 && (
+                      <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
+                        {results.size && (
+                          [...results.entries()].map((results, i) => {
+                            const [title, resultsList] = results;
+    
+                            return (
+                              <List
+                                key={i}
+                                title={title}
+                                resultsList={resultsList}
+                                resultsStore={resultsStore}
+                              />
+                            );
+                          })
+                        )}
+                      </div>
+                    )}
+                    
+                    {nationalResults.size > 0 && (
+                      <Fragment>
+                        <div className={[...results.entries()][0][1].length ? 'flex-col--tablet--12 flex-col--standard--6 flex-col--4 results__list__national-results' : 'flex-col flex-col--12'}>
+                          {nationalResults.size && (
+                            [...nationalResults.entries()].map((results, i) => {
+                              const [title, resultsList] = results;
+    
+                              return (
+                                <List
+                                  key={i}
+                                  title={title}
+                                  resultsList={resultsList}
+                                  resultsStore={resultsStore}
+                                />
+                              );
+                            })
+                          )}
+                        </div>
+                      </Fragment>
+                    )}
+                  </Fragment>
+                ) : (
+                  <div className="results__container">
+                    <h1>
+                      {resultsStore.isPostcodeSearch
+                        ? 'There are currently no service offers available in your area.'
+                        : 'There are currently no service offers available.'}
+                    </h1>
+                  </div>
+                )}
+              </Fragment>
+            )}         
           </div>
         </div>
       </div>

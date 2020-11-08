@@ -50,6 +50,7 @@ import ServiceDisabled from './ServiceDisabled';
 
 interface RouteParams {
   service: string;
+  activity: string;
 }
 
 interface IProps extends RouteComponentProps<RouteParams> {
@@ -84,14 +85,22 @@ class Service extends Component<IProps> {
   componentDidMount() {
     const { serviceStore, match } = this.props;
 
-    serviceStore.fetchService(match.params.service);
+    if(match.params.service) {
+      serviceStore.fetchService(match.params.service);
+    } else if(match.params.activity) {
+      serviceStore.fetchActivity(match.params.activity);
+    }
   }
 
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
       const { serviceStore, match } = this.props;
 
-      serviceStore.fetchService(match.params.service);
+      if(match.params.service) {
+        serviceStore.fetchService(match.params.service);
+      } else if(match.params.activity) {
+        serviceStore.fetchActivity(match.params.activity);
+      }
     }
   }
 
@@ -102,6 +111,7 @@ class Service extends Component<IProps> {
   render() {
     const { serviceStore, uiStore } = this.props;
     const { service, locations, relatedServices } = serviceStore;
+    
     if (!service) {
       return null;
     }
@@ -127,11 +137,19 @@ class Service extends Component<IProps> {
               ]}
             />
             <div className="flex-container flex-container--no-padding flex-container--no-space flex-container--align-center">
-              <div className="flex-col">
-                <div className="service__header__logo">
-                  <img src={getImg(service)} alt={`${service.name} logo`} />
+              {service.open_active ? (
+                <div className="flex-col">
+                  <div className="service__header__logo">
+                    <img src={service.logo_url} alt={`${service.name} logo`} />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex-col">
+                  <div className="service__header__logo">
+                    <img src={getImg(service)} alt={`${service.name} logo`} />
+                  </div>
+                </div>
+              )}
               <div className="flex-col">
                 <h1>{get(service, 'name')}</h1>
                 <p className="service__header__last-updated">
@@ -155,14 +173,14 @@ class Service extends Component<IProps> {
             <div className="service__info flex-col flex-col--10 flex-col--12--tablet">
               <div className="flex-container flex-container--justify flex-container--no-padding">
                 <section className="flex-col flex-col--8 flex-col--mobile--12 flex-col--tablet--12 service__left-column">
-                <div className="flex-container flex-container--align-center flex-container--mobile-no-padding service__section service__section--no-padding">
+                <div className="flex-container flex-container--align-center flex-container--mobile-no-padding service__section service__section--criteria service__section--no-padding">
                   {serviceStore.hasCriteria && (
                     <div className="flex-col flex-col--12 flex-col--mobile--12 service__criteria">
                       <h2 className="service__heading">Who is it for?</h2>
                     </div>
                   )}
                   <div
-                    className="flex-container flex-container--align-center flex-container--mobile-no-padding service__section service__section--no-padding"
+                    className="flex-container flex-container--align-center flex-container--mobile-no-padding service__section service__section--criteria service__section--no-padding"
                     style={{ alignItems: 'stretch' }}
                   >
                     {get(service, 'criteria.age_group') && (
@@ -232,9 +250,9 @@ class Service extends Component<IProps> {
 
                   <div className="flex-container flex-container--align-center service__media service__section--no-padding">
                     <div className="flex-col flex-col--mobile--12">
-                      <h2 className="service__heading">{`What is this ${get(service, 'type')}?`}</h2>
+                      <h2 className="service__heading">{`What is this ${service.type}?`}</h2>
                     </div>
-                    {!!service.gallery_items.length && (
+                    {service.gallery_items && service.gallery_items.length > 0 && (
                       <div className="flex-container flex-container--mobile-no-padding service__gallery">
                         <GalleryCard gallery={service.gallery_items} />
                       </div>

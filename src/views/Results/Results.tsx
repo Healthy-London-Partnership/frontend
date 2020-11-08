@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { History } from 'history';
+import get from 'lodash/get';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
@@ -12,6 +13,8 @@ import MapView from './MapView';
 import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
 import Cta from '../../components/Cta';
+import Select from '../../components/Select';
+import Checkbox from '../../components/Checkbox';
 
 interface IProps {
   location: Location;
@@ -19,11 +22,31 @@ interface IProps {
   history: History;
 }
 
+const activitySortOptions = [
+  {
+    value: 'upcoming-sessions',
+    text: 'Upcoming Sessions'
+  },
+  {
+    value: 'discovery-geo',
+    text: 'Nearest'
+  },
+  {
+    value: 'discovery-price-asc',
+    text: 'Price low to high'
+  },
+  {
+    value: 'discovery-price-desc',
+    text: 'Price high to low'
+  }
+]
+
 class Results extends Component<IProps> {
   componentDidMount() {
     const { resultsStore } = this.props;
 
     resultsStore.getSearchTerms();
+    resultsStore.getActivityTypes();
   }
 
   componentDidUpdate(prevProps: IProps) {
@@ -31,6 +54,7 @@ class Results extends Component<IProps> {
       const { resultsStore } = this.props;
       resultsStore.clear();
       resultsStore.getSearchTerms();
+      resultsStore.getActivityTypes();
     }
   }
 
@@ -51,14 +75,74 @@ class Results extends Component<IProps> {
 
         <div className="results__list flex-container flex-container--justify">
           <div className="results__list__inner flex-col--tablet--12 flex-col--10">
-            <div className="results__filters flex-container flex-container--no-padding flex-container--align-center flex-container--space">
-              <div className="flex-col flex-col--6">
-                {!!resultsStore.results.size && !resultsStore.loading && (	
-                  <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>	
-                )}	
-              </div>	
-              <div className="flex-col flex-col--6">	
-                <ViewFilter />
+            <div
+              className="results__filters flex-container flex-container--no-padding"
+              style={{
+                alignItems: resultsStore.isLiveActivity ? 'flex-end' : 'center',
+                justifyContent: resultsStore.isLiveActivity ? 'flex-start' : 'space-between'
+              }}>
+              {resultsStore.isLiveActivity ? (
+                <Fragment>
+                  <div className="flex-col results__filters__col">
+                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Yoga</small></label>
+                    <Select
+                      className="results__filters__select"
+                      options={resultsStore.activityTypes}
+                      id="activity_type"
+                      placeholder="Select activity type"
+                      selected={resultsStore.activityType}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        resultsStore!.setActivityType(e.target.value);
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch()
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="flex-col results__filters__col">
+                    <label htmlFor="sort_by" className="results__filters__heading">Sort by</label>
+
+                    <Select
+                      className="results__filters__select"
+                      options={activitySortOptions}
+                      id="sort_by"
+                      placeholder="Select sorting method"
+                      selected={resultsStore.sortBy}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        resultsStore!.setSortBy(e.target.value);
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch()
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="flex-col results__filters__col">
+                    <Checkbox
+                      id="virtual_activities"
+                      label="<strong>Show virtual activities only</strong><br>e.g. Zoom classes"
+                      checked={get(resultsStore, 'isVirtual', false)}
+                      onChange={() => {
+                        resultsStore!.toggleIsVirtual();
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch()
+                        });
+                      }}
+                      className="results__filters__checkbox"
+                    />
+                  </div>
+                </Fragment>
+              ) : (
+                <div className="flex-col results__filters__col">
+                  <ViewFilter />
+                </div>
+              )}
+              <div className="flex-col results__filters__col" style={{width: resultsStore.isLiveActivity ? '100%' : 'auto'}}>
+                {!!resultsStore.results.size && !resultsStore.loading && (
+                  <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>
+                )}
               </div>
             </div>
             {resultsStore.nhsResult &&
@@ -74,9 +158,9 @@ class Results extends Component<IProps> {
                 </div>
               </div>
             }
-            {resultsStore.view === 'grid' ? (	
-              <ListView resultsStore={resultsStore} history={history} />	
-            ) : (	
+            {resultsStore.view === 'grid' ? (
+              <ListView resultsStore={resultsStore} history={history} />
+            ) : (
               <MapView />
             )}
           </div>

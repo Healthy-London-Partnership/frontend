@@ -10,15 +10,22 @@ import CategoryList from '../CategoryList';
 import SearchInput from '../SearchInput';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
+import ResultsStore from '../../stores/resultsStore';
 
 interface IProps extends RouteComponentProps {
+  resultsStore?: ResultsStore;
   windowSizeStore?: WindowSizeStore;
   cmsStore?: CMSStore;
 }
 
-@inject('windowSizeStore', 'cmsStore')
+@inject('resultsStore', 'windowSizeStore', 'cmsStore')
 @observer
 class Search extends React.Component<IProps> {
+  componentDidMount() {
+    const { resultsStore } = this.props;
+    resultsStore!.clear();
+  }
+
   render() {
     const { windowSizeStore, cmsStore } = this.props;
 

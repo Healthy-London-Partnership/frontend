@@ -69,7 +69,9 @@ class SearchResultCard extends React.Component<IProps> {
           resultsStore.view === 'map'  ?
           this.props.activeIdHandler(result.id) :
           history.push({
-            pathname: `/services/${result.slug}`,
+            pathname: result.open_active ?
+            `/activities/${result.slug}` :
+            `/services/${result.slug}`,
           });
         }}
         tabIndex={0}
@@ -129,15 +131,22 @@ class SearchResultCard extends React.Component<IProps> {
             )}
           </div>
           <div className="search-result-card__logo">
-            <img
-              src={
-                result.has_logo
-                  ? `${apiBase}/services/${result.id}/logo.png?v=${result.updated_at}`
-                  : `${apiBase}/organisations/${result.organisation_id}/logo.png?v=${result.updated_at}`
-              }
-              alt={result.name}
-              onError={(ev: any) => (ev.target.src = FallBackLogo)}
-            />
+            {result.logo_url ? (
+              <img
+                src={result.logo_url}
+                alt={result.name}
+              />
+            ) : (
+              <img
+                src={
+                  result.has_logo
+                    ? `${apiBase}/services/${result.id}/logo.png?v=${result.updated_at}`
+                    : `${apiBase}/organisations/${result.organisation_id}/logo.png?v=${result.updated_at}`
+                }
+                alt={result.name}
+                onError={(ev: any) => (ev.target.src = FallBackLogo)}
+              />
+            )}
           </div>
         </div>
         <div className="search-result-card__intro">
@@ -148,7 +157,11 @@ class SearchResultCard extends React.Component<IProps> {
           role="navigation"
           aria-label={`View more information on ${result.name}`}
         >
-          <Link to={`/services/${result.slug}`}>
+          <Link to={
+            result.open_active ?
+            `/activities/${result.slug}` :
+            `/services/${result.slug}`
+          }>
             <span>View More</span>
             <FontAwesomeIcon icon="chevron-right" />
           </Link>

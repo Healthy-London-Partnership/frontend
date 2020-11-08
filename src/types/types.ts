@@ -61,8 +61,10 @@ export interface IService {
   is_free: boolean;
   is_national: boolean;
   last_modified_at: string;
+  logo_url: string;
   name: string;
   offerings: [];
+  open_active: boolean;
   organisation_id: string;
   organisation?: IOrganisation;
   referral_button_text: null | string;

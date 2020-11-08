@@ -4,17 +4,18 @@ import { observer } from 'mobx-react';
 import './Select.scss';
 
 interface IOption {
-  value: string;
+  value: any;
   text: string;
 }
 
 interface IProps {
-  options: IOption[];
+  options: IOption[] | null;
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
   placeholder: string;
   id: string;
   disabled?: boolean;
+  selected?: any;
 }
 
 const Select: React.FunctionComponent<IProps> = ({
@@ -24,18 +25,19 @@ const Select: React.FunctionComponent<IProps> = ({
   placeholder,
   id,
   disabled,
+  selected,
 }) => (
   <select
     className={`select ${className}`}
     onChange={onChange}
     id={id}
-    defaultValue={placeholder}
+    value={selected ? selected : placeholder}
     disabled={disabled}
   >
     <option value={placeholder} disabled={true} hidden={true}>
       {placeholder}
     </option>
-    {options.map(({ value, text }) => (
+    {options && options.map(({ value, text }) => (
       <option key={value} value={value}>
         {text}
       </option>
