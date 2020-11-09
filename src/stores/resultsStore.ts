@@ -151,6 +151,11 @@ export default class ResultsStore {
   };
 
   renderTree = (concepts: any, output: any) => {
+    output.push({
+      value: '',
+      text: 'All activity types'
+    });
+
     concepts.forEach((concept: any) => {
       let label = concept.prefLabel;
 
@@ -308,14 +313,10 @@ export default class ResultsStore {
     if(this.keyword) {
       searchSlug = this.keyword.replace(/\s+/g, '-').toLowerCase();
     } else if(this.category) {
-      console.log(this.category);
       searchSlug = this.category.slug.replace('homepage-', '');
     } else if(this.persona) {
-      console.log(this.persona);
       searchSlug = this.persona.slug.replace('homepage-', '');
     }
-
-    console.log(searchSlug);
 
     await axios.get('https://api.nhs.uk/conditions/' + searchSlug, {
       headers: {
