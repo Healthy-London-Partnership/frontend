@@ -18,8 +18,8 @@ interface IProps extends RouteComponentProps {
 }
 
 interface IState {
-  collection_categories: any[];
-  collection_personas: any[];
+  collection_categories: any;
+  collection_personas: any;
 }
 
 @inject('cmsStore', 'resultsStore')
@@ -43,11 +43,7 @@ class Search extends React.Component<IProps, IState> {
   }
 
   getCollection() {
-    const { resultsStore } = this.props;
     const { collection_categories, collection_personas } = queryString.parse(this.props.location.search, {arrayFormat: 'comma'});
-
-    resultsStore.category = collection_categories ? collection_categories : null;
-    // resultsStore.persona = collection_personas ? collection_personas : '';
 
     this.setState({
       collection_categories: collection_categories ? [collection_categories] : [],
@@ -65,9 +61,9 @@ class Search extends React.Component<IProps, IState> {
     
     const renderSearchInfo = () =>{
       if(this.state.collection_categories.length > 0){
-        return <span>This search is restricted to the <strong>{this.state.collection_categories.map((item:string, i:number) => item + ((this.state.collection_categories.length !== i + 1) ? ', ' : ' '))}</strong> category(s).</span>
+        return <span>This search is restricted to the <strong>{this.state.collection_categories.map((item:string, i:number) => item + (this.state.collection_categories.length !== i + 1 ? ', ' : ' '))} </strong>categorie(s).</span>;
       } else if(this.state.collection_personas.length > 0) {
-        return <span>This search is restricted to the <strong>{this.state.collection_personas.map((item:string, i:number) => item + ((this.state.collection_personas.length !== i + 1) ? ', ' : ' '))}</strong> persona(s).</span>
+        return <span>This search is restricted to the <strong>{this.state.collection_personas.map((item:string, i:number) => item + (this.state.collection_personas.length !== i + 1 ? ', ' : ' '))}  </strong>persona(s).</span>;
       }
     }
 
