@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -130,13 +130,19 @@ class SearchResultCard extends React.Component<IProps> {
               </div>
             )}
           </div>
-          <div className="search-result-card__logo">
-            {result.logo_url ? (
-              <img
-                src={result.logo_url}
-                alt={result.name}
-              />
-            ) : (
+          {result.open_active ? (
+            <Fragment>
+              {result.logo_url &&
+                <div className="search-result-card__logo">
+                  <img
+                    src={result.logo_url}
+                    alt={result.name}
+                  />
+                </div>
+              }
+            </Fragment>
+          ) : (
+            <div className="search-result-card__logo">
               <img
                 src={
                   result.has_logo
@@ -146,8 +152,8 @@ class SearchResultCard extends React.Component<IProps> {
                 alt={result.name}
                 onError={(ev: any) => (ev.target.src = FallBackLogo)}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <div className="search-result-card__intro">
           <p className="body--s">{result.intro}</p>
