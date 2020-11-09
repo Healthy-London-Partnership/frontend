@@ -14,7 +14,7 @@ import CMSStore from '../../stores/CMSStore';
 
 interface IProps extends RouteComponentProps {
   cmsStore?: CMSStore;
-  resultsStore?: ResultsStore;
+  resultsStore: ResultsStore;
 }
 
 interface IState {
@@ -43,7 +43,11 @@ class Search extends React.Component<IProps, IState> {
   }
 
   getCollection() {
+    const { resultsStore } = this.props;
     const { collection_categories, collection_personas } = queryString.parse(this.props.location.search, {arrayFormat: 'comma'});
+
+    resultsStore.category = collection_categories ? collection_categories : null;
+    // resultsStore.persona = collection_personas ? collection_personas : '';
 
     this.setState({
       collection_categories: collection_categories ? [collection_categories] : [],
