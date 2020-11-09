@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import Button from '../../components/Button';
 import { inject, observer } from 'mobx-react';
 import queryString from 'query-string';
@@ -46,60 +46,65 @@ class Favourites extends Component<IProps> {
           title="Favourites"
           metaDescription="Favourites"
         />
-        <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Favourites', url: '' }]} />
-        <div className="favourites__header flex-container">
-          <div className="flex-col flex-col--12 favourites__header--heading">
-            <h1>{get(cmsStore, 'favourites.title')}</h1>
-          </div>
-          <div className="flex-container flex-container--mobile-no-padding flex-container--align-center favourites__header--inner-container">
-            <div className="flex-col flex-col--5 flex-col--mobile--12 flex-col--tablet--12 flex-col--tablet-large--4 favourites__header--header-container">
-              <p>{get(cmsStore, 'favourites.content')}</p>
+        <div className="favourites__header flex-container flex-container--justify">
+          <div className="favourites__header__inner flex-col--10 flex-col--tablet-large--12">
+            <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Favourites', url: '' }]} />
+            <div className="flex-col flex-col--12 favourites__header--heading">
+              <h1>{get(cmsStore, 'favourites.title')}</h1>
             </div>
-            <div className="flex-col flex-col--4 flex-col--medium--6 flex-col--tablet-large--7 mobile-hide tablet-hide favourites__header--header-container">
-              <FavouriteShare />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-container flex-container--mobile-no-padding flex-container--align-center ">
-          {!!favouritesStore.favourites.length ? (
-            <Fragment>
-              <div className="flex-col flex-col--12 favourites__count">
-                <p>{`${favouritesStore.favourites.length} results found`}</p>
+            <div className="flex-container flex-container--no-padding">
+              <div className="flex-col flex-col--6 flex-col--mobile--12 flex-col--tablet--12 flex-col--tablet-large--4">
+                <p>{get(cmsStore, 'favourites.content')}</p>
               </div>
-
-              <div className="flex-col flex-col--12">
-                <div className="flex-container flex-container--justify favourites--container">
-                  {favouritesStore.favourites.map((favourite: IService) => {
-                    return (
-                      <FavouritesCard
-                        key={favourite.id}
-                        service={favourite}
-                        locations={favouritesStore.getLocations(favourite.id)}
-                        removeFavourite={favouritesStore.removeFavourite}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="flex-container mobile-show tablet-show">
+              <div className="flex-col flex-col--6 flex-col--medium--6 flex-col--tablet-large--7 mobile-hide tablet-hide">
                 <FavouriteShare />
               </div>
-            </Fragment>
-          ) : (
-            <div className="flex-container favourites__no-favourites">
-              <div className="flex-col flex-col--12">
-                <h3>No favourites saved</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="favourites__content flex-container flex-container--justify">
+          <div className="favourites__content__inner flex-col--10 flex-col--tablet-large--12">
+            {!!favouritesStore.favourites.length ? (
+              <div className="flex-container flex-container--no-padding flex-container--justify">
+                <div className="flex-col text-align-center favourites__count">
+                  <p>{`${favouritesStore.favourites.length} results found`}</p>
+                </div>
+
+                <div className="flex-col flex-col--12">
+                  <div className="flex-container flex-container--no-padding">
+                    {favouritesStore.favourites.map((favourite: IService) => {
+                      return (
+                        <FavouritesCard
+                          key={favourite.id}
+                          service={favourite}
+                          locations={favouritesStore.getLocations(favourite.id)}
+                          removeFavourite={favouritesStore.removeFavourite}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex-container mobile-show tablet-show">
+                  <FavouriteShare />
+                </div>
+              </div>
+            ) : (
+              <div className="flex-container flex-container--justify">
+                <div className="flex-col">
+                  <h3>No favourites saved</h3>
+                </div>
+              </div>
+            )}
+
+            <div className="flex-container flex-container--justify">
+              <div className="favourites__add-more">
+                <Link to="/">
+                  <Button text="Add more" icon="plus" onClick={() => history.push('/')} />
+                </Link>
               </div>
             </div>
-          )}
-        </div>
-        <div className="flex-container flex-container--justify">
-          <div className="favourites__add-more">
-            <Link to="/">
-              <Button text="Add more" icon="plus" onClick={() => history.push('/')} />
-            </Link>
           </div>
         </div>
       </main>

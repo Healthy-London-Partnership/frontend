@@ -6,112 +6,19 @@
 .footer {
   position: relative;
   color: $white;
-  background-color: $san_juan;
+  background-color: $gulf-blue;
   padding: space(64) 0;
-  margin-top: pxtorem(192px);
 
   @include for-phone-only {
-    padding: space(24) 0 space(64) 0;
+    padding: space(32) 0;
   }
 
-  &--inner-container {
-    position: relative;
-
-    @include for-tablet-portrait-up {
-      padding-top: pxtorem(30px) !important;
-    }
+  @media (max-width: 980px) {
+    margin-bottom: space(48);
   }
 
   &--service {
     margin-top: 0;
-
-    > .flex-container {
-      &:before,
-      &:after {
-        display: none !important;
-      }
-    }
-  }
-
-  &:before {
-    content: '';
-    background-image: url('../../assets/images/backgrounds/footer-shape.svg');
-    background-size: cover;
-    background-position: top center;
-    background-repeat: no-repeat;
-    display: block;
-    width: 100%;
-    height: 110px;
-    position: absolute;
-    top: -83px;
-    left: 0;
-
-    @include for-tablet-portrait-down {
-      background-image: url('../../assets/images/backgrounds/footer-shape-mobile.svg');
-    }
-  }
-
-  > .flex-container {
-    position: relative;
-    max-width: 1260px;
-
-    &:before,
-    &::after {
-      position: absolute;
-    }
-
-    @include for-tablet-landscape-up {
-      &:before {
-        content: url('../../assets/images/trees/pink-lg.svg');
-        top: -208px;
-        left: 68px;
-
-        @include for-big-desktop-up {
-          left: -145px;
-        }
-      }
-
-      &:after {
-        content: url('../../assets/images/bridge-shape.svg');
-        top: -158px;
-        left: 30%;
-        z-index: -1;
-
-        @include for-desktop-up {
-          top: -140px;
-        }
-
-        @include for-big-desktop-up {
-          top: -120px;
-        }
-      }
-    }
-
-    @include for-tablet-portrait-down {
-      &:before {
-        content: url('../../assets/images/bridge-shape.svg');
-        top: -133px;
-        left: 143px;
-        transform: scale(0.7);
-        z-index: -1;
-
-        @include for-phone-only {
-          top: -126px;
-          left: 0px;
-        }
-      }
-
-      &:after {
-        content: url('../../assets/images/trees/pink-lg.svg');
-        top: -168px;
-        right: 72px;
-
-        @include for-phone-only {
-          right: 14px;
-          top: -142px;
-        }
-      }
-    }
   }
 
   &__disclaimer {
@@ -149,16 +56,6 @@
   margin: space(24) 0;
 }
 
-.footer__section {
-  @include for-tablet-landscape-up {
-    padding: space(12);
-  }
-
-  @include for-tablet-portrait-down {
-    padding: space(12) 0;
-  }
-}
-
 .footer-contact-links {
   line-height: 26px;
   padding: 0 !important;
@@ -173,58 +70,24 @@
   button {
     color: $white;
     border: 2px solid $white;
-    background: $san-juan;
+    background: $gulf-blue;
     font-family: $font-primary;
     font-weight: normal;
     font-size: pxtorem(18px);
 
     &:hover {
       background: $white;
-      color: $san-juan;
+      color: $gulf-blue;
     }
   }
 
   @include for-phone-only {
     margin-top: space(32);
   }
-
-  @include for-tablet-landscape-up {
-    &:before {
-      position: absolute;
-      content: url('../../assets/images/trees/peurto-lg.svg');
-      top: -245px;
-      right: 50px;
-      max-width: 33px;
-
-      @include for-desktop-up {
-        right: -20px;
-      }
-
-      @include for-big-desktop-up {
-        right: -200px;
-      }
-    }
-
-    &:after {
-      position: absolute;
-      content: url('../../assets/images/trees/cranberry-lg.svg');
-      top: -240px;
-      right: 0px;
-      max-width: 33px;
-
-      @include for-desktop-up {
-        right: -70px;
-      }
-
-      @include for-big-desktop-up {
-        right: -260px;
-      }
-    }
-  }
 }
 
 .header__footer {
-  background-color: $iceberg;
+  width: 100%
 }
 
 .footer-mobile-menu {

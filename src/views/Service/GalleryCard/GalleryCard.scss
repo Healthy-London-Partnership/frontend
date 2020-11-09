@@ -133,7 +133,8 @@
     cursor: pointer;
 
     p {
-      font-family: $font-secondary;
+      font-family: $font-primary;
+      font-weight: 700;
 
       &:hover {
         text-decoration: underline;

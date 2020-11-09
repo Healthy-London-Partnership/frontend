@@ -1,0 +1,71 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/breakpoints.scss';
+@import '../../styles/fonts.scss';
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: space(24);
+  background-color: $nhs-blue;
+  color: $white;
+  border-radius: 10px;
+
+  @include for-tablet-landscape-down {
+    padding: space(20);
+  }
+
+  &-info {
+    flex: 0 1 420px;
+    padding-right: space(32);
+
+    @include for-desktop-up {
+      flex: 0 1 465px;
+    }
+
+    @include for-big-desktop-up {
+      flex: 0 1 620px;
+    }
+
+    @include for-tablet-landscape-down {
+      padding-right: 0;
+    }
+  }
+
+  &-logo {
+    max-width: 120px;
+    margin-right: space(32);
+
+    @include for-tablet-landscape-down {
+      margin-bottom: space(16);
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &-title {
+    margin-bottom: space(8);
+  }
+
+  &-description {
+    @include for-tablet-landscape-down {
+      margin-bottom: space(24);
+    }
+  }
+
+  .button {
+    flex: 0 1 170px;
+    margin-left: auto;
+    background-color: transparent;
+    color: $white;
+    border: 2px solid $white;
+    text-align: center;
+
+    @include for-tablet-landscape-down {
+      margin-left: 0;
+    }
+  }
+}

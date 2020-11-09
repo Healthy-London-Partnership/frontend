@@ -4,12 +4,10 @@ import get from 'lodash/get';
 import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
-import map from 'lodash/map';
 
-import { apiBase } from '../config/api';
+import { apiBase, nhsApiSubscriptionKey, iminApiKey, iminApiBase } from '../config/api';
 import {
   IParams,
-  ICategory,
   IPersona,
   IOrganisation,
   IService,
@@ -18,17 +16,24 @@ import {
 
 import { queryRegex, querySeparator } from '../utils/utils';
 
+const skos = require('@openactive/skos');
+
 export default class ResultsStore {
   @observable keyword: string = '';
-  @observable categoryIds: string[] = [];
-  @observable categories: ICategory[] = [];
-  @observable personaId: string = '';
+  @observable category: any;
   @observable persona: IPersona | null = null;
+  @observable categories: [] | null = [];
+  @observable personas: [] | null = [];
+  @observable taxonomyCategory: any;
+  @observable taxonomyOrganisation: any;
   @observable organisations: IOrganisation[] | null = [];
   @observable is_free: boolean = false;
   @observable order: 'relevance' | 'distance' = 'relevance';
   @observable results: Map<string, IService[]> = new Map();
   @observable nationalResults: Map<string, IService[]> = new Map();
+  @observable nhsResult: any;
+  @observable isLiveActivity: boolean = false;
+  @observable liveActivities: Map<string, IService[]> = new Map();
   @observable loading: boolean = false;
   @observable currentPage: number = 1;
   @observable totalItems: number = 0;
@@ -37,20 +42,15 @@ export default class ResultsStore {
   @observable locationCoords: IGeoLocation | {} = {};
   @observable fetched: boolean = false;
   @observable view: 'grid' | 'map' = 'grid';
+  @observable radius: number = 5;
+  @observable activityTypes: any[] | null = [];
+  @observable activityType: string = '';
+  @observable sortBy: string = 'upcoming-sessions';
+  @observable isVirtual: boolean = false;
 
   @computed
   get isKeywordSearch() {
     return !!this.keyword;
-  }
-
-  @computed
-  get isPersonaSearch() {
-    return !!this.persona;
-  }
-
-  @computed
-  get isCategorySearch() {
-    return !!this.categoryIds.length;
   }
 
   @computed
@@ -61,14 +61,19 @@ export default class ResultsStore {
   @action
   clear() {
     this.keyword = '';
-    this.categoryIds = [];
-    this.categories = [];
-    this.personaId = '';
+    this.category = '';
     this.persona = null;
+    this.categories = null;
+    this.personas = null;
+    this.taxonomyCategory = '';
+    this.taxonomyOrganisation = '';
     this.is_free = false;
     this.order = 'relevance';
     this.results = new Map();
     this.nationalResults = new Map();
+    this.nhsResult = '';
+    this.isLiveActivity = false;
+    this.liveActivities = new Map();
     this.fetched = false;
     this.organisations = [];
     this.currentPage = 1;
@@ -77,29 +82,88 @@ export default class ResultsStore {
     this.postcode = '';
     this.locationCoords = {};
     this.view = 'grid';
+    this.radius = 5;
+    this.activityTypes = [];
+    this.activityType = '';
+    this.sortBy = 'upcoming-sessions';
+    this.isVirtual = false;
   }
 
   @action
-  getCategory = () => {
-    return Promise.all(
-      this.categoryIds.map((id: string) => {
-        return axios
-          .get(`${apiBase}/collections/categories/${id}`)
-          .then(response => get(response, 'data.data'))
-          .then(data => this.categories.push(data))
-          .catch(error => console.error(error));
-      })
-    );
+  getAllCollections = async () => {
+    axios
+      .get(`${apiBase}/collections/categories`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.categories = data)
+      .catch(error => console.error(error));
+
+    axios
+      .get(`${apiBase}/collections/personas`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.personas = data)
+      .catch(error => console.error(error));
   };
 
   @action
-  getPersona = async () => {
-    try {
-      const persona = await axios.get(`${apiBase}/collections/personas/${this.personaId}`);
-      this.persona = get(persona, 'data.data', '');
-    } catch (e) {
-      console.error(e);
-    }
+  getCategory = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/categories/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.category = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getPersona = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/collections/personas/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.persona = data)
+      .then(() => this.setParams())
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getTaxonomiesCategory = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/taxonomies/categories/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.taxonomyCategory = data)
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getTaxonomiesOrganisation = async (slug: string) => {
+    return axios
+      .get(`${apiBase}/taxonomies/organisations/${slug}`)
+      .then(response => get(response, 'data.data'))
+      .then(data => this.taxonomyOrganisation = data)
+      .catch(error => console.error(error));
+  };
+
+  @action
+  getActivityTypes = async () => {
+    const { data } = await axios.get("https://openactive.io/activity-list/activity-list.jsonld");
+    let scheme = new skos.ConceptScheme(data);
+
+    this.activityTypes = this.renderTree(scheme.getTopConcepts(), []);
+  };
+
+  renderTree = (concepts: any, output: any) => {
+    concepts.forEach((concept: any) => {
+      let label = concept.prefLabel;
+
+      if (concept.altLabel && concept.altLabel.length > 0) {
+        label = label + ' / ' + concept.altLabel.join(' / ')
+      }
+
+      output.push({
+        value: concept.id.split('#')[1],
+        text: label
+      });
+    });
+    return output;
   };
 
   getSearchTerms = () => {
@@ -111,24 +175,16 @@ export default class ResultsStore {
   @action
   setSearchTerms = async (searchTerms: { [key: string]: any }) => {
     forEach(searchTerms, (key, value) => {
-      if (value === 'category') {
-        this.categoryIds = key.split(',');
-      }
-
-      if (value === 'persona') {
-        this.personaId = key;
-      }
-
       if (value === 'search_term') {
         this.keyword = key;
       }
 
       if (value === 'is_free') {
-        this.is_free = key === 'true' ? true : false;	
+        this.is_free = key === 'true' ? true : false;
       }
 
       if (value === 'view') {
-        this.view = key;	
+        this.view = key;
       }
 
       if (value === 'page') {
@@ -138,15 +194,27 @@ export default class ResultsStore {
       if (value === 'postcode') {
         this.postcode = key;
       }
+
+      if (value === 'live_activity') {
+        this.isLiveActivity = key;
+      }
+
+      if (value === 'radius') {
+        this.radius = key;
+      }
+
+      if (value === 'activity_type') {
+        this.activityType = key;
+      }
+
+      if (value === 'sort_by') {
+        this.sortBy = key;
+      }
+
+      if (value === 'is_virtual') {
+        this.isVirtual = key;
+      }
     });
-
-    if (this.categoryIds) {
-      await this.getCategory();
-    }
-
-    if (this.personaId) {
-      await this.getPersona();
-    }
 
     if (this.postcode) {
       await this.geolocate();
@@ -157,22 +225,25 @@ export default class ResultsStore {
 
   setParams = async () => {
     const params: IParams = {};
-    // const categories = map(this.categories, 'name');
 
-    if (this.persona) {
-      params.persona = get(this.persona, 'name');
+    if (this.is_free) {
+      params.is_free = this.is_free;
     }
 
-    if (this.is_free) {	
-      params.is_free = this.is_free;	
-    }
-
-    if (this.view) {	
+    if (this.view) {
       params.view = this.view;
     }
 
     if (this.keyword) {
       params.query = this.keyword;
+    }
+
+    if (this.category) {
+      params.category = this.category.slug;
+    }
+
+    if (this.persona) {
+      params.persona = this.persona.slug;
     }
 
     if (size(this.locationCoords)) {
@@ -194,6 +265,7 @@ export default class ResultsStore {
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
     let itemsPerPage;
+    let searchUrl;
 
     if(isNational) {
       itemsPerPage = Math.round(this.itemsPerPage / 2);
@@ -201,7 +273,15 @@ export default class ResultsStore {
       itemsPerPage = this.itemsPerPage;
     }
 
-    const { data } = await axios.post(`${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`, params);
+    if(this.category || this.persona) {
+      searchUrl = `${apiBase}/search?page=${this.currentPage}`;
+    } else if(this.view === 'map') {
+      searchUrl = `${apiBase}/search`;
+    } else {
+      searchUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
+    }
+
+    const { data } = await axios.post(searchUrl, params);
     this.totalItems += get(data, 'meta.total', 0);
 
     if(!isNational) {
@@ -210,18 +290,89 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
+    if(this.keyword || this.category || this.persona) {
+      await this.fetchNhsConditions();
+    }
+
+    if(this.isLiveActivity && params.location) {
+      this.fetchLiveActivities(params.location);
+    }
+
     this.getOrganisations();
   };
 
   @action
-  ordered = () => {
-    const categories = map(this.categories, 'name');
-    // reorder categories based on list in URL
-    const order = [...this.results.entries()].sort((a, b) => {
-      return categories.indexOf(a[0]) - categories.indexOf(b[0]);
+  fetchNhsConditions = async () => {
+    let searchSlug;
+
+    if(this.keyword) {
+      searchSlug = this.keyword.replace(/\s+/g, '-').toLowerCase();
+    } else if(this.category) {
+      console.log(this.category);
+      searchSlug = this.category.slug.replace('homepage-', '');
+    } else if(this.persona) {
+      console.log(this.persona);
+      searchSlug = this.persona.slug.replace('homepage-', '');
+    }
+
+    console.log(searchSlug);
+
+    await axios.get('https://api.nhs.uk/conditions/' + searchSlug, {
+      headers: {
+        'subscription-key': `${nhsApiSubscriptionKey}`,
+      },
+    })
+    .then(response => {
+      this.nhsResult = response.data;
+    })
+    .catch(error => {
+      this.nhsResult = null;
+    });
+  }
+
+  @action
+  fetchLiveActivities = async (location: any) => {
+    const { data } = await axios.get(`${iminApiBase}`, {
+      headers: {
+        'X-API-KEY': `${iminApiKey}`
+      },
+      params: {
+        'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
+        mode: this.sortBy,
+        limit: 9,
+        page: this.currentPage,
+        activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
+        isVirtual: this.isVirtual ? this.isVirtual : null,
+      }
     });
 
-    this.results = new Map(order);
+    this.totalItems = data['imin:totalItems'];
+
+    if(this.totalItems > 0) {
+      let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
+        return {
+          contact_name: activity.organizer.name ? activity.organizer.name : null,
+          contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
+          description: activity.description ? activity.description : null,
+          gallery_items: activity.image ? activity.image : null,
+          has_logo: activity.image ? true : false,
+          logo_url: activity.image ? activity.image[0].url : null,
+          id: activity.identifier ? activity.identifier : null,
+          intro: activity.description ? this.truncateString(activity.description, 150) : null,
+          is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
+          name: activity.name ? activity.name : null,
+          open_active: true,
+          organisation_id: activity.organizer ? activity.organizer.id : null,
+          organisation: activity.organizer ? activity.organizer.name : null,
+          service_locations: [],
+          slug: activity.identifier ? activity.identifier : null,
+          type: 'activity',
+          video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
+        };
+      });
+
+      this.liveActivities.set('Live Activities', liveActivitiesMapped);
+    }
   };
 
   @action
@@ -270,6 +421,11 @@ export default class ResultsStore {
     this.postcode = postcode.replace(' ', '');
   };
 
+  @action
+  radiusChange = (radius: number) => {
+    this.radius = radius;
+  };
+
   amendSearch = () => {
     let url = window.location.search;
 
@@ -285,17 +441,17 @@ export default class ResultsStore {
       this.locationCoords = {};
     }
 
-    if (this.is_free) {	
-      url = this.updateQueryStringParameter('is_free', this.is_free, url);	
-    }	
-
-    if (!this.is_free) {	
-      url = this.removeQueryStringParameter('is_free', url);	
+    if (this.is_free) {
+      url = this.updateQueryStringParameter('is_free', this.is_free, url);
     }
 
-    if (this.view) {	
+    if (!this.is_free) {
+      url = this.removeQueryStringParameter('is_free', url);
+    }
+
+    if (this.view) {
       url = this.updateQueryStringParameter('view', this.view, url)
-    }	
+    }
 
     if (this.keyword) {
       url = this.updateQueryStringParameter('search_term', this.keyword, url);
@@ -303,6 +459,48 @@ export default class ResultsStore {
 
     if (!this.keyword) {
       url = this.removeQueryStringParameter('search_term', url);
+    }
+
+    if (this.isLiveActivity) {
+      url = this.updateQueryStringParameter('live_activity', this.isLiveActivity, url);
+    }
+
+    if (!this.isLiveActivity) {
+      url = this.removeQueryStringParameter('live_activity', url);
+    }
+
+    if(this.isLiveActivity) {
+      if (this.radius) {
+        url = this.updateQueryStringParameter('radius', this.radius, url);
+      }
+
+      if (!this.radius) {
+        url = this.removeQueryStringParameter('radius', url);
+      }
+
+      if (this.activityType) {
+        url = this.updateQueryStringParameter('activity_type', this.activityType, url);
+      }
+
+      if (!this.activityType) {
+        url = this.removeQueryStringParameter('activity_type', url);
+      }
+
+      if (this.sortBy) {
+        url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
+      }
+
+      if (!this.sortBy) {
+        url = this.removeQueryStringParameter('sort_by', url);
+      }
+
+      if (this.isVirtual) {
+        url = this.updateQueryStringParameter('is_virtual', this.isVirtual, url);
+      }
+
+      if (!this.isVirtual) {
+        url = this.removeQueryStringParameter('is_virtual', url);
+      }
     }
 
     this.results = new Map();
@@ -319,10 +517,14 @@ export default class ResultsStore {
 
       const location = get(geolocation, 'data.results[0].geometry.location', {});
 
-      this.locationCoords = {
-        lon: location.lng,
-        lat: location.lat,
-      };
+      if(location) {
+        this.locationCoords = {
+          lon: location.lng,
+          lat: location.lat,
+        };
+      } else {
+        alert('we could not find a location for the address entered');
+      }
     } catch (e) {
       console.error(e);
     }
@@ -333,30 +535,48 @@ export default class ResultsStore {
     this.keyword = value;
   };
 
-  @action	
-  toggleView = (view: 'map' | 'grid') => {	
+  @action
+  toggleView = (view: 'map' | 'grid') => {
     this.view = view;
   };
 
   @action
-  orderResults = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.order = e.target.value as 'relevance' | 'distance';
-    this.results = new Map();
-    this.nationalResults = new Map();
-
-    this.setParams();
-  };
-  
-  @action	
   toggleIsFree = () => {
     this.is_free = !this.is_free;
   };
 
-  @action	
-  paginate = (page: number) => {	
-    this.currentPage = page;	
+  @action
+  setIsLiveActivity = (setting: boolean) => {
+    this.isLiveActivity = setting;
+  };
+
+  @action setActivityType = (activity: string) => {
+    this.activityType = activity;
+  };
+
+  @action setSortBy = (setting: string) => {
+    this.sortBy = setting;
+  };
+
+  @action
+  toggleIsVirtual = () => {
+    this.isVirtual = !this.isVirtual;
+  };
+
+  @action
+  paginate = (page: number) => {
+    this.currentPage = page;
     this.results = new Map();
     this.nationalResults = new Map();
-    this.loading = true;	
+    this.loading = true;
+  };
+
+  @action
+  truncateString = (str: string, num: number) => {
+    if (str.length <= num) {
+      return str
+    }
+
+    return str.slice(0, num) + '...'
   };
 }

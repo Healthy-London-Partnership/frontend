@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { NavLink as RouterLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import './Header.scss';
+import NHSLogo from '../../assets/images/nhs-logo.svg';
 
 import Button from '../Button';
 import WindowSizeStore from '../../stores/windowSizeStore';
@@ -20,7 +21,7 @@ interface IProps extends RouteComponentProps {
 @observer
 class Header extends Component<IProps> {
   render() {
-    const { windowSizeStore, uiStore, location } = this.props;
+    const { windowSizeStore, uiStore } = this.props;
 
     // injected stores must be typed as optional, but will always be there if injected. Allows workound for destructuring values from store
     if (!windowSizeStore || !uiStore) {
@@ -28,61 +29,26 @@ class Header extends Component<IProps> {
     }
 
     const { isMobile } = windowSizeStore;
-    const { burgerMenuOpen, toggleBurgerMenu, toggleFeedbackModal, keywordEditOpen } = uiStore;
+    const { burgerMenuOpen, toggleBurgerMenu, toggleFeedbackModal } = uiStore;
 
     return (
       <header
         className={cx('header', {
           active: burgerMenuOpen,
-          'header--grey': location.pathname.includes('/referral'),
         })}
       >
-        <div
-          className={cx('flex-col--12', {
-            'mobile-hide tablet--large-hide medium-hide': burgerMenuOpen || keywordEditOpen,
-          })}
-        >
+        <div className="flex-container flex-container--justify header__container">
           <div
-            className={cx(
-              'flex-container flex-container--mobile-no-padding flex-container--justify header--top-row',
-              {
-                'header--top-row--iceberg':
-                  location.pathname === '/' || location.pathname.includes('/favourites'),
-                'header--top-row--favourites': location.pathname.includes('/favourites'),
-              }
-            )}
-          >
-            <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--button-box">
-              <div id="google_translate_element" />
-            </div>
-            <div className="flex-col mobile-hide tablet--large-hide medium-hide">
-              <Button
-                text="Give Feedback"
-                header={true}
-                icon="comment"
-                onClick={() => uiStore.toggleFeedbackModal()}
-              />
-            </div>
-            <div className="flex-col flex-col--mobile--5 flex-col--mobile-small--6 header--top-row--favourite header--top-row--button-box">
-              <RouterLink to="/favourites">
-                <Button text="Favourites" header={true} icon="star" />
-              </RouterLink>
-            </div>
-          </div>
-        </div>
-        <div className="flex-container flex-container--align-center flex-container--justify header__container">
-          <div
-            className={cx('flex-col flex-col--6 flex-col--tablet-large--12 header__brand', {
+            className={cx('flex-col flex-col--5 flex-col--tablet-large--12 header__brand', {
               'header__brand--active': burgerMenuOpen,
               'header__brand--sticky': uiStore.keywordEditOpen,
-              'header__brand--iceberg': location.pathname === '/',
-              'header__brand--favourites': location.pathname.includes('/favourites'),
             })}
           >
             <figure className="logo">
               <RouterLink to="/" aria-label="Home Link">
-                <span className="logo-heading">NHS Connect</span>
+                <span className="logo-heading">Connect</span>
                 <span className="logo-byline">Search for support and advice for health and wellbeing</span>
+                <span className="logo-icon"><img src={NHSLogo} alt="NHS" /></span>
               </RouterLink>
             </figure>
 
@@ -99,7 +65,22 @@ class Header extends Component<IProps> {
             </button>
           </div>
 
-          <div className="flex-col flex-col--6 flex-col--tablet-large--12 flex-col--tablet--12 flex-col--medium--6">
+          <div
+            className="header__ctas flex-col flex-col--7 mobile-hide tablet--large-hide medium-hide"
+          >
+            <div id="google_translate_element" />
+            <Button
+              text="Give Feedback"
+              header={true}
+              icon="comment"
+              onClick={() => uiStore.toggleFeedbackModal()}
+            />
+            <RouterLink to="/favourites">
+              <Button text="Your Favourites" header={true} icon="star" />
+            </RouterLink>
+          </div>
+
+          <div className="flex-col flex-col--10 flex-col--tablet-large--12 header__nav">
             <div
               className={cx('flex-container header__content', {
                 'header__content--active': burgerMenuOpen,
@@ -114,7 +95,7 @@ class Header extends Component<IProps> {
                     exact={true}
                     to="/"
                     className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    activeClassName={cx({ 'link--active': !isMobile })}
                     onClick={() => {
                       if (burgerMenuOpen) {
                         toggleBurgerMenu();
@@ -124,20 +105,44 @@ class Header extends Component<IProps> {
                     Home
                   </RouterLink>
                   <RouterLink
-                    to="/about"
+                    to="/about-connect"
                     exact={true}
                     className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
+                    activeClassName={cx({ 'link--active': !isMobile })}
                     onClick={() => {
                       if (burgerMenuOpen) {
                         toggleBurgerMenu();
                       }
                     }}
                   >
-                    About
+                    About Connect
                   </RouterLink>
                   <RouterLink
-                    to="/contact"
+                    to="/providers"
+                    className="link link__inline link--large link__header"
+                    activeClassName={cx({ 'link--active': !isMobile })}
+                    onClick={() => {
+                      if (burgerMenuOpen) {
+                        toggleBurgerMenu();
+                      }
+                    }}
+                  >
+                    Providers
+                  </RouterLink>
+                  <RouterLink
+                    to="/supporters"
+                    className="link link__inline link--large link__header"
+                    activeClassName={cx({ 'link--active': !isMobile })}
+                    onClick={() => {
+                      if (burgerMenuOpen) {
+                        toggleBurgerMenu();
+                      }
+                    }}
+                  >
+                    Supporters
+                  </RouterLink>
+                  <RouterLink
+                    to="/funders"
                     className="link link__inline link--large link__header"
                     activeClassName={cx({ 'nav--active': !isMobile })}
                     onClick={() => {
@@ -146,19 +151,7 @@ class Header extends Component<IProps> {
                       }
                     }}
                   >
-                    Contact
-                  </RouterLink>
-                  <RouterLink
-                    to="/get-involved"
-                    className="link link__inline link--large link__header"
-                    activeClassName={cx({ 'nav--active': !isMobile })}
-                    onClick={() => {
-                      if (burgerMenuOpen) {
-                        toggleBurgerMenu();
-                      }
-                    }}
-                  >
-                    Get Involved
+                    Funders
                   </RouterLink>
 
                   <div className="mobile-show tablet-show tablet--large-show medium-show">

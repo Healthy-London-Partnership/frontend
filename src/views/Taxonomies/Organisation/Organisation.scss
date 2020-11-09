@@ -1,0 +1,21 @@
+@import '../../../styles/breakpoints.scss';
+@import '../../../styles/mixins.scss';
+@import '../../../styles/colors.scss';
+@import '../../../styles/fonts.scss';
+
+.taxonomy__list {
+  display: block;
+  margin: 0 auto;
+  max-width: 1260px;
+  padding: space(120) space(72) space(96) !important;
+
+  @include for-tablet-portrait-down {
+    padding: space(64) space(16) !important;
+  }
+
+  li {
+    a {
+      display: inline-block;   
+    }
+  }
+}
