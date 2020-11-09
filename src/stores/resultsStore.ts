@@ -151,6 +151,11 @@ export default class ResultsStore {
   };
 
   renderTree = (concepts: any, output: any) => {
+    output.push({
+      value: '',
+      text: 'All activity types'
+    });
+
     concepts.forEach((concept: any) => {
       let label = concept.prefLabel;
 
