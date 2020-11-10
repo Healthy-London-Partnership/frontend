@@ -4,12 +4,13 @@
 @import '../../styles/fonts.scss';
 
 .search-result-card {
+  display: flex;
+  flex-wrap: wrap;
   border: 2px solid $gulf-blue;
   border-radius: 10px;
   background-color: $white;
   color: $gulf-blue;
   margin: space(10);
-  height: max-content;
   cursor: pointer;
   overflow: hidden;
 
@@ -38,25 +39,24 @@
 
 .search-result-card__title {
   flex: 1;
-  padding-right: space(16);
+}
+
+.search-result-card__meta {
+  width: 100%;
 }
 
 .search-result-card__organisation {
   @include heading-s-light;
   font-weight: normal;
   color: $waikawa;
-  margin-top: space(8);
-
-  @include for-phone-only {
-    margin: space(8) 0 space(16) 0;
-  }
 }
 
 .search-result-card__logo {
-  width: pxtorem(65px);
-  height: pxtorem(65px);
-  border: 1px solid $nobel;
+  width: pxtorem(50px);
+  height: pxtorem(50px);
+  // border: 1px solid $nobel;
   border-radius: 9px;
+  margin-right: space(12);
 
   &:before {
     content: '';
@@ -75,11 +75,17 @@
 
 .search-result-card__top-row {
   display: flex;
-  padding: space(24) space(16) space(16) space(24);
+  padding: space(16);
+}
 
-  @include for-phone-only {
-    padding: space(16) space(8) space(16) space(16);
-  }
+.search-result-card__middle-row {
+  display: flex;
+  padding: 0 space(16) space(24) space(16);
+}
+
+.search-result-card__tags {
+  display: flex;
+  width: 100%;
 }
 
 .search-result-card__tag {
@@ -88,61 +94,33 @@
   color: $white;
   display: inline-block;
   border-radius: 4px;
-  margin: space(16) 0;
+  margin: 0 space(8) space(16) 0;
 
   @include for-phone-only {
     margin: 0 0 space(16);
   }
-}
 
-.search-result-card__tag--activity {
-  background-color: $cranberry;
-}
-
-.search-result-card__tag--advice {
-  background-color: $puerto-rico;
-}
-
-.search-result-card__tag--app {
-  background-color: $lynch;
-}
-
-.search-result-card__tag--club {
-  background-color: $club-blue;
-}
-
-.search-result-card__tag--helpline {
-  background-color: $elm;
-}
-
-.search-result-card__tag--information {
-  background-color: $jordy-blue;
-}
-
-.search-result-card__tag--service {
-  background-color: $gulf-blue;
-}
-
-.search-result-card__tag--group {
-  background-color: $elm;
-}
-
-.search-result-card__tag--icon {
-  margin-right: pxtorem(4px);
+  &--icon {
+    margin-right: space(8);
+  }
 }
 
 .search-result-card__tag--cost {
-  margin: 0 pxtorem(4px);
-  vertical-align: middle;
+  background-color: $elm;
 }
 
-.search-result-card__tag--cost--free {
-  @include fontSize(7px);
+.search-result-card__tag--recommended {
+  background-color: $nhs-blue;
+}
+
+.search-result-card__tag--type {
+  background-color: $cranberry;
 }
 
 .search-result-card__location {
-  color: $elm;
+  color: $gulf-blue;
   display: flex;
+  align-items: center;
 
   h4 {
     margin-left: space(8);
@@ -177,6 +155,8 @@
 }
 
 .search-result-card__footer {
+  flex: 1 1 100%;
+  align-self: flex-end;
   background-color: $gulf-blue;
   padding: space(16);
   color: $white;
