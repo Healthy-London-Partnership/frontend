@@ -78,42 +78,48 @@ class SearchResultCard extends React.Component<IProps> {
         }}
         tabIndex={0}
       >
-        <div className="search-result-card__top-row">
-          {result.open_active ? (
-            <Fragment>
-              {result.logo_url &&
-                <div className="search-result-card__logo">
-                  <img
-                    src={result.logo_url}
-                    alt={result.name}
-                  />
-                </div>
-              }
-            </Fragment>
-          ) : (
-            <div className="search-result-card__logo">
-              <img
-                src={
-                  result.has_logo
-                    ? `${apiBase}/services/${result.id}/logo.png?v=${result.updated_at}`
-                    : `${apiBase}/organisations/${result.organisation_id}/logo.png?v=${result.updated_at}`
-                }
-                alt={result.name}
-                onError={(ev: any) => (ev.target.src = FallBackLogo)}
-              />
+        <div className="search-result-card__content">
+          <div className="search-result-card__top-row">
+            <div className="search-result-card__title">
+              <h3>{result.name}</h3>
+              {result.open_active ? (
+                <h4 className="search-result-card__organisation">
+                  <span className="sr-only">{`This ${result.type} is ran by`}</span>
+                  {result.organisation}
+                </h4>
+              ) : (
+                <Fragment>
+                  {organisation &&
+                    <h4 className="search-result-card__organisation">
+                      <span className="sr-only">{`This ${result.type} is ran by`}</span>
+                      {organisation.name}
+                    </h4>
+                  }
+                </Fragment>
+              )}
             </div>
-          )}
-          <div className="search-result-card__title">
-            <h3>{result.name}</h3>
-            {organisation && (
-              <h4 className="search-result-card__organisation">
-                <span className="sr-only">{`This ${result.type} is ran by`}</span>
-                {organisation.name}
-              </h4>
+
+            {result.open_active ? (
+              <div className="search-result-card__logo">
+                <img
+                  src={result.logo_url ? result.logo_url : FallBackLogo}
+                  alt={result.name}
+                />
+              </div>
+            ) : (
+              <div className="search-result-card__logo">
+                <img
+                  src={
+                    result.has_logo
+                      ? `${apiBase}/services/${result.id}/logo.png?v=${result.updated_at}`
+                      : `${apiBase}/organisations/${result.organisation_id}/logo.png?v=${result.updated_at}`
+                  }
+                  alt={result.name}
+                  onError={(ev: any) => (ev.target.src = FallBackLogo)}
+                />
+              </div>
             )}
           </div>
-        </div>
-        <div className="search-result-card__middle-row">
           <div className="search-result-card__meta">
             <div className="search-result-card__tags">
               {result.score > 3 &&
@@ -177,9 +183,11 @@ class SearchResultCard extends React.Component<IProps> {
               </div>
             )}
           </div>
-        </div>
-        <div className="search-result-card__intro">
-          <p className="body--s">{result.intro}</p>
+          {result.intro &&
+            <div className="search-result-card__intro">
+              <p className="body--s">{result.intro}</p>
+            </div>
+          }
         </div>
         <div
           className="search-result-card__footer"
@@ -191,8 +199,8 @@ class SearchResultCard extends React.Component<IProps> {
             `/activities/${result.slug}` :
             `/services/${result.slug}`
           }>
-            <span>View More</span>
-            <FontAwesomeIcon icon="chevron-right" />
+            <span>View more</span>
+            <FontAwesomeIcon icon="arrow-alt-circle-right" />
           </Link>
         </div>
       </article>
