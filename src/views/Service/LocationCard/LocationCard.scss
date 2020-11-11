@@ -35,6 +35,10 @@
 
   &--link {
     color: $elm;
+
+    @media print {
+      display: none;
+    }
   }
 }
 
@@ -70,6 +74,10 @@
   button {
     padding: 0;
     color: $elm;
+
+    @media print {
+      display: none;
+    }
   }
 
   h4 {
