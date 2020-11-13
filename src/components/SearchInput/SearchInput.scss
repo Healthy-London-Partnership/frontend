@@ -5,11 +5,7 @@
 @import '../../styles/fonts.scss';
 
 .search__input {
-  margin-bottom: 64px;
-
-  @include for-phone-only {
-    margin-bottom: 48px !important;
-  }
+  margin-bottom: space(40);
 
   &__item {
     position: relative;
