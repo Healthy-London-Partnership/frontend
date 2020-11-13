@@ -69,6 +69,7 @@ class Header extends Component<IProps> {
             className="header__ctas flex-col flex-col--7 mobile-hide tablet--large-hide medium-hide"
           >
             <div id="google_translate_element" />
+
             <Button
               text="Give Feedback"
               header={true}
@@ -78,6 +79,10 @@ class Header extends Component<IProps> {
             <RouterLink to="/favourites">
               <Button text="Your Favourites" header={true} icon="star" />
             </RouterLink>
+
+            <a href="https://admin.connect.nhs.uk" className="button button--medium button__header button__header--fill" target="_blank" rel="noopener noreferrer">
+              Providers Area
+            </a>
           </div>
 
           <div className="flex-col flex-col--10 flex-col--tablet-large--12 header__nav">

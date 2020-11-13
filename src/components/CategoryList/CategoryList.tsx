@@ -41,48 +41,6 @@ class CategoryList extends Component<IProps, any> {
             <FontAwesomeIcon icon="chevron-right" />
           </span>
         </button>
-        <button
-          className="category-list__item"
-          key="physical-activity"
-          onClick={() => uiStore.toggleLocationModal()}>
-          <span className="category-list__item__title">
-            Physical Activity
-          </span>
-          <span className="category-list__item__image">
-            <img src={WhyConnectImg} alt="Why Connect" />
-          </span>
-          <span className="category-list__item__icon">
-            <FontAwesomeIcon icon="chevron-right" />
-          </span>
-        </button>
-        <button
-          className="category-list__item"
-          key="physical-activity"
-          onClick={() => uiStore.toggleLocationModal()}>
-          <span className="category-list__item__title">
-            Physical Activity
-          </span>
-          <span className="category-list__item__image">
-            <img src={WhyConnectImg} alt="Why Connect" />
-          </span>
-          <span className="category-list__item__icon">
-            <FontAwesomeIcon icon="chevron-right" />
-          </span>
-        </button>
-        <button
-          className="category-list__item"
-          key="physical-activity"
-          onClick={() => uiStore.toggleLocationModal()}>
-          <span className="category-list__item__title">
-            Physical Activity
-          </span>
-          <span className="category-list__item__image">
-            <img src={WhyConnectImg} alt="Why Connect" />
-          </span>
-          <span className="category-list__item__icon">
-            <FontAwesomeIcon icon="chevron-right" />
-          </span>
-        </button>
         {categories.map(({ name, id, icon, slug }) => (
           <button
             className="category-list__item"

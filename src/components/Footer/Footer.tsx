@@ -7,7 +7,6 @@ import ReactMarkdown from 'react-markdown';
 import get from 'lodash/get';
 
 import './Footer.scss';
-import Button from '../Button';
 import CMSStore from '../../stores/CMSStore';
 import UIStore from '../../stores/uiStore';
 
@@ -73,12 +72,6 @@ const Footer: React.FunctionComponent<IProps> = ({ mobileMenu, cmsStore, uiStore
                   Give feedback
                 </button>
               </div>
-            </div>
-
-            <div className="flex-col flex-col--6 flex-col--mobile--12 flex-col--tablet--12 footer__section footer__button">
-              <a href="https://admin.connect.nhs.uk" target="_blank" rel="noopener noreferrer">
-                <Button text="Members Area" size="medium" alt={true} />
-              </a>
             </div>
           </div>
         </div>
