@@ -39,9 +39,7 @@ class Home extends React.Component<IProps> {
                   <h2 className="home-title">
                     {get(cmsStore, 'home.categories_title')}
                   </h2>
-                  <div className="home-collections__category-list">
-                    <CategoryList categories={SearchStore.categories} />
-                  </div>
+                  <CategoryList categories={SearchStore.categories} />
                 </div>
               </div>
             </div>
