@@ -44,4 +44,17 @@
   @include for-phone-only {
     padding: space(40) 0;
   }
+
+  &__content {
+    margin-bottom: space(32);
+  }
+
+  &__image {
+    margin-top: -16px;
+    margin-left: space(64);
+
+    @include for-phone-only {
+      margin-top: 0;
+    }
+  }
 }
