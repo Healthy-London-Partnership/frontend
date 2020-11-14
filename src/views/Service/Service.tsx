@@ -307,7 +307,7 @@ class Service extends Component<IProps> {
                     </div>
 
                     {service.testimonial && (
-                      <div className="mobile-hide flex-container service__section service__section--no-padding">
+                      <div className="mobile-hide flex-container service__section service__section--no-padding page-break">
                         <div className="flex-col flex-col--12 service__testimonial--header">
                           <h2 className="service__heading">What people say</h2>
                         </div>
@@ -420,7 +420,7 @@ class Service extends Component<IProps> {
                     </div>
                   </div>
                 </section>
-                <section className="flex-col flex-col--4 flex-col--tablet--12 mobile-hide ">
+                <section className="flex-col flex-col--4 flex-col--tablet--12 mobile-hide page-break">
                   <div className="flex-container service__right-column">
                     <div className="tablet-hide flex-col criteria_card service__info__cost service__section">
                       <CostCard service={service} />

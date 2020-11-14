@@ -93,6 +93,12 @@
   border-radius: 7px;
   padding: space(24) !important;
 
+  @media print {
+    display: inline-block;
+    width: 50% !important;
+    padding: space(16) 0 !important;
+  }
+
   &--address {
     @include for-tablet-portrait-up {
       justify-content: flex-end !important;

@@ -3,6 +3,20 @@
 @import '../../styles/fonts.scss';
 @import '../../styles/breakpoints.scss';
 
+.service {
+  .flex-container {
+    @media print {
+      padding: 0;
+    }
+  }
+
+  .page-break {
+    @media print {
+      page-break-after: always;
+    }
+  }
+}
+
 .service__header {
   position: relative;
   background: rgb(0,94,184);
@@ -19,14 +33,16 @@
     background-color: $white;
     box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
 
-    @media print {
-      padding: 0;
-      box-shadow: none;
-    }
-
     @include for-phone-only {
+      background-color: transparent;
       margin-bottom: -32px !important;
       padding: space(24) !important;
+    }
+
+    @media print {
+      padding: 0 !important;
+      margin-bottom: space(16) !important;
+      box-shadow: none;
     }
   }
 
@@ -64,7 +80,7 @@
 
   @media print {
     margin-top: 0;
-    margin-bottom: space(16);
+    margin-bottom: space(16) !important;
   }
 
   @include for-phone-only {
@@ -85,6 +101,11 @@
     > .flex-col {
       padding: 0 space(8);
       margin-bottom: space(16);
+
+      @media print {
+        width: 50%;
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -117,12 +138,12 @@
   max-width: 1260px;
   padding: space(120) space(72) space(96) !important;
 
-  @media print {
-    padding: space(16);
-  }
-
   @include for-phone-only {
     padding: space(64) space(16) space(48) !important;
+  }
+
+  @media print {
+    padding: space(16) 0 !important;
   }
 
   p {
@@ -143,6 +164,10 @@
   padding: space(24);
   background-color: $gulf-blue !important;
   color: $white;
+
+  @media print {
+    padding: space(16) 0 !important;
+  }
 }
 
 .service__info__cost--header {
@@ -197,6 +222,10 @@
     }
   }
 
+  @media print {
+    display: none !important;
+  }
+
   &--desktop {
     margin-top: space(40);
   }
@@ -225,6 +254,10 @@
       @include body-l;
       margin-bottom: space(40);
       color: $gulf-blue;
+
+      @media print {
+        margin-bottom: space(16);
+      }
     }
   }
 
@@ -289,6 +322,10 @@
 .service__accordian {
   padding: space(24) space(12);
   width: 100%;
+
+  @media print {
+    width: 50%;
+  }
 
   svg {
     font-size: pxtorem(18px);
@@ -355,7 +392,7 @@
   text-align: center;
 
   @media print {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -364,12 +401,20 @@
   background-size: 100% 100%;
   padding: space(8);
 
+  @media print {
+    padding: 0;
+  }
+
   &--mobile {
     background-image: none;
     background-color: $white;
     border: 1px solid $gulf-blue;
     padding: space(16) space(24) space(24) !important;
     border-radius: 17px 33px 47px 29px;
+
+    @media print {
+      padding: 0 !important;
+    }
 
     svg {
       width: auto !important;
@@ -381,6 +426,10 @@
     font-family: $font-tertiary;
     font-size: pxtorem(30px);
     padding: space(8);
+
+    @media print {
+      padding: 0;
+    }
   }
 
   svg {
@@ -416,6 +465,13 @@
   justify-content: space-evenly !important;
   background-color: $white;
   border-radius: 19px;
+
+  @media print {
+    display: inline-block;
+    width: 50% !important;
+    padding: 0;
+    background-color: transparent;
+  }
 
   p {
     font-size: $font-base;
@@ -453,6 +509,10 @@
     background-color: $white;
     padding: space(20) !important;
     border-radius: 19px;
+
+    @media print {
+      padding: 0 !important;
+    }
   }
 }
 
@@ -486,6 +546,10 @@
   border-radius: 13px;
   overflow: hidden;
 
+  @media print {
+    padding: 0 !important;
+  }
+
   .flex-col {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -517,6 +581,12 @@
 
   &--row {
     margin-top: space(40);
+
+    @media print {
+      display: inline-block !important;
+      margin-top: 0;
+      width: 50% !important;
+    }
 
     svg {
       margin-right: space(8);
@@ -559,8 +629,8 @@
   background-color: $white;
 
   @media print {
-    padding: space(16) 0;
-    margin-top: 0;
+    padding: 0 0 space(16) 0 !important;
+    margin-top: 0 !important;
   }
 
   @include for-phone-only {
@@ -579,7 +649,7 @@
 
   @media print {
     margin-top: 0;
-    margin-bottom: space(16);
+    margin-bottom: space(16) !important;
   }
 
   span {
