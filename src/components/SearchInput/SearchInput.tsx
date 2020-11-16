@@ -24,6 +24,7 @@ interface IProps extends RouteComponentProps {
   showGeoLocate: boolean;
   keywordFieldLabel: string;
   postcodeFieldLabel: string;
+  openInNewWindow?: boolean;
 }
 
 interface IState {
@@ -87,17 +88,21 @@ class SearchInput extends React.Component<IProps, IState> {
   };
 
   checkValidation(e: React.ChangeEvent<HTMLButtonElement>) {
-    const { resultsStore } = this.props;
+    const { resultsStore, openInNewWindow } = this.props;
 
     e.preventDefault();
     if(this.state.keyword || this.state.postcode) {
       resultsStore!.postcodeChange(this.state.postcode);
       resultsStore!.handleKeywordChange(this.state.keyword);
       resultsStore!.radiusChange(this.state.radius);
-      this.props.history.push({
-        pathname: '/results',
-        search: resultsStore!.amendSearch()
-      });
+      if(openInNewWindow) {
+        window.open(`https://connect.nhs.uk/results${resultsStore!.amendSearch()}`);
+      } else {
+        this.props.history.push({
+          pathname: '/results',
+          search: resultsStore!.amendSearch()
+        });
+      }
     } else {
       alert('Please fill in at least one search criteria (keyword/location).');
     }
