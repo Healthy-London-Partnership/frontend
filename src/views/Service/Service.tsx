@@ -39,7 +39,6 @@ import VideoCard from './VideoCard';
 import ContactCard from './ContactCard';
 import OrganisationCard from './OrganisationCard';
 import ButtonCard from './ButtonCard';
-import ShareCard from './ShareCard';
 import ReferralCard from './ReferralCard';
 import GalleryCard from './GalleryCard';
 import { UsefulInfoCardAccordian, UsefulInfoCard } from './UsefulInfoCard';
@@ -448,10 +447,6 @@ class Service extends Component<IProps> {
                   </div>
                   <div className="flex-col flex-col--12 flex-col--tablet--5">
                     <ButtonCard serviceStore={serviceStore} />
-                  </div>
-
-                  <div className="flex-col flex-col--12 flex-col--tablet--5">
-                    <ShareCard />
                   </div>
                 </div>
               </section>
