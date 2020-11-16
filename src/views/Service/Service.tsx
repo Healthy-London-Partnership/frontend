@@ -354,7 +354,7 @@ class Service extends Component<IProps> {
 
                     {service.referral_method !== 'none' && (
                       <div className="mobile-show">
-                        <ReferralCard id={service.id} />
+                        <ReferralCard service={service} />
                       </div>
                     )}
 
@@ -430,17 +430,19 @@ class Service extends Component<IProps> {
                         <VideoCard video={service.video_embed} width="100%" />
                       </div>
                     )}
+
                     <div className="flex-col flex-col--12">
                       <h2>{`How can I contact this ${service.type}?`}</h2>
                       {service.referral_method !== 'none' && (
                         <div className="service__section service__referral--desktop">
-                          <ReferralCard id={service.id} />
+                          <ReferralCard service={service} />
                         </div>
                       )}
                       <div className="service__section">
                         <ContactCard service={service} />
                       </div>
                     </div>
+
                     <div className="flex-col flex-col--12">
                       <h2>{`Who runs this ${service.type}?`}</h2>
                       <div className="service__section">

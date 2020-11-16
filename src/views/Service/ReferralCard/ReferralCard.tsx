@@ -4,18 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../../../components/Button';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { observer } from 'mobx-react';
+import { IService } from '../../../types/types';
 
 interface IProps extends RouteComponentProps {
-  id: string;
+  service: IService;
 }
 
-const ReferralCard: React.FunctionComponent<IProps> = ({ history, id }) => (
+const ReferralCard: React.FunctionComponent<IProps> = ({ history, service }) => (
   <div className="flex-container flex-container--align-center flex-container--justify flex-container--mobile-no-padding service__referral">
     <div className="flex-col flex-col--tablet--6 flex-col--mobile--12 flex-col--mobile-small--12">
       <Button
         text="Make a connection"
         icon="arrow-right"
-        onClick={() => history.push(`/referral?service=${id}`)}
+        onClick={() => service.referral_method === 'external' ? window.open(`${service.referral_url}`) : history.push(`/referral?service=${service.id}`) } 
       />
     </div>
     <div className="flex-col flex-col--tablet--12">

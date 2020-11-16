@@ -4,17 +4,29 @@
 @import '../../styles/fonts.scss';
 
 .search-result-card {
+  display: flex;
+  flex-wrap: wrap;
   border: 2px solid $gulf-blue;
-  border-radius: 10px;
+  border-radius: 9px;
   background-color: $white;
   color: $gulf-blue;
   margin: space(10);
-  height: max-content;
   cursor: pointer;
   overflow: hidden;
+  transition: all 0.1s linear;
+  will-change: border-color box-shadow;
 
   &:hover {
-    box-shadow: 0 2px 4px 0 rgba(56, 56, 56, 0.5);
+    border-color: $nhs-blue;
+    box-shadow: 0 0 4px 0 rgba($nhs-blue, 0.5);
+
+    .search-result-card__footer {
+      background-color: $nhs-blue;
+
+      a svg {
+        transform: translateX(4px);
+      }
+    }
   }
 
   &.is-active {
@@ -38,25 +50,24 @@
 
 .search-result-card__title {
   flex: 1;
-  padding-right: space(16);
+  margin-right: space(12);
+}
+
+.search-result-card__meta {
+  width: 100%;
 }
 
 .search-result-card__organisation {
   @include heading-s-light;
   font-weight: normal;
   color: $waikawa;
-  margin-top: space(8);
-
-  @include for-phone-only {
-    margin: space(8) 0 space(16) 0;
-  }
 }
 
 .search-result-card__logo {
-  width: pxtorem(65px);
-  height: pxtorem(65px);
-  border: 1px solid $nobel;
+  width: pxtorem(50px);
+  height: pxtorem(50px);
   border-radius: 9px;
+  border: 1px solid $gulf-blue;
 
   &:before {
     content: '';
@@ -68,18 +79,31 @@
   img {
     border-radius: 9px;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
     height: 100%;
   }
 }
 
+.search-result-card__content {
+  display: flex;
+  flex-wrap: wrap;
+  padding: space(16);
+}
+
 .search-result-card__top-row {
   display: flex;
-  padding: space(24) space(16) space(16) space(24);
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: space(16);
+}
 
-  @include for-phone-only {
-    padding: space(16) space(8) space(16) space(16);
-  }
+.search-result-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: space(8);
 }
 
 .search-result-card__tag {
@@ -88,61 +112,29 @@
   color: $white;
   display: inline-block;
   border-radius: 4px;
-  margin: space(16) 0;
+  margin: 0 space(8) space(8) 0;
 
-  @include for-phone-only {
-    margin: 0 0 space(16);
+  &--icon {
+    margin-right: space(8);
   }
 }
 
-.search-result-card__tag--activity {
+.search-result-card__tag--cost {
+  background-color: $elm;
+}
+
+.search-result-card__tag--recommended {
+  background-color: $nhs-blue;
+}
+
+.search-result-card__tag--type {
   background-color: $cranberry;
 }
 
-.search-result-card__tag--advice {
-  background-color: $puerto-rico;
-}
-
-.search-result-card__tag--app {
-  background-color: $lynch;
-}
-
-.search-result-card__tag--club {
-  background-color: $club-blue;
-}
-
-.search-result-card__tag--helpline {
-  background-color: $elm;
-}
-
-.search-result-card__tag--information {
-  background-color: $jordy-blue;
-}
-
-.search-result-card__tag--service {
-  background-color: $gulf-blue;
-}
-
-.search-result-card__tag--group {
-  background-color: $elm;
-}
-
-.search-result-card__tag--icon {
-  margin-right: pxtorem(4px);
-}
-
-.search-result-card__tag--cost {
-  margin: 0 pxtorem(4px);
-  vertical-align: middle;
-}
-
-.search-result-card__tag--cost--free {
-  @include fontSize(7px);
-}
-
 .search-result-card__location {
-  color: $elm;
+  color: $gulf-blue;
   display: flex;
+  align-items: center;
 
   h4 {
     margin-left: space(8);
@@ -169,25 +161,33 @@
 
 .search-result-card__intro {
   color: $lynch;
-  padding: 0 space(24) space(24);
-
-  @include for-phone-only {
-    padding: 0 space(8) space(16) space(16);
-  }
 }
 
 .search-result-card__footer {
+  flex: 1 1 100%;
+  align-self: flex-end;
   background-color: $gulf-blue;
-  padding: space(16);
+  padding: space(12) space(16);
   color: $white;
   text-align: center;
+  transition: background-color 0.1s linear;
+  will-change: background-color;
 
   a {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
     font-size: $font-body-m;
+    font-weight: 700;
     text-decoration: none;
-  }
 
-  svg {
-    margin-left: space(8);
+    svg {
+      margin-top: 1px;
+      margin-left: space(8);
+      font-size: $font-body-s;
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
   }
 }
