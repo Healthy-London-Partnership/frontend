@@ -90,6 +90,7 @@ export default class ServiceStore {
       referral_method: 'none',
       referral_url: null,
       service_locations: [],
+      score: 0,
       show_referral_disclaimer: false,
       slug: activity.identifier ? activity.identifier : null,
       social_medias: [],
