@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 
 import './CategoryList.scss';
 import UIStore from '../../stores/uiStore';
-import WhyConnectImg from '../../assets/images/why-connect.svg';
+import PhysicalActivityImg from '../../assets/images/illustrations/physical-activity.svg';
 
 import { ICategory } from '../../types/types';
 import LocationModal from '../LocationModal';
@@ -35,13 +35,13 @@ class CategoryList extends Component<IProps, any> {
             Physical Activity
           </span>
           <span className="category-list__item__image">
-            <img src={WhyConnectImg} alt="Why Connect" />
+            <img src={PhysicalActivityImg} alt="Physical Activity" />
           </span>
           <span className="category-list__item__icon">
             <FontAwesomeIcon icon="chevron-right" />
           </span>
         </button>
-        {categories.map(({ name, id, icon, slug }) => (
+        {categories.map(({ name, id, image, slug }) => (
           <button
             className="category-list__item"
             key={id}
@@ -54,7 +54,9 @@ class CategoryList extends Component<IProps, any> {
               {name}
             </span>
             <span className="category-list__item__image">
-              <img src={WhyConnectImg} alt="Why Connect" />
+              {image &&
+                <img src={image} alt={name} />
+              }
             </span>
             <span className="category-list__item__icon">
               <FontAwesomeIcon icon="chevron-right" />

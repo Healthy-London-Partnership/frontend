@@ -7,7 +7,7 @@ import CMSStore from '../../stores/CMSStore';
 import SearchStore from '../../stores/searchStore';
 
 import './Home.scss';
-import WhyConnectImg from '../../assets/images/why-connect.svg';
+import WhyConnectImg from '../../assets/images/illustrations/why-connect.svg';
 
 import Search from '../../components/Search';
 import CategoryList from '../../components/CategoryList';
