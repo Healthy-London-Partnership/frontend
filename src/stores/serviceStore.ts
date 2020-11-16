@@ -36,7 +36,6 @@ export default class ServiceStore {
     this.loading = true;
     const serviceData = await axios.get(`${apiBase}/services/${name}?include=organisation`);
     this.service = get(serviceData, 'data.data');
-    console.log(this.service);
 
     this.getServiceLocations();
     this.getRelatedServices(name);
@@ -53,15 +52,14 @@ export default class ServiceStore {
 
     const activity = data;
     let today = new Date();
-
-    console.log(activity);
+    let ageRange = activity.ageRange !== undefined ? (activity.ageRange.minValue ? activity.ageRange.minValue + ' - ' : '') + (activity.ageRange.maxValue ? activity.ageRange.maxValue : '') : '';
 
     this.service = {
       contact_email: activity.organizer.email ? activity.organizer.email : null,
       contact_name: activity.organizer.name ? activity.organizer.name : null,
       contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
       criteria: {
-        age_group: (activity.ageRange.minValue ? activity.ageRange.minValue + ' - ' : '') + (activity.ageRange.maxValue ? activity.ageRange.maxValue : ''),
+        age_group: ageRange,
         disability: '',
         employment: '',
         gender: activity.genderRestriction ? activity.genderRestriction.replace(/([a-z])([A-Z])/g, '$1 $2').replace('oa:', '') : null,
@@ -92,6 +90,7 @@ export default class ServiceStore {
       referral_method: 'none',
       referral_url: null,
       service_locations: [],
+      score: 0,
       show_referral_disclaimer: false,
       slug: activity.identifier ? activity.identifier : null,
       social_medias: [],

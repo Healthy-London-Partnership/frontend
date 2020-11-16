@@ -138,11 +138,15 @@ class Service extends Component<IProps> {
             />
             <div className="flex-container flex-container--no-padding flex-container--no-space flex-container--align-center">
               {service.open_active ? (
-                <div className="flex-col">
-                  <div className="service__header__logo">
-                    <img src={service.logo_url} alt={`${service.name} logo`} />
-                  </div>
-                </div>
+                <Fragment>
+                  {service.logo_url &&
+                    <div className="flex-col">
+                      <div className="service__header__logo">
+                        <img src={service.logo_url} alt={`${service.name} logo`} />
+                      </div>
+                    </div>
+                  }
+                </Fragment>
               ) : (
                 <div className="flex-col">
                   <div className="service__header__logo">
@@ -349,7 +353,7 @@ class Service extends Component<IProps> {
 
                   {service.referral_method !== 'none' && (
                     <div className="mobile-show">
-                      <ReferralCard id={service.id} />
+                      <ReferralCard service={service} />
                     </div>
                   )}
 
@@ -429,7 +433,7 @@ class Service extends Component<IProps> {
                     <h2>{`How can I contact this ${service.type}?`}</h2>
                     {service.referral_method !== 'none' && (
                       <div className="service__section service__referral--desktop">
-                        <ReferralCard id={service.id} />
+                        <ReferralCard service={service} />
                       </div>
                     )}
                     <div className="service__section">

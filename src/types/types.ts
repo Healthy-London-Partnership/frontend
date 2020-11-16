@@ -73,6 +73,7 @@ export interface IService {
   referral_email: null | string;
   referral_method: string;
   referral_url: null | string;
+  score: number;
   service_locations: [];
   show_referral_disclaimer: boolean;
   slug: string;
