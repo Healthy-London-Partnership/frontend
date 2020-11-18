@@ -35,6 +35,10 @@
 
   &--link {
     color: $elm;
+
+    @media print {
+      display: none;
+    }
   }
 }
 
@@ -70,6 +74,10 @@
   button {
     padding: 0;
     color: $elm;
+
+    @media print {
+      display: none;
+    }
   }
 
   h4 {
@@ -84,6 +92,12 @@
   background-color: $white;
   border-radius: 7px;
   padding: space(24) !important;
+
+  @media print {
+    display: inline-block;
+    width: 50% !important;
+    padding: space(16) 0 !important;
+  }
 
   &--address {
     @include for-tablet-portrait-up {

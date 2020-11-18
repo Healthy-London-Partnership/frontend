@@ -308,35 +308,71 @@ body {
 @include breakpoint($break_tablet_large) {
   .tablet--large-hide {
     display: none !important;
+
+    @media print {
+      display: block !important;
+    }
   }
+
   .tablet--large-show {
     display: block !important;
+
+    @media print {
+      display: none !important;
+    }
   }
 }
 
 @include breakpoint($break_tablet) {
   .tablet-hide {
     display: none !important;
+
+    @media print {
+      display: block !important;
+    }
   }
+
   .tablet-show {
     display: block !important;
+
+    @media print {
+      display: none !important;
+    }
   }
 }
 
 @include breakpoint($break_mobile) {
   .mobile-hide {
     display: none !important;
+
+    @media print {
+      display: block !important;
+    }
   }
+
   .mobile-show {
     display: block !important;
+
+    @media print {
+      display: none !important;
+    }
   }
 }
 
 @include breakpoint($break_medium) {
   .medium-hide {
     display: none !important;
+
+    @media print {
+      display: block !important;
+    }
   }
+
   .medium-show {
     display: block !important;
+
+    @media print {
+      display: none !important;
+    }
   }
 }

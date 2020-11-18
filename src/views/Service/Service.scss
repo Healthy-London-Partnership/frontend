@@ -3,6 +3,20 @@
 @import '../../styles/fonts.scss';
 @import '../../styles/breakpoints.scss';
 
+.service {
+  .flex-container {
+    @media print {
+      padding: 0;
+    }
+  }
+
+  .page-break {
+    @media print {
+      page-break-after: always;
+    }
+  }
+}
+
 .service__header {
   position: relative;
   background: rgb(0,94,184);
@@ -20,8 +34,15 @@
     box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
 
     @include for-phone-only {
+      background-color: transparent;
       margin-bottom: -32px !important;
       padding: space(24) !important;
+    }
+
+    @media print {
+      padding: 0 !important;
+      margin-bottom: space(16) !important;
+      box-shadow: none;
     }
   }
 
@@ -57,6 +78,11 @@
   width: 100%;
   align-items: stretch;
 
+  @media print {
+    margin-top: 0;
+    margin-bottom: space(16) !important;
+  }
+
   @include for-phone-only {
     margin-bottom: space(20) !important;
   }
@@ -72,8 +98,14 @@
   }
 
   &--criteria {
-    .flex-col {
+    > .flex-col {
       padding: 0 space(8);
+      margin-bottom: space(16);
+
+      @media print {
+        width: 50%;
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -110,6 +142,10 @@
     padding: space(64) space(16) space(48) !important;
   }
 
+  @media print {
+    padding: space(16) 0 !important;
+  }
+
   p {
     font-size: pxtorem(18px);
   }
@@ -128,6 +164,10 @@
   padding: space(24);
   background-color: $gulf-blue !important;
   color: $white;
+
+  @media print {
+    padding: space(16) 0 !important;
+  }
 }
 
 .service__info__cost--header {
@@ -182,6 +222,10 @@
     }
   }
 
+  @media print {
+    display: none !important;
+  }
+
   &--desktop {
     margin-top: space(40);
   }
@@ -210,6 +254,10 @@
       @include body-l;
       margin-bottom: space(40);
       color: $gulf-blue;
+
+      @media print {
+        margin-bottom: space(16);
+      }
     }
   }
 
@@ -275,6 +323,10 @@
   padding: space(24) space(12);
   width: 100%;
 
+  @media print {
+    width: 50%;
+  }
+
   svg {
     font-size: pxtorem(18px);
   }
@@ -322,6 +374,11 @@
   font-size: $font-body-m;
   padding: space(16) !important;
 
+  @media print {
+    padding: 0;
+    margin-bottom: space(16);
+  }
+
   a {
     font-size: $font-body-m;
   }
@@ -333,6 +390,10 @@
 
 .service__social-icon-container {
   text-align: center;
+
+  @media print {
+    display: none !important;
+  }
 }
 
 .service__testimonial {
@@ -340,12 +401,20 @@
   background-size: 100% 100%;
   padding: space(8);
 
+  @media print {
+    padding: 0;
+  }
+
   &--mobile {
     background-image: none;
     background-color: $white;
     border: 1px solid $gulf-blue;
     padding: space(16) space(24) space(24) !important;
     border-radius: 17px 33px 47px 29px;
+
+    @media print {
+      padding: 0 !important;
+    }
 
     svg {
       width: auto !important;
@@ -357,6 +426,10 @@
     font-family: $font-tertiary;
     font-size: pxtorem(30px);
     padding: space(8);
+
+    @media print {
+      padding: 0;
+    }
   }
 
   svg {
@@ -390,10 +463,14 @@
 .service__useful-info {
   margin-bottom: space(16) !important;
   justify-content: space-evenly !important;
+  background-color: $white;
+  border-radius: 19px;
 
-  @include for-tablet-portrait-up {
-    background-color: $alabaster;
-    border-radius: 19px;
+  @media print {
+    display: inline-block;
+    width: 50% !important;
+    padding: 0;
+    background-color: transparent;
   }
 
   p {
@@ -432,6 +509,10 @@
     background-color: $white;
     padding: space(20) !important;
     border-radius: 19px;
+
+    @media print {
+      padding: 0 !important;
+    }
   }
 }
 
@@ -465,6 +546,10 @@
   border-radius: 13px;
   overflow: hidden;
 
+  @media print {
+    padding: 0 !important;
+  }
+
   .flex-col {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -497,6 +582,12 @@
   &--row {
     margin-top: space(40);
 
+    @media print {
+      display: inline-block !important;
+      margin-top: 0;
+      width: 50% !important;
+    }
+
     svg {
       margin-right: space(8);
       color: $waikawa;
@@ -509,6 +600,10 @@
   border-radius: 13px;
   padding: space(20);
   text-align: center;
+
+  @media print {
+    display: none;
+  }
 
   h4 {
     display: inline;
@@ -533,6 +628,11 @@
   border-radius: 7px;
   background-color: $white;
 
+  @media print {
+    padding: 0 0 space(16) 0 !important;
+    margin-top: 0 !important;
+  }
+
   @include for-phone-only {
     h3 {
       font-size: $font-body-l;
@@ -547,6 +647,11 @@
   margin-top: space(24);
   margin-bottom: space(40) !important;
 
+  @media print {
+    margin-top: 0;
+    margin-bottom: space(16) !important;
+  }
+
   span {
     color: $lynch;
   }
@@ -560,6 +665,10 @@
 .service__heading {
   margin-bottom: space(32);
 
+  @media print {
+    margin-bottom: space(16);
+  }
+
   @include for-phone-only {
     font-size: $font-body-l !important;
     margin-bottom: space(12);
@@ -570,4 +679,8 @@
   padding: 0 !important;
   width: 100%;
   margin: 0 !important;
+
+  @media print {
+    display: none;
+  }
 }

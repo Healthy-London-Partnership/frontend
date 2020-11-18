@@ -45,7 +45,7 @@ class RelatedServices extends Component<IProps, IState> {
 
     const relatedServices = showMore ? fullList : preview;
     return (
-      <section className="related-services">
+      <section className="related-services page-break">
         <div className="flex-container">
           <div className="flex-col flex-col--12 flex-col--mobile--12">
             <h1>Related Services</h1>
