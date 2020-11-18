@@ -1,0 +1,11 @@
+/* PRINT STYLES */
+
+@media print {
+  .header,
+  .footer,
+  .breadcrumb,
+  .public-beta-banner,
+  .button {
+    display: none;
+  }
+}

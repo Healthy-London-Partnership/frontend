@@ -42,6 +42,10 @@
     margin-bottom: space(8) !important;
   }
 
+  @media print {
+    display: none !important;
+  }
+
   .flex-container {
     padding: 0;
   }
