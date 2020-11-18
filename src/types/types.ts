@@ -14,6 +14,8 @@ export interface IPersona {
 export interface IParams {
   category?: string;
   persona?: string;
+  collection_categories?: string;
+  collection_personas?: string;
   is_free?: boolean;
   wait_time?: string;
   view?: string;

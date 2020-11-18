@@ -77,7 +77,7 @@ class Keyword extends Component<IProps, IState> {
         <div className="flex-container flex-container--no-padding flex-container--align-center">
           <div className="flex-col" style={{flexGrow: 1}}>
             <div className="flex-container flex-container--no-padding">
-              <SearchInput showButtonText={false} keywordFieldLabel="Keyword" postcodeFieldLabel="Location" />
+              <SearchInput showGeoLocate={true} showButtonText={false} keywordFieldLabel="Keyword" postcodeFieldLabel="Location" />
             </div>
           </div>
           {!resultsStore.isLiveActivity &&

@@ -24,6 +24,8 @@ export default class ResultsStore {
   @observable persona: IPersona | null = null;
   @observable categories: [] | null = [];
   @observable personas: [] | null = [];
+  @observable collection_categories: string = '';
+  @observable collection_personas: string = '';
   @observable taxonomyCategory: any;
   @observable taxonomyOrganisation: any;
   @observable organisations: IOrganisation[] | null = [];
@@ -65,6 +67,8 @@ export default class ResultsStore {
     this.persona = null;
     this.categories = null;
     this.personas = null;
+    this.collection_categories = '';
+    this.collection_personas = '';
     this.taxonomyCategory = '';
     this.taxonomyOrganisation = '';
     this.is_free = false;
@@ -219,6 +223,14 @@ export default class ResultsStore {
       if (value === 'is_virtual') {
         this.isVirtual = key;
       }
+
+      if (value === 'collection_categories') {
+        this.collection_categories = key;
+      }
+
+      if (value === 'collection_personas') {
+        this.collection_personas = key;
+      }
     });
 
     if (this.postcode) {
@@ -249,6 +261,14 @@ export default class ResultsStore {
 
     if (this.persona) {
       params.persona = this.persona.slug;
+    }
+
+    if (this.collection_categories) {
+      params.category = this.collection_categories;
+    }
+
+    if (this.collection_personas) {
+      params.persona = this.collection_personas;
     }
 
     if (size(this.locationCoords)) {
