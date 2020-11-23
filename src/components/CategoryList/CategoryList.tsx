@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router'
-
+import { apiBase } from '../../config/api';
 import './CategoryList.scss';
 import UIStore from '../../stores/uiStore';
 import PhysicalActivityImg from '../../assets/images/illustrations/physical-activity.svg';
@@ -54,9 +54,10 @@ class CategoryList extends Component<IProps, any> {
               {name}
             </span>
             <span className="category-list__item__image">
-              {image &&
-                <img src={image} alt={name} />
-              }
+              <img
+                src={`${apiBase}/collections/categories/${id}/image.png?max_dimension=300`}
+                alt={`${name}`}
+              />
             </span>
             <span className="category-list__item__icon">
               <FontAwesomeIcon icon="chevron-right" />
