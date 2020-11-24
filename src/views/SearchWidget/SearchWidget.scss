@@ -1,0 +1,43 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/grid.scss';
+@import '../../styles/breakpoints.scss';
+@import '../../styles/fonts.scss';
+
+.search-widget {
+  background: rgb(0,94,184);
+  background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
+  height: auto;
+  position: relative;
+  padding: space(48) space(16);
+
+  @include for-phone-only {
+    padding: space(32) space(16);
+  }
+
+  .search__input {
+    margin-bottom: 0;
+
+    @include for-phone-only {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.search-widget__heading {
+  @include heading-xl;
+  display: block;
+  margin-bottom: space(16);
+  color: $white;
+}
+
+.search-widget__info {
+  display: block;
+  margin-bottom: space(24);
+  font-size: pxtorem(16px);
+  color: $white;
+
+  svg {
+    margin-right: space(8);
+  }
+}

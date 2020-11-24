@@ -40,7 +40,7 @@ class Search extends React.Component<IProps> {
               <div className="flex-col--12">
                 <h1 className="search__heading">{get(cmsStore, 'home.search_title')}</h1>
               </div>
-              <SearchInput showButtonText={true} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
+              <SearchInput showButtonText={true} showGeoLocate={true} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
             </div>
           </form>
         </section>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +24,7 @@ import Funders from './views/Funders';
 import Contact from './views/Contact'
 import Privacy from './views/Privacy';
 import DutyToRefer from './views/DutyToRefer';
+import SearchWidget from './views/SearchWidget';
 
 import './styles/grid.scss';
 
@@ -58,6 +59,11 @@ class App extends Component {
   componentDidMount() {
     windowSizeStore.setWindow();
   }
+  
+  showGlobals() {
+    if(window.location.pathname === '/search-widget') return false;
+    return true;
+  }
 
   render() {
     return (
@@ -73,8 +79,12 @@ class App extends Component {
         <MetaData />
         <Router>
           <ScrollToTop>
-            <PublicBetaBanner />
-            <Header />
+            {this.showGlobals() &&
+              <Fragment>
+                <PublicBetaBanner />
+                <Header />
+              </Fragment>
+            }
             <main className="main">
               <Switch>
                 <Route path="/" exact={true} component={Home} />
@@ -96,13 +106,18 @@ class App extends Component {
                 <Route path="/privacy-policy" component={Privacy} />
                 <Route path="/terms-and-conditions" component={Terms} />
                 <Route path="/duty-to-refer" component={DutyToRefer} />
+                <Route path="/search-widget" exact={true} component={SearchWidget} />
 
                 <Route component={NotFound} />
               </Switch>
             </main>
-            <FeedbackModal />
-            <HomeScreenPrompt />
-            <Footer />
+            {this.showGlobals() &&
+              <Fragment>
+                <FeedbackModal />
+                <HomeScreenPrompt />
+                <Footer />
+              </Fragment>
+            }
           </ScrollToTop>
         </Router>
       </Provider>

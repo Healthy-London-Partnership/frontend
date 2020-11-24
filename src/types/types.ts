@@ -12,6 +12,8 @@ export interface IPersona {
 export interface IParams {
   category?: string;
   persona?: string;
+  collection_categories?: string;
+  collection_personas?: string;
   is_free?: boolean;
   wait_time?: string;
   view?: string;
@@ -69,6 +71,7 @@ export interface IService {
   referral_email: null | string;
   referral_method: string;
   referral_url: null | string;
+  score: number;
   service_locations: [];
   show_referral_disclaimer: boolean;
   slug: string;

@@ -10,7 +10,7 @@ interface IProps {
 const ButtonCard: React.FunctionComponent<IProps> = ({ serviceStore }) => (
   <div className="flex-container flex-container--justify service__button-container">
     <div className="flex-col">
-      <Button text="Print" icon="print" alt={true} onClick={() => window.print()} />
+      <Button text="Print" icon="print" alt={true} onClick={() => window.print() } />
     </div>
     <div className="flex-col service__button-container--mobile">
       <Button
