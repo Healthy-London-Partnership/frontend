@@ -10,7 +10,6 @@ import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 import Cta from '../../../components/Cta/Cta';
 import List from '../../../views/Results/ListView/List';
 import Loading from '../../../components/Loading/Loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface RouteParams {
   category: string;
@@ -63,7 +62,7 @@ class Category extends Component<IProps> {
             <div className="flex-container">
               <div className="flex-col flex-col--8 flex-col--standard--12">
                 <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: category.name, url: '' }]} />
-                <h1 className="category__heading"><FontAwesomeIcon icon={category.icon} /> {category.name}</h1>
+                <h1 className="category__heading">{category.name}</h1>
                 <p className="category__intro">{category.intro}</p>
               </div>
             </div>

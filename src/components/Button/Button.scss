@@ -93,6 +93,11 @@
   border: 2px solid $gulf-blue;
 }
 
+.button--fill {
+  background-color: $gulf-blue;
+  color: $white;
+}
+
 .button--disabled {
   background-color: $lynch;
   opacity: 0.75;
@@ -251,6 +256,12 @@
 
   .button__icon {
     margin-right: space(12);
+  }
+
+  &--fill {
+    background-color: $gulf-blue;
+    color: $white !important;
+    text-decoration: none;
   }
 }
 

@@ -3,10 +3,8 @@ import { observer, inject } from 'mobx-react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import get from 'lodash/get';
 
-import SearchStore from '../../stores/searchStore';
-
 import './Search.scss';
-import CategoryList from '../CategoryList';
+
 import SearchInput from '../SearchInput';
 import WindowSizeStore from '../../stores/windowSizeStore';
 import CMSStore from '../../stores/CMSStore';
@@ -43,14 +41,6 @@ class Search extends React.Component<IProps> {
                 <h1 className="search__heading">{get(cmsStore, 'home.search_title')}</h1>
               </div>
               <SearchInput showButtonText={true} showGeoLocate={true} keywordFieldLabel="Enter a keyword" postcodeFieldLabel="Enter a location" />
-              <div className="flex-col--12">
-                <label className="search__support__heading" htmlFor="category">
-                  {get(cmsStore, 'home.categories_title')}
-                </label>
-                <div className="search__category-list">
-                  <CategoryList categories={SearchStore.categories} />
-                </div>
-              </div>
             </div>
           </form>
         </section>

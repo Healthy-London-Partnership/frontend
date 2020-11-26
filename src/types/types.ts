@@ -1,5 +1,3 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core';
-
 export interface IPersona {
   created_at: string;
   id: string;
@@ -30,7 +28,7 @@ export interface ICategory {
   intro: string;
   name: string;
   slug: string;
-  icon: IconName | undefined;
+  image: string;
   sideboxes: ISidebox[];
 }
 

@@ -84,7 +84,7 @@ class Results extends Component<IProps> {
               {resultsStore.isLiveActivity ? (
                 <Fragment>
                   <div className="flex-col results__filters__col">
-                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Yoga</small></label>
+                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Running</small></label>
                     <Select
                       className="results__filters__select"
                       options={resultsStore.activityTypes}

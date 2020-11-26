@@ -42,6 +42,7 @@ class SearchStore {
       );
 
       this.categories = homepageCategories;
+      console.log(this.categories);
     } catch (e) {
       console.error(e);
     }
