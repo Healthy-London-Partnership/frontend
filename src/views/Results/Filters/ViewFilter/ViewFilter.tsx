@@ -24,7 +24,7 @@ class ViewFilter extends Component<IProps> {
     return (
       <Fragment>
         <div className="view-filter__filter">
-          <p className="view-filter__filter__header">View as:</p>
+          <p className="view-filter__filter__header">View as</p>
           <Button
             text="Grid"
             icon="th-large"

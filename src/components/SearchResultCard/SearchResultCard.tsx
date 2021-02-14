@@ -28,7 +28,7 @@ interface IProps extends RouteComponentProps {
 
 @inject('resultsStore', 'result', 'organisation', 'isActive')
 @observer
-class SearchResultCard extends React.Component<IProps> {
+class SearchResultCard extends React.Component<IProps, any> {
   getIcon = (type: string) => {
     switch (true) {
       case type === 'activity':
@@ -59,8 +59,6 @@ class SearchResultCard extends React.Component<IProps> {
     if (!result) {
       return null;
     }
-
-    console.log(result);
 
     return (
       <article

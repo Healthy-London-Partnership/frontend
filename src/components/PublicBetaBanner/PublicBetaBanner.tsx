@@ -13,7 +13,7 @@ interface IProps extends RouteComponentProps {
 
 @inject('uiStore')
 @observer
-class PublicBetaBanner extends Component<IProps> {
+class PublicBetaBanner extends Component<IProps, any> {
   render() {
     const { uiStore } = this.props;
 
@@ -31,7 +31,11 @@ class PublicBetaBanner extends Component<IProps> {
             <span className="public-beta-banner-tag">BETA</span>
           </div>
           <div className="flex-col">
-            <p className="public-beta-banner-information">This is a new service – your <button onClick={() => toggleFeedbackModal()}>feedback</button> will help us to improve it.</p>
+            <p className="public-beta-banner-information">
+              {`This is a new service – your `}
+              <button onClick={() => toggleFeedbackModal()}>feedback</button>
+              {` will help us to improve it.`}
+            </p>
           </div>
         </div>
       </section>

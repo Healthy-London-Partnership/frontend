@@ -29,7 +29,7 @@ class Header extends Component<IProps> {
     }
 
     const { isMobile } = windowSizeStore;
-    const { burgerMenuOpen, toggleBurgerMenu, toggleFeedbackModal } = uiStore;
+    const { burgerMenuOpen, toggleBurgerMenu, toggleFeedbackModal, toggleQuizModal } = uiStore;
 
     return (
       <header

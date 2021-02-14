@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import Pagination from 'react-js-pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer } from 'mobx-react';
+import QuizHeroCard from '../../../components/QuizHeroCard';
 
 import ResultsStore from '../../../stores/resultsStore';
 import Loading from '../../../components/Loading';
@@ -18,16 +19,18 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
     return <Loading />;
   }
 
-  const isLiveActivity = resultsStore.isLiveActivity;
-  const liveActivities = resultsStore.liveActivities;
-  const results = resultsStore.results;
-  const nationalResults = resultsStore.nationalResults;
+  const { isLiveActivity, liveActivities, results, nationalResults, keyword, view } = resultsStore;
 
   return (
     <Fragment>
       <div className="flex-container flex-container--justify flex-container--no-padding" style={{margin: '0 -16px'}}>
         <div className="flex-col flex-col--12">
           <div className="flex-container flex-container--justify flex-container--no-padding">
+            {(view === 'grid' && keyword ) &&
+              <QuizHeroCard
+                title={keyword}
+              />
+            }
             {isLiveActivity ? (
               <Fragment>
                 {liveActivities && (
@@ -74,7 +77,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
                           {nationalResults.size && (
                             [...nationalResults.entries()].map((results, i) => {
                               const [title, resultsList] = results;
-    
+
                               return (
                                 <List
                                   key={i}
