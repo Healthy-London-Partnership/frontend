@@ -27,7 +27,7 @@ class CategoryList extends Component<IProps, any> {
 
     return (
       <div className="category-list">
-        <button
+        <div
           className="category-list__item"
           key="physical-activity"
           onClick={() => uiStore.toggleLocationModal()}>
@@ -40,9 +40,9 @@ class CategoryList extends Component<IProps, any> {
           <span className="category-list__item__icon">
             <FontAwesomeIcon icon="chevron-right" />
           </span>
-        </button>
+        </div>
         {categories.map(({ name, id, image, slug }) => (
-          <button
+          <div
             className="category-list__item"
             key={id}
             onClick={() => {
@@ -62,7 +62,7 @@ class CategoryList extends Component<IProps, any> {
             <span className="category-list__item__icon">
               <FontAwesomeIcon icon="chevron-right" />
             </span>
-          </button> 
+          </div>
         ))}
         <LocationModal />
       </div>
