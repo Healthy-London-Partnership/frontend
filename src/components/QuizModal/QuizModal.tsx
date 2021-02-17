@@ -53,8 +53,7 @@ class QuizModal extends Component<IProps, any> {
     }
 
     // const { step } = this.state;
-    const { step, nextStep, backStep } = quizStore;
-    console.log(quizStore);
+    const { step } = quizStore;
 
     return (
       <Modal isOpen={uiStore.quizModalOpen} className="quiz-modal" shouldCloseOnEsc={true}>

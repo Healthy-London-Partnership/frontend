@@ -16,6 +16,7 @@ import Cta from '../../components/Cta';
 import Select from '../../components/Select';
 // import Checkbox from '../../components/Checkbox';
 import SelectFilter from './Filters/SelectFilter/SelectFilter';
+import ActivityTypeFilter from './Filters/ActivityTypeFilter';
 import { activitySortOptions, activityAnyDayOptions, activityAnyTimeOptions } from './meta';
 
 interface IProps {
@@ -74,25 +75,7 @@ class Results extends Component<IProps, any> {
                 justifyContent: resultsStore.isLiveActivity ? 'flex-start' : 'space-between',
               }}
             >
-              <div className="flex-col results__filters__col">
-                <label htmlFor="activity_type" className="results__filters__heading">
-                  Activity Type
-                </label>
-                <Select
-                  className="results__filters__select"
-                  options={resultsStore.activityTypes}
-                  id="activity_type"
-                  placeholder="Select activity type"
-                  selected={resultsStore.activityType}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                    resultsStore!.setActivityType(e.target.value);
-                    this.props.history.push({
-                      pathname: '/results',
-                      search: resultsStore!.amendSearch(),
-                    });
-                  }}
-                />
-              </div>
+              <ActivityTypeFilter />
 
               <SelectFilter
                 title="Sort by"

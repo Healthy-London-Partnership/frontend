@@ -43,6 +43,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.2",
     "react-svg": "^10.0.20",
+    "reactjs-popup": "^2.0.4",
     "typescript": "^3.6.2",
     "universal-cookie": "^4.0.4"
   },
