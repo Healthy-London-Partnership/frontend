@@ -14,15 +14,32 @@ import MetaData from '../../components/MetaData';
 import Breadcrumb from '../../components/Breadcrumb';
 import Cta from '../../components/Cta';
 import Select from '../../components/Select';
-// import Checkbox from '../../components/Checkbox';
-import SelectFilter from './Filters/SelectFilter/SelectFilter';
-import { activitySortOptions, activityAnyDayOptions, activityAnyTimeOptions } from './meta';
+import Checkbox from '../../components/Checkbox';
 
 interface IProps {
   location: Location;
   resultsStore: ResultStore;
   history: History;
 }
+
+const activitySortOptions = [
+  {
+    value: 'upcoming-sessions',
+    text: 'Upcoming Sessions',
+  },
+  {
+    value: 'discovery-geo',
+    text: 'Nearest',
+  },
+  {
+    value: 'discovery-price-asc',
+    text: 'Price low to high',
+  },
+  {
+    value: 'discovery-price-desc',
+    text: 'Price high to low',
+  },
+];
 
 class Results extends Component<IProps, any> {
   componentDidMount() {
@@ -74,71 +91,71 @@ class Results extends Component<IProps, any> {
                 justifyContent: resultsStore.isLiveActivity ? 'flex-start' : 'space-between',
               }}
             >
-              <div className="flex-col results__filters__col">
-                <label htmlFor="activity_type" className="results__filters__heading">
-                  Activity Type
-                </label>
-                <Select
-                  className="results__filters__select"
-                  options={resultsStore.activityTypes}
-                  id="activity_type"
-                  placeholder="Select activity type"
-                  selected={resultsStore.activityType}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                    resultsStore!.setActivityType(e.target.value);
-                    this.props.history.push({
-                      pathname: '/results',
-                      search: resultsStore!.amendSearch(),
-                    });
-                  }}
-                />
-              </div>
+              {!resultsStore.isLiveActivity ? (
+                <Fragment>
+                  <div className="flex-col results__filters__col">
+                    <label htmlFor="activity_type" className="results__filters__heading">
+                      Activity Type <small>e.g. Running</small>
+                    </label>
+                    <Select
+                      className="results__filters__select"
+                      options={resultsStore.activityTypes}
+                      id="activity_type"
+                      placeholder="Select activity type"
+                      selected={resultsStore.activityType}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        resultsStore!.setActivityType(e.target.value);
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch(),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="flex-col results__filters__col">
+                    <label htmlFor="sort_by" className="results__filters__heading">
+                      Sort by
+                    </label>
 
-              <SelectFilter
-                title="Sort by"
-                options={activitySortOptions}
-                id="sort_by"
-                selected={resultsStore.sortBy}
-                onChange={e => {
-                  resultsStore!.setSortBy(e.target.value);
-                  this.props.history.push({
-                    pathname: '/results',
-                    search: resultsStore!.amendSearch(),
-                  });
-                }}
-              />
-
-              <SelectFilter
-                title="Any Day"
-                options={activityAnyDayOptions}
-                id="any_day"
-                selected={resultsStore.sortDay}
-                onChange={e => {
-                  resultsStore!.setSortDay(e.target.value);
-                  this.props.history.push({
-                    pathname: '/results',
-                    search: resultsStore!.amendSearch(),
-                  });
-                }}
-              />
-
-              <SelectFilter
-                title="Any Time"
-                options={activityAnyTimeOptions}
-                id="any_time"
-                selected={resultsStore.sortTime}
-                onChange={e => {
-                  resultsStore!.setSortTime(e.target.value);
-                  this.props.history.push({
-                    pathname: '/results',
-                    search: resultsStore!.amendSearch(),
-                  });
-                }}
-              />
-            </div>
-
-            <div className="flex-container flex-container--no-padding flex-container--justify_between">
-              <div className="flex-col results__filters__col">
+                    <Select
+                      className="results__filters__select"
+                      options={activitySortOptions}
+                      id="sort_by"
+                      placeholder="Select sorting method"
+                      selected={resultsStore.sortBy}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        resultsStore!.setSortBy(e.target.value);
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch(),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="flex-col results__filters__col">
+                    <Checkbox
+                      id="virtual_activities"
+                      label="<strong>Show virtual activities only</strong><br>e.g. Zoom classes"
+                      checked={get(resultsStore, 'isVirtual', false)}
+                      onChange={() => {
+                        resultsStore!.toggleIsVirtual();
+                        this.props.history.push({
+                          pathname: '/results',
+                          search: resultsStore!.amendSearch(),
+                        });
+                      }}
+                      className="results__filters__checkbox"
+                    />
+                  </div>
+                </Fragment>
+              ) : (
+                <div className="flex-col results__filters__col">
+                  <ViewFilter />
+                </div>
+              )}
+              <div
+                className="flex-col results__filters__col"
+                style={{ width: resultsStore.isLiveActivity ? '100%' : 'auto' }}>
                 {!!resultsStore.results.size && !resultsStore.loading && (
                   <p className="results__filters__col__text">{`${resultsStore.totalItems} (after filtering) results`}</p>
                 )}
@@ -147,7 +164,6 @@ class Results extends Component<IProps, any> {
                 <ViewFilter />
               </div>
             </div>
-
             {resultsStore.nhsResult && (
               <div className="results__nhs-results">
                 <div className="flex-container flex-container--justify flex-container--no-padding">

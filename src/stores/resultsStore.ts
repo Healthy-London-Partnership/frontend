@@ -48,6 +48,8 @@ export default class ResultsStore {
   @observable activityTypes: any[] | null = [];
   @observable activityType: string = '';
   @observable sortBy: string = 'upcoming-sessions';
+  @observable sortDay: string = 'every-day';
+  @observable sortTime: string = 'morning';
   @observable isVirtual: boolean = false;
 
   @computed
@@ -577,6 +579,14 @@ export default class ResultsStore {
 
   @action setSortBy = (setting: string) => {
     this.sortBy = setting;
+  };
+
+  @action setSortDay = (setting: string) => {
+    this.sortDay = setting;
+  };
+
+  @action setSortTime = (setting: string) => {
+    this.sortTime = setting;
   };
 
   @action

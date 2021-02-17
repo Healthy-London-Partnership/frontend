@@ -116,6 +116,10 @@ body {
   // Horizontal align center
   &--justify {
     justify-content: center;
+
+    &_between {
+      justify-content: space-between;
+    }
   }
 
   // Don't fill space

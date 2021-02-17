@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { inject, observer } from 'mobx-react';
 import UIStore from '../../stores/uiStore';
 import ResultsStore from '../../stores/resultsStore';
+import quizStore from '../../stores/quizStore';
 
 import './QuizModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,40 +28,33 @@ interface IProps extends RouteComponentProps {
 class QuizModal extends Component<IProps, any> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      step: 1,
-    };
   }
 
-  nextStep = () => {
-    const { step } = this.state;
+  handleNextStep = () => {
     const { uiStore } = this.props;
+    const { step, maxStep, nextStep } = quizStore;
 
-    this.setState(
-      {
-        step: step === 8 ? 8 : step + 1,
-      },
-      () => {
-        if (step === 8) {
-          uiStore?.toggleQuizModal();
-        }
-      }
-    );
+    nextStep();
+    if (step === maxStep) {
+      uiStore?.toggleQuizModal();
+    }
   };
 
-  backStep = () => {
-    const { step } = this.state;
-
-    this.setState({ step: step === 1 ? 1 : step - 1 });
+  handleBackStep = () => {
+    const { backStep } = quizStore;
+    backStep();
   };
 
   render() {
     const { uiStore, resultsStore } = this.props;
-    const { step } = this.state;
 
-    if (!uiStore) {
+    if (!uiStore || !resultsStore) {
       return null;
     }
+
+    // const { step } = this.state;
+    const { step, nextStep, backStep } = quizStore;
+    console.log(quizStore);
 
     return (
       <Modal isOpen={uiStore.quizModalOpen} className="quiz-modal" shouldCloseOnEsc={true}>
@@ -82,13 +76,13 @@ class QuizModal extends Component<IProps, any> {
             <div className="quiz-modal__footer">
               <button
                 className="quiz-modal__footer__button quiz-modal__footer__button__back"
-                onClick={this.backStep}
+                onClick={this.handleBackStep}
               >
                 <FontAwesomeIcon icon="chevron-left" /> Back
               </button>
               <button
                 className="quiz-modal__footer__button quiz-modal__footer__button__next"
-                onClick={this.nextStep}
+                onClick={this.handleNextStep}
               >
                 {step === 8 ? 'Show Result' : 'Next'} <FontAwesomeIcon icon="chevron-right" />
               </button>
