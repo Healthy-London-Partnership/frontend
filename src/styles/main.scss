@@ -129,19 +129,24 @@ button {
 }
 
 .goog-te-menu-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   span {
     display: none;
   }
 
   span &:before {
-    content: 'Translate';
-    color: $gulf-blue;
-  }
-
-  span &:after {
     content: '\f1ab';
     font-family: 'Font Awesome 5 Brands', 'Font Awesome 5 Free';
     font-weight: 900;
+    color: $gulf-blue;
+    font-size: 1.55rem;
+  }
+
+  span &:after {
+    content: 'Translate';
     color: $gulf-blue;
   }
 
