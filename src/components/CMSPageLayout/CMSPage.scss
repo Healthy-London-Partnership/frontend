@@ -37,8 +37,10 @@
 .cms__header {
   position: relative;
   padding: space(40) 0;
-  background: rgb(0,94,184);
-  background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
+
+  // REMOVE COMMENT FOR ACTIVE THE CARD
+  //background: rgb(0,94,184);
+  //background: linear-gradient(90deg, rgba(0,94,184,1) 0%, rgba(109,205,211,1) 45%, rgba(213,246,157,1) 100%);
 
   .flex-container {
     max-width: 1260px;
@@ -50,8 +52,10 @@
     margin-bottom: -52px;
     position: relative;
     border-radius: 13px;
-    background-color: $white;
-    box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
+
+    // REMOVE COMMENT FOR ACTIVE THE CARD
+    //background-color: $white;
+    //box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.1);
 
     @include for-tablet-landscape-down {
       padding: space(24) space(32);
@@ -76,7 +80,7 @@
 .cms__content {
   &__inner {
     max-width: 1260px;
-    padding: space(120) space(72) space(96) !important;
+    padding: space(72) space(72) space(96) !important;
 
     @include for-tablet-landscape-down {
       padding: space(96) 0 space(64) !important;
