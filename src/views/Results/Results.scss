@@ -191,6 +191,10 @@
     padding-right: space(24);
     margin-bottom: space(24);
 
+    &__text {
+      font-weight: 600;
+    }
+
     @include for-phone-only {
       padding-right: 0;
       margin-bottom: space(20) !important;
@@ -207,7 +211,7 @@
     font-weight: 700;
     font-size: $font-heading-s;
     margin-bottom: space(12);
-  
+
     @include for-phone-only {
       margin-bottom: space(8);
     }
