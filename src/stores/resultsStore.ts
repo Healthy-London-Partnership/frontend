@@ -47,6 +47,7 @@ export default class ResultsStore {
   @observable radius: number = 5;
   @observable activityTypes: any[] | null = [];
   @observable activityType: string = '';
+  @observable activityTypeSelected: any[] | null = [];
   @observable sortBy: string = 'upcoming-sessions';
   @observable sortDay: string = 'every-day';
   @observable sortTime: string = 'morning';
@@ -91,6 +92,7 @@ export default class ResultsStore {
     this.radius = 5;
     this.activityTypes = [];
     this.activityType = '';
+    this.activityTypeSelected = [];
     this.sortBy = 'upcoming-sessions';
     this.isVirtual = false;
   }
@@ -157,10 +159,10 @@ export default class ResultsStore {
   };
 
   renderTree = (concepts: any, output: any) => {
-    output.push({
-      value: '',
-      text: 'All activity types'
-    });
+    // output.push({
+    //   value: '',
+    //   text: 'All activity types'
+    // });
 
     concepts.forEach((concept: any) => {
       let label = concept.prefLabel;
@@ -317,15 +319,15 @@ export default class ResultsStore {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
-    if(this.keyword || this.category || this.persona) {
+    if (this.keyword || this.category || this.persona) {
       await this.fetchNhsConditions();
     }
 
-    if(this.isLiveActivity && params.location) {
-      this.fetchLiveActivities(params.location);
+    if (this.isLiveActivity && params.location) {
+      await this.fetchLiveActivities(params.location);
     }
 
-    this.getOrganisations();
+    await this.getOrganisations();
   };
 
   @action
@@ -357,7 +359,7 @@ export default class ResultsStore {
   fetchLiveActivities = async (location: any) => {
     const { data } = await axios.get(`${iminApiBase}`, {
       headers: {
-        'X-API-KEY': `${iminApiKey}`
+        'X-API-KEY': `${iminApiKey}`,
       },
       params: {
         'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
@@ -371,8 +373,8 @@ export default class ResultsStore {
 
     this.totalItems = data['imin:totalItems'];
 
-    if(this.totalItems > 0) {
-      let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
+    if (this.totalItems > 0) {
+      const liveActivitiesMapped = data['imin:item'].map((activity: any) => {
         return {
           contact_name: activity.organizer.name ? activity.organizer.name : null,
           contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
@@ -492,6 +494,30 @@ export default class ResultsStore {
       url = this.removeQueryStringParameter('live_activity', url);
     }
 
+    if (this.sortBy) {
+      url = this.updateQueryStringParameter('sort_by', this.sortBy, url);
+    }
+
+    if (!this.sortBy) {
+      url = this.removeQueryStringParameter('sort_by', url);
+    }
+
+    if (this.sortDay) {
+      url = this.updateQueryStringParameter('sort_day', this.sortDay, url);
+    }
+
+    if (!this.sortDay) {
+      url = this.removeQueryStringParameter('sort_day', url);
+    }
+
+    if (this.sortTime) {
+      url = this.updateQueryStringParameter('sort_time', this.sortTime, url);
+    }
+
+    if (!this.sortTime) {
+      url = this.removeQueryStringParameter('sort_time', url);
+    }
+
     if(this.isLiveActivity) {
       if (this.radius) {
         url = this.updateQueryStringParameter('radius', this.radius, url);
@@ -577,6 +603,18 @@ export default class ResultsStore {
     this.activityType = activity;
   };
 
+  @action setActivityTypeSelected = (activity: string) => {
+    if (this.activityTypeSelected?.includes(activity)) {
+      this.activityTypeSelected?.splice(this.activityTypeSelected.indexOf(activity), 1);
+    } else {
+      this.activityTypeSelected?.push(activity);
+    }
+  };
+
+  @action clearActivityTypeSelected = () => {
+    this.activityTypeSelected = [];
+  };
+
   @action setSortBy = (setting: string) => {
     this.sortBy = setting;
   };
@@ -605,9 +643,9 @@ export default class ResultsStore {
   @action
   truncateString = (str: string, num: number) => {
     if (str.length <= num) {
-      return str
+      return str;
     }
 
-    return str.slice(0, num) + '...'
+    return str.slice(0, num) + '...';
   };
 }

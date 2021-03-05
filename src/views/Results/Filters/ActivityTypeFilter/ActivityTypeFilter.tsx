@@ -16,12 +16,32 @@ interface IProps extends RouteComponentProps {
 @inject('resultsStore')
 @observer
 class ActivityTypeFilter extends Component<IProps, any> {
+  constructor(props: IProps | Readonly<IProps>) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+    };
+  }
+
   componentDidMount() {
     const { resultsStore } = this.props;
 
     resultsStore?.getSearchTerms();
     resultsStore?.getActivityTypes();
   }
+
+  openModal = () => {
+    this.setState({
+      isOpen: true,
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      isOpen: false,
+    });
+  };
 
   groupByAlphabet = (data: any[]) => {
     const output = Object.values(
@@ -39,6 +59,7 @@ class ActivityTypeFilter extends Component<IProps, any> {
   };
 
   render() {
+    const { isOpen } = this.state;
     const { resultsStore } = this.props;
     const activityTypes = resultsStore?.activityTypes;
 
@@ -48,10 +69,24 @@ class ActivityTypeFilter extends Component<IProps, any> {
           <label htmlFor="activity_type" className="results__filters__heading">
             Activity Type
           </label>
+          {/*<div className="activity-filter" onClick={this.openModal}>*/}
+          {/*  {resultsStore?.activityTypeSelected?.length === 0*/}
+          {/*    ? 'Select activity type'*/}
+          {/*    : `${resultsStore?.activityTypeSelected?.length} activities selected`*/}
+          {/*  }*/}
+          {/*</div>*/}
           <Popup
-            trigger={<div className="activity-filter">Select activity type</div>}
+            trigger={
+              <div className="activity-filter">
+                {resultsStore?.activityTypeSelected?.length === 0
+                  ? 'Select activity type'
+                  : `${resultsStore?.activityTypeSelected?.length} activities selected`
+                }
+              </div>
+            }
             position="bottom left"
             className="my-popup"
+            nested={true}
           >
             <div className="activity-filter__content">
               <div className="activity-filter__body">
@@ -62,7 +97,29 @@ class ActivityTypeFilter extends Component<IProps, any> {
                       <li>{item[0].text[0]}</li>
                       {item.map((val: any, i: string | number | null | undefined) => (
                         <li key={i}>
-                          <Checkbox label={val.text} id={String(val.value)} checked={false} />
+                          {/*<input*/}
+                          {/*  type="checkbox"*/}
+                          {/*  id={String(val.value)}*/}
+                          {/*  name={String(val.value)}*/}
+                          {/*  checked={*/}
+                          {/*    !!resultsStore?.activityTypeSelected?.includes(String(val.value))*/}
+                          {/*  }*/}
+                          {/*  onChange={() =>*/}
+                          {/*    resultsStore?.setActivityTypeSelected(String(val.value))*/}
+                          {/*  }*/}
+                          {/*/>*/}
+                          {/*<label htmlFor={String(val.value)}>{val.text}</label>*/}
+                          <Checkbox
+                            className={'ddd'}
+                            label={val.text}
+                            id={String(val.value)}
+                            checked={
+                              !!resultsStore?.activityTypeSelected?.includes(String(val.value))
+                            }
+                            onChange={() =>
+                              resultsStore!.setActivityTypeSelected(String(val.value))
+                            }
+                          />
                         </li>
                       ))}
                     </ul>
@@ -70,8 +127,15 @@ class ActivityTypeFilter extends Component<IProps, any> {
                 </div>
               </div>
               <div className="activity-filter__footer">
-                <Button size="small" text="Clear all" />
-                <Button size="small" text="Apply filters" />
+                <Button
+                  size="small"
+                  text="Clear all"
+                  onClick={resultsStore?.clearActivityTypeSelected}
+                />
+                <Button
+                  size="small"
+                  text="Apply filters"
+                />
               </div>
             </div>
           </Popup>
