@@ -25,23 +25,23 @@ interface IProps {
 const activitySortOptions = [
   {
     value: 'upcoming-sessions',
-    text: 'Upcoming Sessions'
+    text: 'Upcoming Sessions',
   },
   {
     value: 'discovery-geo',
-    text: 'Nearest'
+    text: 'Nearest',
   },
   {
     value: 'discovery-price-asc',
-    text: 'Price low to high'
+    text: 'Price low to high',
   },
   {
     value: 'discovery-price-desc',
-    text: 'Price high to low'
-  }
-]
+    text: 'Price high to low',
+  },
+];
 
-class Results extends Component<IProps> {
+class Results extends Component<IProps, any> {
   componentDidMount() {
     const { resultsStore } = this.props;
 
@@ -63,12 +63,21 @@ class Results extends Component<IProps> {
     return (
       <section>
         <MetaData
-          title={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
-          metaDescription={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
+          title={`Search Results ${resultsStore.keyword ? 'for ' + resultsStore.keyword : ''}${
+            resultsStore.postcode ? ' in ' + resultsStore.postcode : ''
+          }`}
+          metaDescription={`Search Results ${
+            resultsStore.keyword ? 'for ' + resultsStore.keyword : ''
+          }${resultsStore.postcode ? ' in ' + resultsStore.postcode : ''}`}
         />
         <div className="results__search-box flex-container flex-container--justify">
           <div className="results__search-box__inner flex-col--10 flex-col--tablet-large--12">
-            <Breadcrumb crumbs={[{ text: 'Home', url: '/' }, { text: 'Search', url: '' }]} />
+            <Breadcrumb
+              crumbs={[
+                { text: 'Home', url: '/' },
+                { text: 'Search', url: '' },
+              ]}
+            />
             <Keyword />
           </div>
         </div>
@@ -79,12 +88,25 @@ class Results extends Component<IProps> {
               className="results__filters flex-container flex-container--no-padding"
               style={{
                 alignItems: resultsStore.isLiveActivity ? 'flex-end' : 'center',
-                justifyContent: resultsStore.isLiveActivity ? 'flex-start' : 'space-between'
-              }}>
+                justifyContent: resultsStore.isLiveActivity ? 'flex-start' : 'space-between',
+              }}
+            >
+              <div
+                className="flex-col results__filters__col"
+                style={{ width: resultsStore.isLiveActivity ? '100%' : 'auto' }}
+              >
+                {!!resultsStore.results.size && !resultsStore.loading && (
+                  // <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>
+                  <p className="results__filters__col__text">{`${resultsStore.totalItems} (after filtering) results`}</p>
+                )}
+              </div>
+
               {resultsStore.isLiveActivity ? (
                 <Fragment>
                   <div className="flex-col results__filters__col">
-                    <label htmlFor="activity_type" className="results__filters__heading">Activity Type <small>e.g. Running</small></label>
+                    <label htmlFor="activity_type" className="results__filters__heading">
+                      Activity Type <small>e.g. Running</small>
+                    </label>
                     <Select
                       className="results__filters__select"
                       options={resultsStore.activityTypes}
@@ -95,13 +117,15 @@ class Results extends Component<IProps> {
                         resultsStore!.setActivityType(e.target.value);
                         this.props.history.push({
                           pathname: '/results',
-                          search: resultsStore!.amendSearch()
+                          search: resultsStore!.amendSearch(),
                         });
                       }}
                     />
                   </div>
                   <div className="flex-col results__filters__col">
-                    <label htmlFor="sort_by" className="results__filters__heading">Sort by</label>
+                    <label htmlFor="sort_by" className="results__filters__heading">
+                      Sort by
+                    </label>
 
                     <Select
                       className="results__filters__select"
@@ -113,7 +137,7 @@ class Results extends Component<IProps> {
                         resultsStore!.setSortBy(e.target.value);
                         this.props.history.push({
                           pathname: '/results',
-                          search: resultsStore!.amendSearch()
+                          search: resultsStore!.amendSearch(),
                         });
                       }}
                     />
@@ -127,7 +151,7 @@ class Results extends Component<IProps> {
                         resultsStore!.toggleIsVirtual();
                         this.props.history.push({
                           pathname: '/results',
-                          search: resultsStore!.amendSearch()
+                          search: resultsStore!.amendSearch(),
                         });
                       }}
                       className="results__filters__checkbox"
@@ -139,13 +163,8 @@ class Results extends Component<IProps> {
                   <ViewFilter />
                 </div>
               )}
-              <div className="flex-col results__filters__col" style={{width: resultsStore.isLiveActivity ? '100%' : 'auto'}}>
-                {!!resultsStore.results.size && !resultsStore.loading && (
-                  <p>{resultsStore.totalItems > 25 ? 'Over 25' : resultsStore.totalItems} service(s) found</p>
-                )}
-              </div>
             </div>
-            {resultsStore.nhsResult &&
+            {resultsStore.nhsResult && (
               <div className="results__nhs-results">
                 <div className="flex-container flex-container--justify flex-container--no-padding">
                   <div className="flex-col flex-col--12">
@@ -153,11 +172,11 @@ class Results extends Component<IProps> {
                       title={resultsStore.nhsResult.about.name}
                       description={resultsStore.nhsResult.description}
                       buttonUrl={resultsStore.nhsResult.url.replace('api.nhs.uk', 'www.nhs.uk')}
-                      />
+                    />
                   </div>
                 </div>
               </div>
-            }
+            )}
             {resultsStore.view === 'grid' ? (
               <ListView resultsStore={resultsStore} history={history} />
             ) : (
