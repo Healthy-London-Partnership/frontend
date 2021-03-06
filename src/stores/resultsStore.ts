@@ -5,7 +5,7 @@ import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
 
-import { apiBase, nhsApiSubscriptionKey, iminApiKey, iminApiBase } from '../config/api';
+import { apiBase, iminApiKey, iminApiBase } from '../config/api';
 import {
   IParams,
   IPersona,
@@ -342,6 +342,7 @@ export default class ResultsStore {
       searchSlug = this.persona.slug.replace('homepage-', '');
     }
 
+<<<<<<< HEAD
     await axios.get('https://api.nhs.uk/conditions/' + searchSlug, {
       headers: {
         'subscription-key': `${nhsApiSubscriptionKey}`,
@@ -353,6 +354,15 @@ export default class ResultsStore {
       .catch(error => {
         this.nhsResult = null;
       });
+=======
+    await axios.get(apiBase + '/nhs-conditions/' + searchSlug)
+    .then(response => {
+      this.nhsResult = response.data;
+    })
+    .catch(error => {
+      this.nhsResult = null;
+    });
+>>>>>>> e5b7f868fa2ec6aa190de40b1be33b23cfdb996f
   }
 
   @action
