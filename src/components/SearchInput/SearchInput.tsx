@@ -109,22 +109,25 @@ class SearchInput extends React.Component<IProps, IState> {
   };
 
   getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.reverseGeolocate(position.coords.longitude.toString(), position.coords.latitude.toString());
+    navigator.geolocation.getCurrentPosition(position => {
+      this.reverseGeolocate(
+        position.coords.longitude.toString(),
+        position.coords.latitude.toString()
+      );
     });
   };
 
   reverseGeolocate = async (lon: string, lat: string) => {
     await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
-    ).then(response => {
-      let location = response.data.results[0].formatted_address;
-
-      this.handleInputChange(location, 'postcode');
-    })
-    .catch(() => {
-      alert('Sorry. We are currently unable to determine your location.');
-    });
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&result_type=postal_code&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+      )
+      .then(response => {
+        const location = response.data.results[0].formatted_address;
+        this.handleInputChange(location, 'postcode');
+      })
+      .catch(() => {
+        alert('Sorry. We are currently unable to determine your location.');
+      });
   };
 
   render() {
