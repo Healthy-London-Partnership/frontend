@@ -114,7 +114,7 @@ export default class ResultsStore {
       .get(`${apiBase}/collections/categories/${slug}`)
       .then(response => get(response, 'data.data'))
       .then(data => this.category = data)
-      .then(() => this.setParams())
+      .then(() => this.setCategoryParams())
       .catch(error => console.error(error));
   };
 
@@ -124,7 +124,7 @@ export default class ResultsStore {
       .get(`${apiBase}/collections/personas/${slug}`)
       .then(response => get(response, 'data.data'))
       .then(data => this.persona = data)
-      .then(() => this.setParams())
+      .then(() => this.setPersonaParams())
       .catch(error => console.error(error));
   };
 
@@ -283,6 +283,26 @@ export default class ResultsStore {
     }
   };
 
+  setCategoryParams = async () => {
+    const params: IParams = {};
+
+    if (this.category) {
+      params.category = this.category.slug;
+    }
+
+    await this.fetchCollectionResults('categories', params);
+  };
+
+  setPersonaParams = async () => {
+    const params: IParams = {};
+
+    if (this.persona) {
+      params.persona = this.persona.slug;
+    }
+
+    await this.fetchCollectionResults('personas', params);
+  };
+
   @action
   fetchResults = async (isNational: boolean, params: IParams) => {
     let itemsPerPage;
@@ -318,6 +338,20 @@ export default class ResultsStore {
     if(this.isLiveActivity && params.location) {
       this.fetchLiveActivities(params.location);
     }
+
+    this.getOrganisations();
+  };
+
+  @action
+  fetchCollectionResults = async (type: string, params: IParams) => {
+    let searchUrl;
+
+    searchUrl = `${apiBase}/search/collections/${type}?page=${this.currentPage}`
+
+    const { data } = await axios.post(searchUrl, params);
+    this.totalItems += get(data, 'meta.total', 0);
+
+    this.results = this.results.set(params.query as string, data.data);
 
     this.getOrganisations();
   };
