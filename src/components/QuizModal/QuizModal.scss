@@ -31,6 +31,13 @@
     }
   }
 
+  &__link_location {
+    font-size: 16px;
+    margin-top: .4rem;
+    color: #0A66BB;
+    cursor: pointer;
+  }
+
   &__title {
     margin-bottom: space(12);
     font-size: space(24);
@@ -73,6 +80,11 @@
         border-radius: 12px;
         margin: .5rem;
       }
+      .active {
+        background: #051a4c;
+        color: #ffffff;
+        border: 2px solid #051a4c;
+      }
     }
 
     ul.step-card-selection {
@@ -92,6 +104,11 @@
         flex: 1;
         align-items: center;
         justify-content: center;
+      }
+      .active {
+        background: #051a4c;
+        color: #ffffff;
+        border: 2px solid #051a4c;
       }
     }
 
