@@ -5,7 +5,7 @@ import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
 
-import { apiBase, nhsApiSubscriptionKey, iminApiKey, iminApiBase } from '../config/api';
+import { apiBase, iminApiKey, iminApiBase } from '../config/api';
 import {
   IParams,
   IPersona,
@@ -116,7 +116,7 @@ export default class ResultsStore {
       .get(`${apiBase}/collections/categories/${slug}`)
       .then(response => get(response, 'data.data'))
       .then(data => this.category = data)
-      .then(() => this.setParams())
+      .then(() => this.setCategoryParams())
       .catch(error => console.error(error));
   };
 
@@ -126,7 +126,7 @@ export default class ResultsStore {
       .get(`${apiBase}/collections/personas/${slug}`)
       .then(response => get(response, 'data.data'))
       .then(data => this.persona = data)
-      .then(() => this.setParams())
+      .then(() => this.setPersonaParams())
       .catch(error => console.error(error));
   };
 
@@ -249,10 +249,6 @@ export default class ResultsStore {
       params.is_free = this.is_free;
     }
 
-    if (this.view) {
-      params.view = this.view;
-    }
-
     if (this.keyword) {
       params.query = this.keyword;
     }
@@ -287,6 +283,26 @@ export default class ResultsStore {
 
       await this.fetchResults(true, params);
     }
+  };
+
+  setCategoryParams = async () => {
+    const params: IParams = {};
+
+    if (this.category) {
+      params.category = this.category.slug;
+    }
+
+    await this.fetchCollectionResults('categories', params);
+  };
+
+  setPersonaParams = async () => {
+    const params: IParams = {};
+
+    if (this.persona) {
+      params.persona = this.persona.slug;
+    }
+
+    await this.fetchCollectionResults('personas', params);
   };
 
   @action
@@ -329,6 +345,20 @@ export default class ResultsStore {
   };
 
   @action
+  fetchCollectionResults = async (type: string, params: IParams) => {
+    let searchUrl;
+
+    searchUrl = `${apiBase}/search/collections/${type}?page=${this.currentPage}`
+
+    const { data } = await axios.post(searchUrl, params);
+    this.totalItems += get(data, 'meta.total', 0);
+
+    this.results = this.results.set(params.query as string, data.data);
+
+    this.getOrganisations();
+  };
+
+  @action
   fetchNhsConditions = async () => {
     let searchSlug;
 
@@ -340,11 +370,7 @@ export default class ResultsStore {
       searchSlug = this.persona.slug.replace('homepage-', '');
     }
 
-    await axios.get('https://api.nhs.uk/conditions/' + searchSlug, {
-      headers: {
-        'subscription-key': `${nhsApiSubscriptionKey}`,
-      },
-    })
+    await axios.get(apiBase + '/nhs-conditions/' + searchSlug)
     .then(response => {
       this.nhsResult = response.data;
     })

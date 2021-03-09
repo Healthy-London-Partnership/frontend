@@ -1,5 +1,8 @@
 import React, { Fragment, FunctionComponent } from 'react';
 import '../QuizModal.scss';
+import cx from 'classnames';
+import quizStore from '../../../stores/quizStore';
+import { observer } from 'mobx-react';
 
 const selectionMapping = ['Free only', 'Paid only', 'Both'];
 
@@ -21,7 +24,11 @@ const Step4: FunctionComponent<IProps> = ({ stepTitle }) => {
       <div className="quiz-modal__content">
         <ul className="step-card-selection">
           {selectionMapping.map((item, index) => (
-            <li key={index}>{item}</li>
+            <li
+              key={index}
+              className={cx({ "active" : quizStore.step4 === index })}
+              onClick={() => quizStore.setStep4(index)}
+            >{item}</li>
           ))}
         </ul>
       </div>
@@ -29,4 +36,4 @@ const Step4: FunctionComponent<IProps> = ({ stepTitle }) => {
   );
 };
 
-export default Step4;
+export default observer(Step4);

@@ -1,5 +1,7 @@
-import React, { Fragment, FunctionComponent, useState } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import '../QuizModal.scss';
+import quizStore from '../../../stores/quizStore';
+import { observer } from 'mobx-react';
 
 const metaOld = ['12-18', '19-34', '35-48', '49-64', '65-78', '79 and over'];
 
@@ -8,8 +10,6 @@ interface IProps {
 }
 
 const Step2: FunctionComponent<IProps> = ({ stepTitle }) => {
-  const [active, setActive] = useState(-1);
-
   return (
     <Fragment>
       <div className="quiz-modal__step">
@@ -24,8 +24,8 @@ const Step2: FunctionComponent<IProps> = ({ stepTitle }) => {
       <div className="quiz-modal__content">
         <div className="radio-selection-wrapper">
           {metaOld.map((item, index) => (
-            <div key={index} className="radio-selection" onClick={() => setActive(index)}>
-              <div className={`circle ${active === index ? 'circle-active' : ''}`} />
+            <div key={index} className="radio-selection" onClick={() => quizStore.setStep2(index)}>
+              <div className={`circle ${quizStore.step2 === index ? 'circle-active' : ''}`} />
               <label>{item}</label>
             </div>
           ))}
@@ -35,4 +35,4 @@ const Step2: FunctionComponent<IProps> = ({ stepTitle }) => {
   );
 };
 
-export default Step2;
+export default observer(Step2);

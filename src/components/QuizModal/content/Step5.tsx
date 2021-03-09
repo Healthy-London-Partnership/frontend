@@ -1,5 +1,8 @@
-import React, { Fragment, FunctionComponent, useState } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import '../QuizModal.scss';
+import quizStore from '../../../stores/quizStore';
+import { observer } from 'mobx-react';
+import get from 'lodash/get';
 
 import Input from '../../Input';
 
@@ -8,9 +11,8 @@ interface IProps {
 }
 
 const Step5: FunctionComponent<IProps> = ({ stepTitle }) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const stepIdentifier = 'step5';
+
   return (
     <Fragment>
       <div className="quiz-modal__step">
@@ -33,14 +35,19 @@ const Step5: FunctionComponent<IProps> = ({ stepTitle }) => {
           <Input
             id="fullname"
             type="text"
-            onChange={e => setFullName(e.target.value)}
-            value={fullName}
+            onChange={e => quizStore.setField('full_name', e.target.value, stepIdentifier)}
+            value={get(quizStore, 'step5.full_name')}
           />
         </div>
 
         <div className="form-control-text">
           <label htmlFor="email">Email Address</label>
-          <Input id="email" type="email" onChange={e => setEmail(e.target.value)} value={email} />
+          <Input
+            id="email"
+            type="email"
+            onChange={e => quizStore.setField('email', e.target.value, stepIdentifier)}
+            value={get(quizStore, 'step5.email')}
+          />
         </div>
 
         <div className="form-control-text">
@@ -48,8 +55,8 @@ const Step5: FunctionComponent<IProps> = ({ stepTitle }) => {
           <Input
             id="phone"
             type="text"
-            onChange={e => setPhone(e.target.value)}
-            value={phone}
+            onChange={e => quizStore.setField('phone', e.target.value, stepIdentifier)}
+            value={get(quizStore, 'step5.phone')}
           />
         </div>
       </div>
@@ -57,4 +64,4 @@ const Step5: FunctionComponent<IProps> = ({ stepTitle }) => {
   );
 };
 
-export default Step5;
+export default observer(Step5);
