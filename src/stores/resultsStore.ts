@@ -247,10 +247,6 @@ export default class ResultsStore {
       params.is_free = this.is_free;
     }
 
-    if (this.view) {
-      params.view = this.view;
-    }
-
     if (this.keyword) {
       params.query = this.keyword;
     }
