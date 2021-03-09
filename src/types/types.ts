@@ -16,6 +16,7 @@ export interface IParams {
   collection_personas?: string;
   is_free?: boolean;
   wait_time?: string;
+  view?: string;
   order?: 'distance' | 'relevance';
   query?: string;
   location?: IGeoLocation | {};
