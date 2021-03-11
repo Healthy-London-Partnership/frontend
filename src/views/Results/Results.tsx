@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { History } from 'history';
 import get from 'lodash/get';
+import quizStore from '../../stores/quizStore';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
@@ -42,21 +43,33 @@ const activitySortOptions = [
 ];
 
 class Results extends Component<IProps, any> {
+  requestData = () => {
+    const { resultsStore } = this.props;
+    if (quizStore.step1 !== '') {
+      resultsStore?.getResultByQuiz(
+        quizStore.step1,
+        quizStore.step2
+      );
+    } else {
+      resultsStore.getSearchTerms();
+    }
+  };
+
   componentDidMount() {
     const { resultsStore } = this.props;
-
-    resultsStore.getSearchTerms();
+    this.requestData();
     resultsStore.getActivityTypes();
   }
 
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.location.search !== this.props.location.search) {
       const { resultsStore } = this.props;
-      resultsStore.clear();
-      resultsStore.getSearchTerms();
+      // resultsStore.clear(); BUG DATA NOT SHOW
+      this.requestData();
       resultsStore.getActivityTypes();
     }
   }
+
 
   render() {
     const { resultsStore, history } = this.props;

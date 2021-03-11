@@ -185,8 +185,6 @@ export default class ResultsStore {
 
   @action
   getResultByQuiz = async (postcode: string, age: string) => {
-    this.currentPage = 1;
-
     await this.geolocate(postcode);
 
     const arrAge = age.split('-');
@@ -198,8 +196,8 @@ export default class ResultsStore {
       page: this.currentPage,
       activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
       isVirtual: this.isVirtual ? this.isVirtual : null,
-      'ageRangeMin[gte]': arrAge[0],
-      'ageRangeMax[lte]': arrAge[1],
+      // 'ageRangeMin[gte]': arrAge[0],
+      // 'ageRangeMax[lte]': arrAge[1],
     };
 
     if (this.locationCoords.lat === '' && this.locationCoords.lon === '') {
@@ -216,11 +214,9 @@ export default class ResultsStore {
     this.totalItems = data['imin:totalItems'];
 
     if (this.totalItems > 0) {
-      try {
-        this.results = this.transformLiveActivities(data);
-      } catch (err) {
-        alert('Something wrong...');
-      }
+      this.results = new Map();
+
+      this.results = this.results.set('', this.transformLiveActivities(data));
     }
   };
 
@@ -367,9 +363,9 @@ export default class ResultsStore {
       itemsPerPage = this.itemsPerPage;
     }
 
-    if(this.category || this.persona) {
+    if (this.category || this.persona) {
       searchUrl = `${apiBase}/search?page=${this.currentPage}`;
-    } else if(this.view === 'map') {
+    } else if (this.view === 'map') {
       searchUrl = `${apiBase}/search`;
     } else {
       searchUrl = `${apiBase}/search?page=${this.currentPage}&per_page=${itemsPerPage}`;
@@ -407,6 +403,9 @@ export default class ResultsStore {
     this.totalItems += get(data, 'meta.total', 0);
 
     this.results = this.results.set(params.query as string, data.data);
+    console.log('danan', data.data)
+    console.log('params', params.query)
+    console.log(this.results)
 
     this.getOrganisations();
   };
@@ -501,11 +500,7 @@ export default class ResultsStore {
     this.fetched = true;
   };
 
-  updateQueryStringParameter = (
-    key: string,
-    value: string | boolean | number,
-    query: string = window.location.search
-  ) => {
+  updateQueryStringParameter = (key: string, value: string | boolean | number, query: string = window.location.search) => {
     const re = queryRegex(key);
     const separator = querySeparator(query);
 

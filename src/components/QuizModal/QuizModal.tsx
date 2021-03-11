@@ -34,6 +34,7 @@ class QuizModal extends Component<IProps, any> {
     if (step === maxStep) {
       uiStore?.toggleQuizModal();
       resultsStore?.getResultByQuiz(
+
         quizStore.step1,
         quizStore.step2
       );
