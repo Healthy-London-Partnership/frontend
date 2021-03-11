@@ -178,19 +178,16 @@ export default class ResultsStore {
 
   @action
   getResultByQuiz = async () => {
+    this.currentPage = 1;
 
     const params = {
       'geo[radial]': '51.5454736,-0.1627902,5',
       mode: this.sortBy,
       limit: 9,
-      page: 1,
+      page: this.currentPage,
       activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
       isVirtual: this.isVirtual ? this.isVirtual : null,
     };
-
-    if (this.isVirtual) {
-      delete params['geo[radial]'];
-    }
 
     const { data } = await axios.get(`${iminApiBase}`, {
       headers: {
@@ -201,7 +198,7 @@ export default class ResultsStore {
 
     this.totalItems = data['imin:totalItems'];
 
-    if ( this.totalItems > 0) {
+    if (this.totalItems > 0) {
       this.results.set('Live Activities', this.transformLiveActivities(data));
     }
     //
