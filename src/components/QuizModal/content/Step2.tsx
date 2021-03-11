@@ -3,7 +3,14 @@ import '../QuizModal.scss';
 import quizStore from '../../../stores/quizStore';
 import { observer } from 'mobx-react';
 
-const metaOld = ['12-18', '19-34', '35-48', '49-64', '65-78', '79 and over'];
+const metaOld = [
+  { label: '12-18', value: '12-18' },
+  { label: '19-34', value: '19-34' },
+  { label: '35-48', value: '35-48' },
+  { label: '49-64', value: '49-64' },
+  { label: '65-78', value: '65-78' },
+  { label: '79 and over', value: '79-100' },
+];
 
 interface IProps {
   stepTitle?: string;
@@ -23,10 +30,14 @@ const Step2: FunctionComponent<IProps> = ({ stepTitle }) => {
       <small>Please choose your age range so we can suggest activities that suit you best.</small>
       <div className="quiz-modal__content">
         <div className="radio-selection-wrapper">
-          {metaOld.map((item, index) => (
-            <div key={index} className="radio-selection" onClick={() => quizStore.setStep2(index)}>
-              <div className={`circle ${quizStore.step2 === index ? 'circle-active' : ''}`} />
-              <label>{item}</label>
+          {metaOld.map(item => (
+            <div
+              key={item.value}
+              className="radio-selection"
+              onClick={() => quizStore.setStep2(item.value)}
+            >
+              <div className={`circle ${quizStore.step2 === item.value ? 'circle-active' : ''}`} />
+              <label>{item.label}</label>
             </div>
           ))}
         </div>

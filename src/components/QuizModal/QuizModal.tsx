@@ -27,12 +27,13 @@ interface IProps extends RouteComponentProps {
 @observer
 class QuizModal extends Component<IProps, any> {
   handleNextStep = () => {
-    const { uiStore } = this.props;
+    const { uiStore, resultsStore } = this.props;
     const { step, maxStep, nextStep } = quizStore;
 
     nextStep();
     if (step === maxStep) {
       uiStore?.toggleQuizModal();
+      resultsStore?.getResultByQuiz();
     }
   };
 

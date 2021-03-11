@@ -110,10 +110,11 @@ export default class ResultsStore {
 
   @action
   getCategory = async (slug: string) => {
+    const url = `${apiBase}/collections/categories/${slug}`;
     return axios
-      .get(`${apiBase}/collections/categories/${slug}`)
+      .get(url)
       .then(response => get(response, 'data.data'))
-      .then(data => this.category = data)
+      .then(data => (this.category = data))
       .then(() => this.setCategoryParams())
       .catch(error => console.error(error));
   };
@@ -173,6 +174,41 @@ export default class ResultsStore {
       });
     });
     return output;
+  };
+
+  @action
+  getResultByQuiz = async () => {
+
+    const params = {
+      'geo[radial]': '51.5454736,-0.1627902,5',
+      mode: this.sortBy,
+      limit: 9,
+      page: 1,
+      activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
+      isVirtual: this.isVirtual ? this.isVirtual : null,
+    };
+
+    if (this.isVirtual) {
+      delete params['geo[radial]'];
+    }
+
+    const { data } = await axios.get(`${iminApiBase}`, {
+      headers: {
+        'X-API-KEY': `${iminApiKey}`,
+      },
+      params,
+    });
+
+    this.totalItems = data['imin:totalItems'];
+
+    if ( this.totalItems > 0) {
+      this.results.set('Live Activities', this.transformLiveActivities(data));
+    }
+    //
+    //
+    // console.log('getResultByQuiz')
+    // this.liveActivities.set('Live Activities', []);
+    // this.results = new Map();
   };
 
   getSearchTerms = () => {
@@ -325,17 +361,17 @@ export default class ResultsStore {
     const { data } = await axios.post(searchUrl, params);
     this.totalItems += get(data, 'meta.total', 0);
 
-    if(!isNational) {
+    if (!isNational) {
       this.results = this.results.set(params.query as string, data.data);
     } else {
       this.nationalResults = this.nationalResults.set(params.query as string, data.data);
     }
 
-    if(this.keyword || this.category || this.persona) {
+    if (this.keyword || this.category || this.persona) {
       await this.fetchNhsConditions();
     }
 
-    if(this.isLiveActivity && params.location) {
+    if (this.isLiveActivity && params.location) {
       this.fetchLiveActivities(params.location);
     }
 
@@ -379,48 +415,56 @@ export default class ResultsStore {
 
   @action
   fetchLiveActivities = async (location: any) => {
+
+    const params = {
+      'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
+      mode: this.sortBy,
+      limit: 9,
+      page: this.currentPage,
+      activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
+      isVirtual: this.isVirtual ? this.isVirtual : null,
+    };
+
+    if (this.isVirtual) {
+      delete params['geo[radial]'];
+    }
+
     const { data } = await axios.get(`${iminApiBase}`, {
       headers: {
-        'X-API-KEY': `${iminApiKey}`
+        'X-API-KEY': `${iminApiKey}`,
       },
-      params: {
-        'geo[radial]': `${location.lat},${location.lon},${this.radius}`,
-        mode: this.sortBy,
-        limit: 9,
-        page: this.currentPage,
-        activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
-        isVirtual: this.isVirtual ? this.isVirtual : null,
-      }
+      params,
     });
 
     this.totalItems = data['imin:totalItems'];
 
-    if(this.totalItems > 0) {
-      let liveActivitiesMapped = data['imin:item'].map((activity: any) => {
-        return {
-          contact_name: activity.organizer.name ? activity.organizer.name : null,
-          contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
-          description: activity.description ? activity.description : null,
-          gallery_items: activity.image ? activity.image : null,
-          has_logo: activity.image ? true : false,
-          logo_url: activity.image ? activity.image[0].url : null,
-          id: activity.identifier ? activity.identifier : null,
-          intro: activity.description ? this.truncateString(activity.description, 150) : null,
-          is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
-          name: activity.name ? activity.name : null,
-          open_active: true,
-          organisation_id: activity.organizer ? activity.organizer.id : null,
-          organisation: activity.organizer ? activity.organizer.name : null,
-          service_locations: [],
-          slug: activity.identifier ? activity.identifier : null,
-          type: 'activity',
-          video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
-        };
-      });
-
-      this.liveActivities.set('Live Activities', liveActivitiesMapped);
+    if (this.totalItems > 0) {
+      this.liveActivities.set('Live Activities', this.transformLiveActivities(data));
     }
   };
+
+  transformLiveActivities = (data: any) =>
+    data['imin:item'].map((activity: any) => {
+      return {
+        contact_name: activity.organizer.name ? activity.organizer.name : null,
+        contact_phone: activity.organizer.telephone ? activity.organizer.telephone : null,
+        description: activity.description ? activity.description : null,
+        gallery_items: activity.image ? activity.image : null,
+        has_logo: activity.image ? true : false,
+        logo_url: activity.image ? activity.image[0].url : null,
+        id: activity.identifier ? activity.identifier : null,
+        intro: activity.description ? this.truncateString(activity.description, 150) : null,
+        is_free: activity.isAccessibleForFree ? activity.isAccessibleForFree : null,
+        name: activity.name ? activity.name : null,
+        open_active: true,
+        organisation_id: activity.organizer ? activity.organizer.id : null,
+        organisation: activity.organizer ? activity.organizer.name : null,
+        service_locations: [],
+        slug: activity.identifier ? activity.identifier : null,
+        type: 'activity',
+        video_embed: activity['beta:video'] ? activity['beta:video'][0].url : null,
+      };
+    });
 
   @action
   getOrganisations = async () => {
