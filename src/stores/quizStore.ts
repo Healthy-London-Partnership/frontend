@@ -9,6 +9,7 @@ interface IStep5 {
 class QuizStore {
   @observable step: number = 1;
   @observable maxStep: number = 8;
+  @observable disableNext: boolean = false;
 
   @observable intro3: any = [];
   @observable step1: string = '';
@@ -19,6 +20,11 @@ class QuizStore {
     full_name: '',
     email: '',
     phone: '',
+  };
+
+  @action
+  setDisableNext = (value: boolean) => {
+    this.disableNext = value;
   };
 
   @action
@@ -65,7 +71,6 @@ class QuizStore {
     // @ts-ignore
     this[step][field] = data;
   };
-
 
 }
 

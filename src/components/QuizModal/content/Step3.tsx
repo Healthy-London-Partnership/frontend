@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, {Fragment, FunctionComponent, useEffect} from 'react';
 import '../QuizModal.scss';
 import cx from 'classnames';
 import quizStore from '../../../stores/quizStore';
@@ -17,6 +17,14 @@ interface IProps {
 }
 
 const Step3: FunctionComponent<IProps> = ({ stepTitle }) => {
+  useEffect(() => {
+    quizStore.setDisableNext(true);
+
+    if (quizStore.step3 !== '') {
+      quizStore.setDisableNext(false);
+    };
+  });
+
   return (
     <Fragment>
       <div className="quiz-modal__step">

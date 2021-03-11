@@ -41,7 +41,11 @@ export default class ResultsStore {
   @observable totalItems: number = 0;
   @observable itemsPerPage: number = 9;
   @observable postcode: string = '';
-  @observable locationCoords: IGeoLocation | {} = {};
+  // @observable locationCoords: IGeoLocation | {} = {};
+  @observable locationCoords = {
+    lat: '',
+    lon: '',
+  };
   @observable fetched: boolean = false;
   @observable view: 'grid' | 'map' = 'grid';
   @observable radius: number = 5;
@@ -84,7 +88,10 @@ export default class ResultsStore {
     this.totalItems = 0;
     this.itemsPerPage = 9;
     this.postcode = '';
-    this.locationCoords = {};
+    this.locationCoords = {
+      lat: '',
+      lon: '',
+    };
     this.view = 'grid';
     this.radius = 5;
     this.activityTypes = [];
@@ -177,17 +184,27 @@ export default class ResultsStore {
   };
 
   @action
-  getResultByQuiz = async () => {
+  getResultByQuiz = async (postcode: string, age: string) => {
     this.currentPage = 1;
 
+    await this.geolocate(postcode);
+
+    const arrAge = age.split('-');
+
     const params = {
-      'geo[radial]': '51.5454736,-0.1627902,5',
+      'geo[radial]': `${this.locationCoords.lat},${this.locationCoords.lon},${this.radius}`,
       mode: this.sortBy,
       limit: 9,
       page: this.currentPage,
       activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
       isVirtual: this.isVirtual ? this.isVirtual : null,
+      'ageRangeMin[gte]': arrAge[0],
+      'ageRangeMax[lte]': arrAge[1],
     };
+
+    if (this.locationCoords.lat === '' && this.locationCoords.lon === '') {
+      delete params['geo[radial]'];
+    }
 
     const { data } = await axios.get(`${iminApiBase}`, {
       headers: {
@@ -199,13 +216,8 @@ export default class ResultsStore {
     this.totalItems = data['imin:totalItems'];
 
     if (this.totalItems > 0) {
-      this.results.set('Live Activities', this.transformLiveActivities(data));
+      this.results = this.transformLiveActivities(data);
     }
-    //
-    //
-    // console.log('getResultByQuiz')
-    // this.liveActivities.set('Live Activities', []);
-    // this.results = new Map();
   };
 
   getSearchTerms = () => {
@@ -267,7 +279,7 @@ export default class ResultsStore {
     });
 
     if (this.postcode) {
-      await this.geolocate();
+      await this.geolocate(this.postcode);
     }
 
     this.setParams();
@@ -300,7 +312,11 @@ export default class ResultsStore {
       params.persona = this.collection_personas;
     }
 
-    if (size(this.locationCoords)) {
+    // if (size(this.locationCoords)) {
+    //   params.location = this.locationCoords;
+    // }
+
+    if (this.locationCoords.lat !== '' && this.locationCoords.lon !== '') {
       params.location = this.locationCoords;
     }
 
@@ -308,7 +324,7 @@ export default class ResultsStore {
 
     await this.fetchResults(false, params);
 
-    if(this.view !== 'map' && this.postcode !== '') {
+    if (this.view !== 'map' && this.postcode !== '') {
       params.is_national = true;
       delete params['location'];
 
@@ -526,7 +542,10 @@ export default class ResultsStore {
 
     if (!this.postcode) {
       url = this.removeQueryStringParameter('postcode', url);
-      this.locationCoords = {};
+      this.locationCoords = {
+        lat: '',
+        lon: '',
+      };
     }
 
     if (this.is_free) {
@@ -597,15 +616,15 @@ export default class ResultsStore {
   };
 
   @action
-  geolocate = async () => {
+  geolocate = async (postcode: string) => {
     try {
       const geolocation = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${this.postcode},UK&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${postcode},UK&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
       );
 
       const location = get(geolocation, 'data.results[0].geometry.location', {});
 
-      if(location) {
+      if (location) {
         this.locationCoords = {
           lon: location.lng,
           lat: location.lat,

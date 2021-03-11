@@ -33,7 +33,10 @@ class QuizModal extends Component<IProps, any> {
     nextStep();
     if (step === maxStep) {
       uiStore?.toggleQuizModal();
-      resultsStore?.getResultByQuiz();
+      resultsStore?.getResultByQuiz(
+        quizStore.step1,
+        quizStore.step2
+      );
     }
   };
 
@@ -79,6 +82,7 @@ class QuizModal extends Component<IProps, any> {
               <button
                 className="quiz-modal__footer__button quiz-modal__footer__button__next"
                 onClick={this.handleNextStep}
+                disabled={quizStore.disableNext}
               >
                 {step === 8 ? 'Show Result' : 'Next'} <FontAwesomeIcon icon="chevron-right" />
               </button>

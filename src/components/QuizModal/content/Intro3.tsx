@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, {Fragment, FunctionComponent, useEffect} from 'react';
 import cx from 'classnames';
 import '../QuizModal.scss';
 import quizStore from '../../../stores/quizStore';
@@ -18,6 +18,14 @@ const selectionMapping = [
 ];
 
 const Intro3: FunctionComponent = () => {
+  useEffect(() => {
+    quizStore.setDisableNext(true);
+
+    if (quizStore.intro3.length >= 3) {
+      quizStore.setDisableNext(false);
+    }
+  });
+
   return (
     <Fragment>
       <h4 className="modal__title quiz-modal__title">What is your main reason for wanting to be more physically active?</h4>

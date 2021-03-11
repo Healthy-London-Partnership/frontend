@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, {Fragment, FunctionComponent, useEffect} from 'react';
 import '../QuizModal.scss';
 import quizStore from '../../../stores/quizStore';
 import { observer } from 'mobx-react';
@@ -12,6 +12,13 @@ interface IProps {
 }
 
 const Step1: FunctionComponent<IProps> = ({ stepTitle }) => {
+  useEffect(() => {
+    quizStore.setDisableNext(true);
+
+    if (quizStore.step1 !== '') {
+      quizStore.setDisableNext(false);
+    }
+  });
 
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(position => {
