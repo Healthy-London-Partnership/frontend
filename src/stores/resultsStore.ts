@@ -216,7 +216,11 @@ export default class ResultsStore {
     this.totalItems = data['imin:totalItems'];
 
     if (this.totalItems > 0) {
-      this.results = this.transformLiveActivities(data);
+      try {
+        this.results = this.transformLiveActivities(data);
+      } catch (err) {
+        alert('Something wrong...');
+      }
     }
   };
 
@@ -395,7 +399,9 @@ export default class ResultsStore {
   fetchCollectionResults = async (type: string, params: IParams) => {
     let searchUrl;
 
-    searchUrl = `${apiBase}/search/collections/${type}?page=${this.currentPage}`
+    // searchUrl = `${apiBase}/search/collections/${type}?page=${this.currentPage}` // BUG API NOT FOUND
+
+    searchUrl = `${apiBase}/search?page=${this.currentPage}`;
 
     const { data } = await axios.post(searchUrl, params);
     this.totalItems += get(data, 'meta.total', 0);
