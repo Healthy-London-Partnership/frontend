@@ -267,9 +267,14 @@
   }
 
   &--fill {
-    background-color: $gulf-blue;
+    border: 2px solid #0A66BB;
+    background-color: #0A66BB;
     color: $white !important;
     text-decoration: none;
+  }
+
+  &--fill:hover {
+    background-color: #0A66BB;
   }
 }
 
