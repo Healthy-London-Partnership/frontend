@@ -79,7 +79,10 @@
         border: 2px solid;
         border-radius: 12px;
         margin: .5rem;
+        max-width: 45%;
+        width: 100%;
       }
+      
       .active {
         background: #051a4c;
         color: #ffffff;
