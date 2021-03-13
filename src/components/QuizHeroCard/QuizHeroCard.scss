@@ -1,0 +1,42 @@
+@import '../../styles/breakpoints.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.quiz-hero {
+  background: #F0F8FF;
+  margin: space(16);
+  border-radius: space(16);
+
+  &__wrapper {
+    max-width: 1260px;
+    padding: space(24);
+
+    @include for-tablet-landscape-up {
+      padding: space(32) space(72);
+    }
+  }
+
+  &__title {
+    @include heading-l;
+    margin-bottom: space(20);
+  }
+
+  &__description {
+    margin-bottom: space(20);
+  }
+
+  &__image {
+    margin-right: space(64);
+
+    @include for-phone-only {
+      display: none;
+    }
+  }
+
+  button {
+    border-radius: space(32);
+    font-size: 16px;
+    padding: 0 space(32);
+  }
+}

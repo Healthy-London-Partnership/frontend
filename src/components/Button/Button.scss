@@ -231,7 +231,6 @@
   margin: 0 space(8);
   border-radius: 40px;
   border: 2px solid $gulf-blue;
-  background-color: $white;
   color: $gulf-blue !important;
   font-size: $font-body-m;
   font-weight: 500;
@@ -243,6 +242,15 @@
   &:hover {
     background-color: $gulf-blue;
     color: $white !important;
+    box-shadow: 0 2px 4px 0 rgba(56, 56, 56, 0.5);
+
+    span .goog-te-menu-value:before {
+      color: $white !important;
+    }
+
+    span .goog-te-menu-value:after {
+      color: $white !important;
+    }
   }
 
   &:disabled {
@@ -259,9 +267,14 @@
   }
 
   &--fill {
-    background-color: $gulf-blue;
+    border: 2px solid #0A66BB;
+    background-color: #0A66BB;
     color: $white !important;
     text-decoration: none;
+  }
+
+  &--fill:hover {
+    background-color: #0A66BB;
   }
 }
 
