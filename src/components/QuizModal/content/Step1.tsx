@@ -45,7 +45,7 @@ const Step1: FunctionComponent<IProps> = ({ stepTitle }) => {
         <div className="quiz-modal__step_title">{stepTitle}</div>
       </div>
       <h4 className="modal__title quiz-modal__title">
-        Please add post code or location so we can display the opportunities nearest to you
+        Add your postcode or location for opportunities near you
       </h4>
       <div className="quiz-modal__content">
         <p className="helper">e.g SW16 7GZ or Camden</p>

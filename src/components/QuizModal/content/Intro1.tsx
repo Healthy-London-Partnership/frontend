@@ -4,11 +4,14 @@ import '../QuizModal.scss';
 const Intro1: FunctionComponent = () => {
   return (
     <Fragment>
-      <h4 className="modal__title quiz-modal__title">Please complete this one minute quiz</h4>
+      <h4 className="modal__title quiz-modal__title">
+        Let’s find some physical that is right for you!<br/>
+        Complete this one minute quiz
+      </h4>
       <div className="quiz-modal__content">
         <p>
-          Your answers remain strictly confidential and are only used to ensure you get the support
-          you need and want. For more about how we use your information please see here
+          Your answers are confidential and are used to ensure you get the right support.
+          For more details click here
         </p>
       </div>
     </Fragment>
