@@ -4,6 +4,7 @@ export default class UIStore {
   @observable burgerMenuOpen: boolean = false;
   @observable feedbackModalOpen: boolean = false;
   @observable locationModalOpen: boolean = false;
+  @observable quizModalOpen: boolean = false;
   @observable keywordEditOpen: boolean = false;
 
   @action
@@ -19,6 +20,11 @@ export default class UIStore {
   @action
   toggleLocationModal = () => {
     this.locationModalOpen = !this.locationModalOpen;
+  };
+
+  @action
+  toggleQuizModal = () => {
+    this.quizModalOpen = !this.quizModalOpen;
   };
 
   @action
