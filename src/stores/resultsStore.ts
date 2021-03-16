@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import size from 'lodash/size';
 import axios from 'axios';
 import queryString from 'query-string';
+import quizStore from '../stores/quizStore';
 
 import { apiBase, iminApiKey, iminApiBase } from '../config/api';
 import {
@@ -184,7 +185,11 @@ export default class ResultsStore {
   };
 
   @action
-  getResultByQuiz = async (postcode: string, age: string) => {
+  getResultByQuiz = async () => {
+    const postcode = quizStore.step1;
+    const age = quizStore.step2;
+    const price = quizStore.step4;
+
     await this.geolocate(postcode);
 
     const arrAge = age.split('-');
@@ -196,12 +201,25 @@ export default class ResultsStore {
       page: this.currentPage,
       activityId: this.activityType ? 'https://openactive.io/activity-list#' + this.activityType : null,
       isVirtual: this.isVirtual ? this.isVirtual : null,
-      // 'ageRangeMin[gte]': arrAge[0],
-      // 'ageRangeMax[lte]': arrAge[1],
+      'ageRangeMin[gte]': arrAge[0],
+      'ageRangeMax[lte]': arrAge[1],
+      'priceAdult[gte]': 1,
+      'priceAdult[lte]': 1,
     };
 
     if (this.locationCoords.lat === '' && this.locationCoords.lon === '') {
       delete params['geo[radial]'];
+    }
+
+    if (price === 'paid') {
+      params['priceAdult[gte]'] = 1;
+      delete params['priceAdult[lte]'];
+    } else if (price === 'free') {
+      params['priceAdult[gte]'] = 0;
+      params['priceAdult[lte]'] = 0;
+    } else {
+      delete params['priceAdult[gte]'];
+      delete params['priceAdult[lte]'];
     }
 
     const { data } = await axios.get(`${iminApiBase}`, {
@@ -217,6 +235,8 @@ export default class ResultsStore {
       this.results = new Map();
 
       this.results = this.results.set('', this.transformLiveActivities(data));
+    } else {
+      this.results = new Map();
     }
   };
 
@@ -403,9 +423,6 @@ export default class ResultsStore {
     this.totalItems += get(data, 'meta.total', 0);
 
     this.results = this.results.set(params.query as string, data.data);
-    console.log('danan', data.data)
-    console.log('params', params.query)
-    console.log(this.results)
 
     this.getOrganisations();
   };

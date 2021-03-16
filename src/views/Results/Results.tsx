@@ -44,12 +44,13 @@ const activitySortOptions = [
 
 class Results extends Component<IProps, any> {
   requestData = () => {
-    const { resultsStore } = this.props;
+    const { resultsStore, history } = this.props;
     if (quizStore.step1 !== '') {
-      resultsStore?.getResultByQuiz(
-        quizStore.step1,
-        quizStore.step2
-      );
+      if (history.location.search.includes('radius')) {
+        resultsStore.getSearchTerms();
+      } else {
+        resultsStore?.getResultByQuiz();
+      }
     } else {
       resultsStore.getSearchTerms();
     }
@@ -69,7 +70,6 @@ class Results extends Component<IProps, any> {
       resultsStore.getActivityTypes();
     }
   }
-
 
   render() {
     const { resultsStore, history } = this.props;
