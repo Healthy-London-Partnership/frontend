@@ -107,13 +107,19 @@ export default class ResultsStore {
       .get(`${apiBase}/collections/categories`)
       .then(response => get(response, 'data.data'))
       .then(data => this.categories = data)
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.fetched = true;
+      });
 
     axios
       .get(`${apiBase}/collections/personas`)
       .then(response => get(response, 'data.data'))
       .then(data => this.personas = data)
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.fetched = true;
+      });
   };
 
   @action
@@ -124,7 +130,10 @@ export default class ResultsStore {
       .then(response => get(response, 'data.data'))
       .then(data => (this.category = data))
       .then(() => this.setCategoryParams())
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.fetched = true;
+      });
   };
 
   @action
@@ -134,7 +143,10 @@ export default class ResultsStore {
       .then(response => get(response, 'data.data'))
       .then(data => this.persona = data)
       .then(() => this.setPersonaParams())
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.fetched = true;
+      });
   };
 
   @action
@@ -143,7 +155,10 @@ export default class ResultsStore {
       .get(`${apiBase}/taxonomies/categories/${slug}`)
       .then(response => get(response, 'data.data'))
       .then(data => this.taxonomyCategory = data)
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.fetched = true;
+      });
   };
 
   @action
@@ -152,7 +167,10 @@ export default class ResultsStore {
       .get(`${apiBase}/taxonomies/organisations/${slug}`)
       .then(response => get(response, 'data.data'))
       .then(data => this.taxonomyOrganisation = data)
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        this.fetched = true;
+      });
   };
 
   @action
@@ -173,12 +191,12 @@ export default class ResultsStore {
       let label = concept.prefLabel;
 
       if (concept.altLabel && concept.altLabel.length > 0) {
-        label = label + ' / ' + concept.altLabel.join(' / ')
+        label = label + ' / ' + concept.altLabel.join(' / ');
       }
 
       output.push({
         value: concept.id.split('#')[1],
-        text: label
+        text: label,
       });
     });
     return output;
@@ -237,13 +255,15 @@ export default class ResultsStore {
       this.results = this.results.set('', this.transformLiveActivities(data));
     } else {
       this.results = new Map();
+      this.totalItems = 0;
     }
   };
 
-  getSearchTerms = () => {
+  getSearchTerms = async () => {
     const searchTerms = queryString.parse(window.location.search);
 
-    this.setSearchTerms(searchTerms);
+    await this.setSearchTerms(searchTerms);
+    this.fetched = true;
   };
 
   @action
@@ -254,7 +274,7 @@ export default class ResultsStore {
       }
 
       if (value === 'is_free') {
-        this.is_free = key === 'true' ? true : false;
+        this.is_free = key === 'true';
       }
 
       if (value === 'view') {
@@ -302,7 +322,7 @@ export default class ResultsStore {
       await this.geolocate(this.postcode);
     }
 
-    this.setParams();
+    await this.setParams();
   };
 
   setParams = async () => {
@@ -408,7 +428,7 @@ export default class ResultsStore {
       this.fetchLiveActivities(params.location);
     }
 
-    this.getOrganisations();
+    await this.getOrganisations();
   };
 
   @action
@@ -424,7 +444,7 @@ export default class ResultsStore {
 
     this.results = this.results.set(params.query as string, data.data);
 
-    this.getOrganisations();
+    await this.getOrganisations();
   };
 
   @action
@@ -629,6 +649,7 @@ export default class ResultsStore {
     }
 
     this.results = new Map();
+    this.totalItems = 0;
     this.nationalResults = new Map();
     return url;
   };
@@ -692,6 +713,7 @@ export default class ResultsStore {
   paginate = (page: number) => {
     this.currentPage = page;
     this.results = new Map();
+    this.totalItems = 0;
     this.nationalResults = new Map();
     this.loading = true;
   };

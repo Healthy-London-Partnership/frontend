@@ -27,9 +27,7 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
         <div className="flex-col flex-col--12">
           <div className="flex-container flex-container--justify flex-container--no-padding">
             {(view === 'grid' && keyword ) &&
-            <QuizHeroCard
-              title={keyword}
-            />
+              <QuizHeroCard title={keyword}/>
             }
             {isLiveActivity ? (
               <Fragment>
@@ -50,7 +48,8 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
               </Fragment>
             ) : (
               <Fragment>
-                {(results.size || nationalResults.size) ? (
+                {/*{(results.size || nationalResults.size) ? (*/}
+                {(resultsStore.totalItems > 0) ? (
                   <Fragment>
                     {results.size > 0 && (
                       <div className={nationalResults.size ? 'flex-col flex-col--tablet--12 flex-col--standard--6 flex-col--8 results__list--has-national-results' : 'flex-col flex-col--12'}>
@@ -121,13 +120,13 @@ const ListView: React.FunctionComponent<IProps> = ({ resultsStore, history }) =>
               });
             }}
             prevPageText={
-              <span>	
-                <FontAwesomeIcon icon="chevron-left" /> Prev	
+              <span>
+                <FontAwesomeIcon icon="chevron-left" /> Prev
               </span>
             }
             nextPageText={
-              <span>	
-                Next <FontAwesomeIcon icon="chevron-right" />	
+              <span>
+                Next <FontAwesomeIcon icon="chevron-right" />
               </span>
             }
             innerClass="pagination"

@@ -113,7 +113,6 @@ class Results extends Component<IProps, any> {
                   <p className="results__filters__col__text">{`${resultsStore.totalItems} (after filtering) results`}</p>
                 )}
               </div>
-
               {resultsStore.isLiveActivity ? (
                 <Fragment>
                   <div className="flex-col results__filters__col">
@@ -177,7 +176,7 @@ class Results extends Component<IProps, any> {
                 </div>
               )}
             </div>
-            {resultsStore.nhsResult && (
+            {(resultsStore.nhsResult && resultsStore.totalItems > 0) && (
               <div className="results__nhs-results">
                 <div className="flex-container flex-container--justify flex-container--no-padding">
                   <div className="flex-col flex-col--12">
