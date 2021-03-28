@@ -30,4 +30,4 @@ done
     cypress/included:3.2.0
 
 # Demote the testint env.
-mv .env.testing .env
+mv .env .env.testing
