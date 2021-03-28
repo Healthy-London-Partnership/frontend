@@ -169,6 +169,11 @@
 
   &__footer {
 
+    button:disabled {
+      background: #e9edf4;
+      cursor: not-allowed;
+    };
+
     &__button {
       background-color: #05194C;
       color: #fff;

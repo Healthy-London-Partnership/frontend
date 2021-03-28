@@ -60,21 +60,19 @@ class SearchResultCard extends React.Component<IProps> {
       return null;
     }
 
-    console.log(result);
-
     return (
       <article
         className={cx('search-result-card', {
           'is-active': isActive,
         })}
         onClick={() => {
-          resultsStore.view === 'map'  ?
-          this.props.activeIdHandler(result.id) :
-          history.push({
-            pathname: result.open_active ?
-            `/activities/${result.slug}` :
-            `/services/${result.slug}`,
-          });
+          resultsStore.view === 'map'
+            ? this.props.activeIdHandler(result.id)
+            : history.push({
+                pathname: result.open_active
+                  ? `/activities/${result.slug}`
+                  : `/services/${result.slug}`,
+              });
         }}
         tabIndex={0}
       >

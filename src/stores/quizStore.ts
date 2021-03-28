@@ -9,16 +9,22 @@ interface IStep5 {
 class QuizStore {
   @observable step: number = 1;
   @observable maxStep: number = 8;
+  @observable disableNext: boolean = false;
 
   @observable intro3: any = [];
   @observable step1: string = '';
-  @observable step2: number = -1;
-  @observable step3: number = -1;
-  @observable step4: number = -1;
+  @observable step2: string = '';
+  @observable step3: string = '';
+  @observable step4: string = '';
   @observable step5: IStep5 = {
     full_name: '',
     email: '',
     phone: '',
+  };
+
+  @action
+  setDisableNext = (value: boolean) => {
+    this.disableNext = value;
   };
 
   @action
@@ -46,17 +52,17 @@ class QuizStore {
   };
 
   @action
-  setStep2 = (value: number) => {
+  setStep2 = (value: string) => {
     this.step2 = value;
   };
 
   @action
-  setStep3 = (value: number) => {
+  setStep3 = (value: string) => {
     this.step3 = value;
   };
 
   @action
-  setStep4 = (value: number) => {
+  setStep4 = (value: string) => {
     this.step4 = value;
   };
 
@@ -65,6 +71,7 @@ class QuizStore {
     // @ts-ignore
     this[step][field] = data;
   };
+
 }
 
 const quizStore = new QuizStore();

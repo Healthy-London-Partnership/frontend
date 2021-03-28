@@ -46,13 +46,13 @@ export default class ServiceStore {
   fetchActivity = async (id: string) => {
     const { data } = await axios.get(`${iminApiBase}/${id}`, {
       headers: {
-        'X-API-KEY': `${iminApiKey}`
-      }
+        'X-API-KEY': `${iminApiKey}`,
+      },
     });
 
     const activity = data;
-    let today = new Date();
-    let ageRange = activity.ageRange !== undefined ? (activity.ageRange.minValue ? activity.ageRange.minValue + ' - ' : '') + (activity.ageRange.maxValue ? activity.ageRange.maxValue : '') : '';
+    const today = new Date();
+    const ageRange = activity.ageRange !== undefined ? (activity.ageRange.minValue ? activity.ageRange.minValue + ' - ' : '') + (activity.ageRange.maxValue ? activity.ageRange.maxValue : '') : '';
 
     this.service = {
       contact_email: activity.organizer.email ? activity.organizer.email : null,

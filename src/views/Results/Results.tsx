@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { observer, inject } from 'mobx-react';
 import { History } from 'history';
 import get from 'lodash/get';
+import quizStore from '../../stores/quizStore';
 
 import './Results.scss';
 import ResultStore from '../../stores/resultsStore';
@@ -42,18 +43,30 @@ const activitySortOptions = [
 ];
 
 class Results extends Component<IProps, any> {
+  requestData = () => {
+    const { resultsStore, history } = this.props;
+    if (quizStore.step1 !== '') {
+      if (history.location.search.includes('radius')) {
+        resultsStore.getSearchTerms();
+      } else {
+        resultsStore?.getResultByQuiz();
+      }
+    } else {
+      resultsStore.getSearchTerms();
+    }
+  };
+
   componentDidMount() {
     const { resultsStore } = this.props;
-
-    resultsStore.getSearchTerms();
+    this.requestData();
     resultsStore.getActivityTypes();
   }
 
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.location.search !== this.props.location.search) {
       const { resultsStore } = this.props;
-      resultsStore.clear();
-      resultsStore.getSearchTerms();
+      // resultsStore.clear(); BUG DATA NOT SHOW
+      this.requestData();
       resultsStore.getActivityTypes();
     }
   }
@@ -100,7 +113,6 @@ class Results extends Component<IProps, any> {
                   <p className="results__filters__col__text">{`${resultsStore.totalItems} (after filtering) results`}</p>
                 )}
               </div>
-
               {resultsStore.isLiveActivity ? (
                 <Fragment>
                   <div className="flex-col results__filters__col">
@@ -164,7 +176,7 @@ class Results extends Component<IProps, any> {
                 </div>
               )}
             </div>
-            {resultsStore.nhsResult && (
+            {(resultsStore.nhsResult && resultsStore.totalItems > 0) && (
               <div className="results__nhs-results">
                 <div className="flex-container flex-container--justify flex-container--no-padding">
                   <div className="flex-col flex-col--12">

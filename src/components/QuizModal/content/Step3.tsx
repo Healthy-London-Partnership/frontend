@@ -1,16 +1,30 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, {Fragment, FunctionComponent, useEffect} from 'react';
 import '../QuizModal.scss';
 import cx from 'classnames';
 import quizStore from '../../../stores/quizStore';
 import { observer } from 'mobx-react';
 
-const selectionMapping = ['Low', 'Medium', 'High'];
+// const selectionMapping = ['Low', 'Medium', 'High'];
+
+const selectionMapping = [
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'High', value: 'high' },
+];
 
 interface IProps {
   stepTitle?: string;
 }
 
 const Step3: FunctionComponent<IProps> = ({ stepTitle }) => {
+  useEffect(() => {
+    quizStore.setDisableNext(true);
+
+    if (quizStore.step3 !== '') {
+      quizStore.setDisableNext(false);
+    };
+  });
+
   return (
     <Fragment>
       <div className="quiz-modal__step">
@@ -25,12 +39,12 @@ const Step3: FunctionComponent<IProps> = ({ stepTitle }) => {
       </h4>
       <div className="quiz-modal__content">
         <ul className="step-card-selection">
-          {selectionMapping.map((item, index) => (
+          {selectionMapping.map(item => (
             <li
-              key={index}
-              className={cx({ "active" : quizStore.step3 === index })}
-              onClick={() => quizStore.setStep3(index)}
-            >{item}</li>
+              key={item.value}
+              className={cx({ "active" : quizStore.step3 === item.value })}
+              onClick={() => quizStore.setStep3(item.value)}
+            >{item.label}</li>
           ))}
         </ul>
       </div>
