@@ -27,6 +27,15 @@ Once dependancies are installed, run
 
 You should now be able to view the website by visiting [localhost:3000](http://localhost:3000).
 
+## Testing
+
+Automated browser tests can be ran with the following command:
+
+```bash
+# Ensure app is already running locally on port 3000
+yarn run test_functional
+```
+
 ## Deployment
 
 This project is intended to be deployed onto AWS to a S3 bucket.
