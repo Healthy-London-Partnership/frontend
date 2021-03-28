@@ -73,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "mockserver": "^3.1.1",
     "prettier": "^1.18.2",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",

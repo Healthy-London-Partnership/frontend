@@ -1,0 +1,45 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: *
+
+{
+  "data": [
+    {
+      "id": "fa38b356-9102-4f67-b01b-2be5b5bec010",
+      "slug": "health-apps",
+      "name": "Health apps",
+      "intro": "We have curated a range of quality assured apps to help you look after your wellbeing.",
+      "subtitle": "Apps to health support your wellbeing",
+      "order": 1,
+      "sideboxes": [],
+      "category_taxonomies": [
+        {
+          "id": "687960e5-b9c7-479e-bfcf-65d29e2c9464",
+          "parent_id": "d71917b3-fd2a-417d-93bb-f1c536938408",
+          "slug": "apps",
+          "name": "Apps",
+          "created_at": "2020-06-18T11:32:56+0000",
+          "updated_at": "2020-10-02T09:08:18+0000"
+        }
+      ],
+      "created_at": "2020-04-16T19:03:41+0000",
+      "updated_at": "2020-09-07T10:02:39+0000"
+    }
+  ],
+  "links": {
+    "first": "http:\/\/localhost:3001\/core\/v1\/collections\/personas?page=1",
+    "last": "http:\/\/localhost:3001\/core\/v1\/collections\/personas?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "path": "http:\/\/localhost:3001\/core\/v1\/collections\/personas",
+    "per_page": 25,
+    "to": 1,
+    "total": 1
+  }
+}

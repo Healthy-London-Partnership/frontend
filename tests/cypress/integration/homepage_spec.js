@@ -1,7 +1,7 @@
 describe('Homepage Tests', () => {
-  it('renders the "Find support" heading', () => {
+  it('renders the "Find Something" heading', () => {
     cy.visit('/')
 
-    cy.contains('Find support')
+    cy.contains('Find Something')
   })
 })

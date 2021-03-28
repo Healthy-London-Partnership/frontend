@@ -3,6 +3,12 @@
 # Bail out on first error.
 set -e
 
+# Promote the testing env.
+mv .env.testing .env
+
+# Start the mock server.
+node tests/mocks/api/server.js &
+
 # Start the development server.
 yarn run start &
 
@@ -22,3 +28,6 @@ done
     -v $PWD/tests:/e2e \
     -w /e2e \
     cypress/included:3.2.0
+
+# Demote the testint env.
+mv .env.testing .env
