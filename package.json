@@ -52,7 +52,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "tslint 'src/**/*.{ts,tsx,js}'",
-    "test_functional": "docker run --rm -v $PWD/tests:/e2e -w /e2e cypress/included:3.2.0"
+    "test_functional": "docker run --rm --network=host -v $PWD/tests:/e2e -w /e2e cypress/included:3.2.0"
   },
   "eslintConfig": {
     "extends": "react-app"
