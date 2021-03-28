@@ -10,7 +10,7 @@ mv .env.testing .env
 node tests/mocks/api/server.js &
 
 # Start the development server.
-yarn run start &
+REACT_APP_API_URL=http://localhost:3001/core/v1 yarn run start &
 
 # Pull the Cypress image.
 docker pull cypress/included:3.2.0
