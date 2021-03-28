@@ -1,0 +1,59 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: *
+
+{
+  "data": {
+    "cms": {
+      "frontend": {
+        "home": {
+          "search_title": "Find Something",
+          "personas_title": "Themes",
+          "categories_title": "Types of support",
+          "personas_content": "Help for different groups"
+        },
+        "about": {
+          "title": "About Connected Together",
+          "content": "This website has been developed by Healthy London Partnership to give you easy access to support and advice that can help to keep you safe and well during the Covid-19 pandemic.\n\nWe\u2019ve started by adding apps and other online resources that have all been quality assured.\n\nWe\u2019re now in the process of working with partners to add local support opportunities \u2013 especially those which can be accessed at a distance at this time. It will take a few weeks for us to offer the full range of support offers that we\u2019d like.\n\nMany thanks to Kingston Council and the Work and Health Unit for making this site possible."
+        },
+        "global": {
+          "footer_title": "Connected Together",
+          "contact_email": "hlp.admin.connect@nhs.net",
+          "contact_phone": "Contact phone",
+          "footer_content": "Keeping us safe and well through COVID-19",
+          "twitter_handle": "Twitter handle",
+          "facebook_handle": "Facebook handle"
+        },
+        "contact": {
+          "title": "Get in touch",
+          "content": "You can email us at: [hlp.admin.connect@nhs.net](mailto:hlp.admin.connect@nhs.net)"
+        },
+        "funders": {
+          "title": "Funders",
+          "content": "Welcome to NHS Connect.\n\nWe\u2019re setting out to transform how people can access health and wellbeing support and we can\u2019t do that without you.\n\nFor all the advances of digital technology, it remains remarkably difficult for either professionals or members of the public to access the support they need. NHS Connect changes that by drawing on aggregated data sets on scale, putting providers in charge of their listings - with tools and nudges to keep them uptodate - and then using sophisticated technologies to match a person with the ideal package of support for them.\n\nBut our goal is not just about giving people access to trusted information about support opportunities, vital though that is; it is also about ensuring that money is available to fund the right support for this person, now \u2013 not later on when their needs have often grown more complex, difficult and costly to solve.\n\nThis challenge is all the greater in the UK, which has long had both a mixed economy for health, with employers and health insurance operating in a quite separate space from the NHS, and also fragmented funding and support across different arms of central and local government. There is also a messy but critical role for personal budgets and self-funding.\n\nVery often funders don\u2019t have the budget and the business case on their own to do the right thing, but together we can.\n\nSo if you\u2019re an Integrated Care System, or an insurance company or an enlightened employer, or you just share our passion to pool funding together to transform health outcomes and protect our NHS in the process, please get in touch. We have some big plans for 2021."
+        },
+        "providers": {
+          "title": "You can get involved by:",
+          "content": "**Adding your service to the Connected website**\n\nPlease take a few minutes to sign up and add your first service or activity.\n\nYou retain control over who is referred to your service and it is easy for you to keep your listing up to date: [https:\/\/admin.connect.nhs.uk\/](https:\/\/admin.connect.nhs.uk\/)\n\n**Become a Connected Champion**\n\nWe\u2019re on a mission to maximise everyone\u2019s access to the support they need and want.\n\nIf you hold data on different support opportunities, please get in touch and we\u2019ll help you to add your data to the system (we have tools for both bulk import of data and two way data sharing).\n\nIf you\u2019re a funder, please encourage the organisations that you\u2019ve supported to add a listing \u2013 especially services that can be accessed at a distance.\n\n**Primary Care**\n\nThis website is part of a growing set of digital resources that give patients access to personalised support. If you want to support hundreds of patients easily at a distance, or if you want to give your link workers new super-powers, please get in touch at: [hlp.admin.connect@nhs.net](mailto:hlp.admin.connect@nhs.net)"
+        },
+        "favourites": {
+          "title": "See all your favourite content in one place",
+          "content": "You can add items from the directory to your favourites to allow you to find them again easily."
+        },
+        "supporters": {
+          "title": "Supporters",
+          "content": "Welcome to NHS Connect, a new platform built by and for local health and place-based systems, that offers seamless and comprehensive access to health and wellbeing support.\n\nConnect is an essential tool for Social Prescribing Link Workers and those with similar \u201ccoaching and connecting\u201d roles. You can use the system to help clients search for support based on what matters to them, make referrals and then receive follow-up information on levels of engagement, satisfaction and outcomes achieved.\n\nGPs can combine Connect with use of platforms such as AccuRx, iPlato or MJog to mass message patients presenting heightened risk for specific health problems such as Mental Health or Musculo-skeletal pain, or share by phone, email, or in consultations; giving a strong nudge to increased self-management, improved wellbeing and reduced reliance on GP services in the future.\n\nEmployment support staff such as Disability Employment Advisers can use Connect to give claimants access to wrap around support that will boost both health and employment outcomes.\n\nCouncil staff, for example in Public Health, Neighbourhood Services and especially those areas committed to local integrated teamwork, can use Connect to access all local public services alongside a wealth of third sector and national offers; making existing resources stretch much further.\n\nWe recommend that you start with playing with the platform as it is right now, but please bear in mind that the service is still in Public Beta and we still have many improvements in the pipeline. This includes integration shortly with other digital systems such as leading Client Management Systems for social prescribing, for maximum ease and effectiveness.\n\nWant to learn more? We are running a series of drop-in webinars for busy professionals that give you a quick tour of the system and explain our roots in a model of tackling health inequality at its roots and addressing the social and psychological as well as physical needs of people in being well and in control of their lives.\n\nYou might also want to join our Co-design Coalition to get advance knowledge of what is coming next and help us to co-design and test key pieces of functionality so they work for you.\n\nIf your area wants to start making referrals through the platform, a senior staff member will need to sign off the request, you\u2019ll need send us a list of approved supporters and we\u2019ll give them access to enhanced roles and permissions within the platform. Please email hlp.admin.connect@nhs.net to make this happen."
+        },
+        "privacy_policy": {
+          "title": "Fair processing notice",
+          "content": "[https:\/\/connect.nhs.uk\/Fai](https:\/\/connect.nhs.uk\/Fai)_[Processing](https:\/\/connect.nhs.uk\/Fair_Processing_Notice_Final.pdf)_[Notice\\_Final.pdf](https:\/\/connect.nhs.uk\/Fair_Processing_Notice_Final.pdf)"
+        },
+        "terms_and_conditions": {
+          "title": "Title",
+          "content": "Content"
+        }
+      }
+    }
+  }
+}

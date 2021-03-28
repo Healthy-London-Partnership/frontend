@@ -10,8 +10,6 @@ branches:
     - develop
 
 language: node_js
-node_js:
-  - '10'
 
 cache: yarn
 
@@ -19,7 +17,8 @@ install:
   - yarn install
 
 script:
-  - echo "No tests ran"
+  - echo "TODO - Run code style tests"
+  - bash .travis/functional_tests.sh
 
 before_deploy:
   - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "/tmp/awscli-bundle.zip"
