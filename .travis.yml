@@ -19,7 +19,7 @@ install:
   - yarn install
 
 script:
-  - echo "No tests ran"
+  - bash .travis/functional_tests.sh
 
 before_deploy:
   - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "/tmp/awscli-bundle.zip"
