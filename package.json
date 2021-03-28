@@ -52,6 +52,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "tslint 'src/**/*.{ts,tsx,js}'",
+    "start_testing": "REACT_APP_API_URL=http://host.docker.internal:3001/core/v1 react-scripts start",
+    "mock_api_server": "node tests/mocks/api/server.js",
     "test_functional": "docker run --rm --network=host -v $PWD/tests:/e2e -w /e2e cypress/included:3.2.0"
   },
   "eslintConfig": {

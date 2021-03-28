@@ -32,7 +32,8 @@ You should now be able to view the website by visiting [localhost:3000](http://l
 Automated browser tests can be ran with the following command:
 
 ```bash
-# Ensure app is already running locally on port 3000
+yarn run start_testing
+yarn run mock_api_server
 yarn run test_functional
 ```
 
